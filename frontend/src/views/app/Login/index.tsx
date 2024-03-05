@@ -1,10 +1,10 @@
 import { EyeInvisibleOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons";
 import "./styles.css";
-import logo from "../../../assets/images/transferir (2).png";
+import logo from "../../../assets/images/ifes.png";
 import { useNavigate } from "react-router";
 import UseProvideAuth from "../../../hooks/useProvideAuth";
 import { useState } from "react";
-import passaporteImg from "../../../assets/images/passaporte_industrial.jpg";
+import passaporteImg from "../../../assets/images/Ifes-Colatina.jpg";
 
 export default function Login() {
   const useProvideAuth = UseProvideAuth() as any;
@@ -28,10 +28,11 @@ export default function Login() {
     <div id="senai-login" style={{ display: "flex" }}>
       <div className="wrapper">
         <div className="image-container">
-          <img
+                    <img
             src={passaporteImg} // Substitua com o caminho da sua imagem
             alt="Imagem"
           />
+
         </div>
 
         <div className="formContainer">
@@ -45,6 +46,7 @@ export default function Login() {
                 marginBottom: "10px",
                 position: "relative",
                 bottom: "20px",
+                paddingTop: '1rem'
               }}
             >
               Controle de Acesso

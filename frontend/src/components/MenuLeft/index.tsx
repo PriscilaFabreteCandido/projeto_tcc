@@ -25,6 +25,7 @@ import {
   UserAddOutlined,
   UsergroupAddOutlined,
   VideoCameraOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import "./styles.css";
@@ -62,13 +63,8 @@ function getItem(
 
 const items: MenuProps["items"] = [
   getItem("Início", "inicio", <HomeOutlined />, "/Inicio"),
-  getItem("Equipe de Execução", "equipeexecucao", <CheckCircleOutlined />, "/Cadastros", 
-  [
-    getItem("Voluntários", "voluntario", <UsergroupAddOutlined />, "/Cadastros/Usuários"),
-    getItem("Bolsistas", "bolsistas", <BookOutlined   />, "/Cadastros/Exames"),
-    getItem("Servidores", "servidores", <CloudServerOutlined   />, "/Cadastros/Exames"),
-  ],
-  ),
+  getItem("PCSMO", "pcmso", <WarningOutlined />, "/PCMSO"),
+  getItem("Equipe de Execução", "equipeexecucao", <CheckCircleOutlined />, "/Equipe de Execução"),
   getItem("Documentos", "consultas", <FileTextOutlined />, "/Consultas",
   [
     getItem("Relatórios", "voluntario", <BarChartOutlined />, "/Cadastros/Usuários"),
@@ -128,8 +124,8 @@ function MenuLeft({ isIconClicked }: any) {
       <div
         style={{
           width: "100%",
-          padding: '0rem 1rem',
-          height: isIconClicked ? "4rem" : "4rem",
+          padding: isIconClicked ? '0rem 1rem' : '1rem 0rem 0rem 0rem',
+          height: isIconClicked ? "4rem" : "3rem",
           borderInlineEnd: "1px solid rgba(5, 5, 5, 0.06)",
         }}
         className="logo"

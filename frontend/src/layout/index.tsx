@@ -30,12 +30,14 @@ function RootLayout() {
 
   return (
     <div className="root-layout grid-container">
-      <nav id="pageNav">
-        <MenuLeft isIconClicked={isIconClicked} />
-      </nav>
       <header id="pageHeader">
         <Header onIconClick={handleIconClick} />
       </header>
+      
+      <nav id="pageNav">
+        <MenuLeft isIconClicked={isIconClicked} />
+      </nav>
+      
       <main
         id="pageMain">
           

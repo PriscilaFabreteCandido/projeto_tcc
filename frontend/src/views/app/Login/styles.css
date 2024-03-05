@@ -5,7 +5,7 @@
   height: 100vh;
   width: 100vw;
   backdrop-filter: blur(50px);
-  background-color: #fafafa;
+  background-color: #e5edea;
 }
 
 .formContainer {
@@ -96,7 +96,7 @@
 .formContainer .btn {
   width: 100%;
   height: 45px;
-  background: linear-gradient(to right, #101f62, #511b9e);
+  background: linear-gradient(to right, #04652F, #3B8A6D);
   border: none;
   outline: none;
   border-radius: 40px;

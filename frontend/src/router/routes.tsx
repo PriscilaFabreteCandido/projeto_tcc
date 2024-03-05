@@ -17,6 +17,7 @@ import PGR from "../views/PGR";
 import Consultas from "../views/Consultas";
 import Relatorios from "../views/Relatorios";
 import Error404 from "../components/404";
+import EquipesExecucao from "../views/EquipeExecucao";
 
 export interface RouteConfig {
   path: string;
@@ -25,11 +26,10 @@ export interface RouteConfig {
   children?: RouteConfig[];
 }
 
-
 const routes: RouteConfig[] = [
   { path: "/login", element: <Login />, permissions: "" },
   { path: "/logout", element: <Logout />, permissions: "" },
-  { 
+  {
     path: "",
     element: <RootLayout />,
     permissions: "",
@@ -39,36 +39,44 @@ const routes: RouteConfig[] = [
 
       //Cadastros
       { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
-      { path: "Cadastros/Usuários/Cadastrar", element: <CadastroUsuario />, permissions: "" },
-      { path: "Cadastros/Usuários/Cadastrar/:id", element: <CadastroUsuario />, permissions: "" },
-      
+      {
+        path: "Cadastros/Usuários/Cadastrar",
+        element: <CadastroUsuario />,
+        permissions: "",
+      },
+      {
+        path: "Cadastros/Usuários/Cadastrar/:id",
+        element: <CadastroUsuario />,
+        permissions: "",
+      },
+
       { path: "Cadastros/Exames", element: <Exames />, permissions: "" },
-      { path: "Cadastros/Exames/Cadastrar", element: <CadastroExame />, permissions: "" },
-      
+      {
+        path: "Cadastros/Exames/Cadastrar",
+        element: <CadastroExame />,
+        permissions: "",
+      },
+
       //Consultas
       { path: "Consultas", element: <Consultas />, permissions: "" },
 
-      //PGR
-      { path: "PGR", element: <PGR />, permissions: "" },
+      //Equipe de Execução
+      { path: "Equipe de Execução", element: <EquipesExecucao />, permissions: "" },
 
-      //PCMSO
-      { path: "PCMSO", element: <PCMSO />, permissions: "" },
-      { path: "PCMSO/Cadastrar", element: <CadastroPCMSO />, permissions: "" },
-      { path: "PCMSO/Editar", element: <CadastroPCMSO />, permissions: "" },
-      
       //Relatórios
-      { path: "Relatórios", element: <Relatorios />, permissions: "",},
-
-      //Perguntas Frequentes
-      { path: "Perguntas Frequentes", element: <PerguntasFrequentes />, permissions: "",},
-      { path: "Perguntas Frequentes/:titulo", element: <CategoriaPerguntasFrequentes />, permissions: "",},
-      
-      //PCMSO
-      { path: "PCMSO/Cadastrar/Adicionar itens ao PCMSO", element: <ItemPCMSO />, permissions: "",},
-      { path: "PCMSO/Cadastrar/Adicionar itens ao PCMSO/Cadastrar", element: <CadastroItemPCMSO />, permissions: "",},
-      { path: "PCMSO/Cadastrar/Adicionar itens ao PCMSO/Editar", element: <CadastroItemPCMSO />, permissions: "",},
-      { path: "PCMSO/Cadastrar/Adicionar itens ao PCMSO/Clonar Novo Item PCMSO", element: <CadastroItemPCMSO />, permissions: "",},
-      { path: "*", permissions: "",  element: (<> <Navigate to="/404" replace /><Error404 /></>),},
+      { path: "Relatórios", element: <Relatorios />, permissions: "" },
+     
+      {
+        path: "*",
+        permissions: "",
+        element: (
+          <>
+            {" "}
+            <Navigate to="/404" replace />
+            <Error404 />
+          </>
+        ),
+      },
     ],
   },
 ];
