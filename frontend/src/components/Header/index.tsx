@@ -11,7 +11,7 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, FloatButton, Menu, MenuProps } from "antd";
+import { Avatar, Button, FloatButton, Menu, MenuProps } from "antd";
 import MenuItem from "antd/es/menu/MenuItem";
 import { useNavigate } from "react-router";
 
@@ -54,7 +54,7 @@ const itemsMenu: MenuProps["items"] = [
     getItem(
       "Gerenciar Usuários",
       "redefinirSenha",
-      <UserOutlined  />,
+      <UserOutlined />,
       "/RedefinirSenha"
     ),
   ]),
@@ -130,25 +130,22 @@ function Header({ onIconClick }: any) {
           </Button>
         </div>
 
+
         <div className="flex gap-1">
           {/* Informações do Usuário */}
-          <UserOutlined
-            className="white-icon"
-            style={{ fontSize: "1.25rem" }}
-          />
-          
+
+          <Avatar className="white-icon" size={24} icon={<UserOutlined />} />
+
           <div className="cor-white info-user flex flex-column btn-info-user">
             <h6 className="font-14" style={{ margin: "0" }}>
               Administrador
             </h6>
-            <span style={{ fontSize: "11px" }}>Empresa</span>
-            <span style={{ fontSize: "11px" }}>Contrato</span>
           </div>
 
           {/* Botão de Ação Adicional (se aplicável) */}
-            {/* Separador */}
-            <div className="separador"></div>
-            
+          {/* Separador */}
+          <div className="separador"></div>
+
           <Button
             onClick={() => setMenuVisible(!menuVisible)}
             style={{
@@ -160,9 +157,10 @@ function Header({ onIconClick }: any) {
               left: "-1px",
             }}
           >
-            <SettingOutlined  style={{ fontSize: "1.2rem", color: "white" }} />
+            <SettingOutlined style={{ fontSize: "1.2rem", color: "white" }} />
           </Button>
         </div>
+
       </div>
 
       {menuVisible && (

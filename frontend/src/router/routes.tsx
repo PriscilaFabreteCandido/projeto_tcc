@@ -3,21 +3,15 @@ import Home from "../views/app/home";
 import RootLayout from "../layout";
 import Login from "../views/app/Login";
 import Logout from "../views/app/Logout";
-import PCMSO from "../views/PCMSO";
-import CadastroPCMSO from "../views/PCMSO/CadastroPCMSO";
 import CadastroUsuario from "../views/Cadastros/Usuario/CadastroUsuario";
-import PerguntasFrequentes from "../views/PerguntasFrequentes";
-import CadastroItemPCMSO from "../views/PCMSO/ItemPCMSO/CadastroItemPCMSO";
-import ItemPCMSO from "../views/PCMSO/ItemPCMSO";
-import CategoriaPerguntasFrequentes from "../views/PerguntasFrequentes/categoria";
 import Usuarios from "../views/Cadastros/Usuario";
-import Exames from "../views/Cadastros/Exames";
-import CadastroExame from "../views/Cadastros/Exames/CadastroExame";
-import PGR from "../views/PGR";
 import Consultas from "../views/Consultas";
 import Relatorios from "../views/Relatorios";
 import Error404 from "../components/404";
-import EquipesExecucao from "../views/EquipeExecucao";
+import EquipesExecucao from "../views/Cadastros/EquipeExecucao";
+import Acoes from "../views/Acoes";
+import CadastrarAcoes from "../views/Acoes/CadastrarAcoes";
+import CadastrarEquipesExecucao from "../views/Cadastros/EquipeExecucao/CadastrarEquipe";
 
 export interface RouteConfig {
   path: string;
@@ -39,29 +33,16 @@ const routes: RouteConfig[] = [
 
       //Cadastros
       { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
-      {
-        path: "Cadastros/Usuários/Cadastrar",
-        element: <CadastroUsuario />,
-        permissions: "",
-      },
-      {
-        path: "Cadastros/Usuários/Cadastrar/:id",
-        element: <CadastroUsuario />,
-        permissions: "",
-      },
-
-      { path: "Cadastros/Exames", element: <Exames />, permissions: "" },
-      {
-        path: "Cadastros/Exames/Cadastrar",
-        element: <CadastroExame />,
-        permissions: "",
-      },
+      { path: "Equipe de Execução", element: <EquipesExecucao />, permissions: "" },
+      { path: "/Equipes de Execução/Cadastrar", element: <CadastrarEquipesExecucao />, permissions: "" },
 
       //Consultas
       { path: "Consultas", element: <Consultas />, permissions: "" },
 
-      //Equipe de Execução
-      { path: "Equipe de Execução", element: <EquipesExecucao />, permissions: "" },
+      //Ações
+      { path: "Ações", element: <Acoes />, permissions: "" },
+      { path: "Ações/Cadastrar Ações", element: <CadastrarAcoes />, permissions: "" },
+      
 
       //Relatórios
       { path: "Relatórios", element: <Relatorios />, permissions: "" },

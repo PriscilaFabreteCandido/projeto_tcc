@@ -124,7 +124,7 @@ export default function EquipesExecucao() {
     <>
       {/* Header */}
 
-      <div className="flex justify-content-between">
+      <div className="flex justify-content-between pb-1">
         {/* Filtros */}
         <div className="flex filtros-card">
           <Input placeholder="Código E-social" style={{ width: "200px" }} />
@@ -147,7 +147,7 @@ export default function EquipesExecucao() {
           <Button
             className="senai-btn-success"
             onClick={() => {
-              navigate("/Cadastros/Exames/Cadastrar");
+              navigate("/Equipes de Execução/Cadastrar");
             }}
           >
             <PlusOutlined className="senai-icon" />

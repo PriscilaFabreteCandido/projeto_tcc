@@ -63,17 +63,39 @@ function getItem(
 
 const items: MenuProps["items"] = [
   getItem("Início", "inicio", <HomeOutlined />, "/Inicio"),
-  getItem("PCSMO", "pcmso", <WarningOutlined />, "/PCMSO"),
-  getItem("Equipe de Execução", "equipeexecucao", <CheckCircleOutlined />, "/Equipe de Execução"),
-  getItem("Documentos", "consultas", <FileTextOutlined />, "/Consultas",
-  [
-    getItem("Relatórios", "voluntario", <BarChartOutlined />, "/Cadastros/Usuários"),
-    getItem("Ano", "ano", <CalendarOutlined   />, "/Cadastros/Exames"),
-    getItem("Anexar Documentos", "servidores", <PaperClipOutlined   />, "/Cadastros/Exames"),
-  ],),
-  getItem("Ações", "acoes", <PlayCircleOutlined />, "/PGR"),
-  getItem("Perguntas Frequentes", "perguntasfrequentes", <QuestionCircleOutlined />, "/Perguntas Frequentes"),
-  
+
+  getItem("Cadastros", "consultas", <FileTextOutlined />, "/Consultas", [
+    getItem(
+      "Equipe de Execução",
+      "equipeexecucao",
+      <CheckCircleOutlined />,
+      "/Equipe de Execução"
+    ),
+    getItem("Turma", "turma", <CalendarOutlined />, "/Turmas"),
+    getItem(
+      "Coordenador",
+      "coordenador",
+      <PaperClipOutlined />,
+      "/Coordenador"
+    ),
+  ]),
+
+  getItem("Documentos", "consultas", <FileTextOutlined />, "/Consultas", [
+    getItem(
+      "Relatórios",
+      "voluntario",
+      <BarChartOutlined />,
+      "/Cadastros/Usuários"
+    ),
+    getItem("Ano", "ano", <CalendarOutlined />, "/Cadastros/Exames"),
+    getItem(
+      "Anexar Documentos",
+      "servidores",
+      <PaperClipOutlined />,
+      "/Cadastros/Exames"
+    ),
+  ]),
+  getItem("Ações", "acoes", <PlayCircleOutlined />, "/Ações"),
 ];
 
 function MenuLeft({ isIconClicked }: any) {
@@ -83,37 +105,37 @@ function MenuLeft({ isIconClicked }: any) {
 
   useEffect(() => {
     const currentPath = location.pathname;
-  
+
     const selectedItem = items?.find((item: any) =>
       currentPath.startsWith(item.uri || "")
     );
-  
+
     if (selectedItem) {
       setDefaultSelectedKeys([selectedItem?.key?.toString()]);
     } else {
       setDefaultSelectedKeys([""]);
     }
   }, [location.pathname, navigate]);
-  
+
   function encontrarItemDoMenu(items: any[], targetKey: React.Key): void {
     var selectedItem: any = null;
     if (!items || items.length <= 0) return;
-  
+
     for (const item of items) {
       if (item.key === targetKey) {
         selectedItem = item;
         return selectedItem;
       }
-  
+
       if (item.children && item.children.length > 0) {
         selectedItem = encontrarItemDoMenu(item.children, targetKey);
-        if(selectedItem) return selectedItem;
+        if (selectedItem) return selectedItem;
       }
     }
   }
-  
+
   const onClick: MenuProps["onClick"] = (e) => {
-    var selectedItem: any = encontrarItemDoMenu(items ?  items : [], e.key);
+    var selectedItem: any = encontrarItemDoMenu(items ? items : [], e.key);
     if (selectedItem && selectedItem.uri) {
       navigate(selectedItem.uri);
     }
@@ -124,14 +146,14 @@ function MenuLeft({ isIconClicked }: any) {
       <div
         style={{
           width: "100%",
-          padding: isIconClicked ? '0rem 1rem' : '1rem 0rem 0rem 0rem',
+          padding: isIconClicked ? "0rem 1rem" : "1rem 0rem 0rem 0rem",
           height: isIconClicked ? "4rem" : "3rem",
           borderInlineEnd: "1px solid rgba(5, 5, 5, 0.06)",
         }}
         className="logo"
       >
         <img
-          src={isIconClicked ? transferir: logo}
+          src={isIconClicked ? transferir : logo}
           alt="Descrição da imagem"
           style={{ width: "100%", height: "100%" }}
         />
@@ -147,14 +169,14 @@ function MenuLeft({ isIconClicked }: any) {
         >
           <Menu
             onClick={onClick}
-            style={{ height: "100%" }}
+            style={{ height: "90%" }}
             defaultSelectedKeys={defaultSelectedKeys}
             defaultOpenKeys={["sub1"]}
             mode="inline"
             inlineCollapsed={!isIconClicked}
             items={items}
-          >
-          </Menu>
+          ></Menu>
+
         </div>
       )}
     </>

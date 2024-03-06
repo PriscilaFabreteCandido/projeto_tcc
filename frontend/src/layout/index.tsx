@@ -10,7 +10,7 @@ function RootLayout() {
   const [isIconClicked, setIsIconClicked] = useState<boolean>(false);
 
   const handleIconClick = (e: any) => {
-    console.log('e', e)
+    console.log("e", e);
     if (e) {
       document.documentElement.style.setProperty("--column-width", "15%");
     } else {
@@ -26,34 +26,36 @@ function RootLayout() {
     } else {
       document.documentElement.style.setProperty("--column-width", "80px");
     }
-  })
+  });
 
   return (
     <div className="root-layout grid-container">
       <header id="pageHeader">
         <Header onIconClick={handleIconClick} />
       </header>
-      
+
       <nav id="pageNav">
         <MenuLeft isIconClicked={isIconClicked} />
       </nav>
-      
-      <main
-        id="pageMain">
-          
+
+      <main id="pageMain">
+        <div
+          style={{
+            borderRadius: "10px",
+            margin: "0.25rem 0.85rem",
+          }}
+        >
+          <Breadcrumbs />
+        </div>
         <div
           className="shadow"
           style={{
             background: "white",
             borderRadius: "10px",
-            margin: "0.85rem",
+            margin: "0rem 0.85rem",
             padding: "1rem",
           }}
         >
-          <div className="pb-1rem">
-            <Breadcrumbs />
-          </div>
-
           <Outlet />
         </div>
       </main>
