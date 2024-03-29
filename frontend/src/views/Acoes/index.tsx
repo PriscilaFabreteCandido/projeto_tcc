@@ -1,135 +1,115 @@
-import { Button, Input, Select, Space, Switch, Table, Tooltip, Typography } from "antd";
 import React from "react";
-import "./styles.css";
-import { CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, InfoOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Input,
+  Select,
+  Space,
+  Switch,
+  Table,
+  Tooltip,
+  Typography,
+} from "antd";
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  DeleteOutlined,
+  InfoOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/es/table";
 
 interface DataType {
   key: React.Key;
+  nome: string;
+  projeto: string;
+  tipoAcao: string;
   publicoAlvo: string;
   instituicaoAtendida: string;
-  qtdeParticipantes: number;
-  instituicao: string;
   numeroVagas: number;
-  turno: string;
   duracao: string;
-  data: any;
-  dataInicio: any;
-  dataTermino: any;
+  horarioInicio: string;
+  horarioTermino: string;
 }
 
-export default function Acoes() {
+const { Option } = Select;
+
+const Acoes: React.FC = () => {
   const navigate = useNavigate();
 
-  const columns: any = [
+  const projetos = ["Programa-se", "Titãs da Robótica", "Letter"];
+
+  const columns: ColumnsType<DataType> = [
     {
-      title: 'Nome da Oficina',
-      dataIndex: 'nome',
-      sorter: (a: any, b: any) => a.nome.length - b.nome.length,
-      sortDirections: ['descend'],
+      title: "Nome",
+      dataIndex: "nome",
+      key: "nome",
     },
     {
-      title: 'Público Alvo',
-      dataIndex: 'publicoAlvo',
-      sorter: (a:any, b: any) => a.publicoAlvo.length - b.publicoAlvo.length,
-      sortDirections: ['descend'],
+      title: "Projeto",
+      dataIndex: "projeto",
+      key: "projeto",
     },
     {
-      title: 'Instituição Atendida',
-      dataIndex: 'instituicaoAtendida',
-      sorter: (a: any, b: any) => a.instituicaoAtendida.length - b.instituicaoAtendida.length,
-      sortDirections: ['descend'],
+      title: "Tipo de Ação",
+      dataIndex: "tipoAcao",
+      key: "tipoAcao",
     },
     {
-      title: 'Qtde de Participantes',
-      dataIndex: 'qtdeParticipantes',
-      sorter: (a: any, b: any) => a.qtdeParticipantes - b.qtdeParticipantes,
-      sortDirections: ['descend'],
+      title: "Público Alvo",
+      dataIndex: "publicoAlvo",
+      key: "publicoAlvo",
     },
     {
-      title: 'Instituição',
-      dataIndex: 'instituicao',
-      sorter: (a: any, b: any) => a.instituicao.length - b.instituicao.length,
-      sortDirections: ['descend'],
+      title: "Instituição Atendida",
+      dataIndex: "instituicaoAtendida",
+      key: "instituicaoAtendida",
     },
     {
-      title: 'Número de Vagas',
-      dataIndex: 'numeroVagas',
-      sorter: (a: any, b: any) => a.numeroVagas - b.numeroVagas,
-      sortDirections: ['descend'],
+      title: "Número de Vagas",
+      dataIndex: "numeroVagas",
+      key: "numeroVagas",
     },
     {
-      title: 'Turno',
-      dataIndex: 'turno',
-      sorter: (a: any, b: any) => a.turno.length - b.turno.length,
-      sortDirections: ['descend'],
+      title: "Duração",
+      dataIndex: "duracao",
+      key: "duracao",
     },
     {
-      title: 'Duração',
-      dataIndex: 'duracao',
-      sorter: (a: any, b: any) => a.duracao.length - b.duracao.length,
-      sortDirections: ['descend'],
+      title: "Horário de Início",
+      dataIndex: "horarioInicio",
+      key: "horarioInicio",
     },
     {
-      title: 'Data',
-      dataIndex: 'data',
-      sorter: (a: any, b: any) => a.data.length - b.data.length,
-      sortDirections: ['descend'],
+      title: "Horário de Término",
+      dataIndex: "horarioTermino",
+      key: "horarioTermino",
     },
     {
-      title: 'Data Início',
-      dataIndex: 'dataInicio',
-      sorter: (a: any, b: any) => a.dataInicio.length - b.dataInicio.length,
-      sortDirections: ['descend'],
-    },
-    {
-      title: 'Data Término',
-      dataIndex: 'dataTermino',
-      sorter: (a: any, b: any) => a.dataTermino.length - b.dataTermino.length,
-      sortDirections: ['descend'],
-    },
-    {
-      title: 'Ações',
-      key: 'acao',
-      render: (acao: any, record: any) => (
+      title: "Ações",
+      key: "actions",
+      render: (_, record) => (
         <Space size="middle">
-          {/* Adicione os ícones e a lógica de ação conforme necessário */}
-          <Tooltip title="Excluir">
+          <Tooltip title="Vincular Equipe de Execução">
             <Button
-              className="senai-btn-danger"
-              shape="circle"
-              onClick={() => {}}
+              type="primary"
+              icon={<InfoOutlined />}
+              onClick={() => {
+                // Implementar a lógica para vincular equipe de execução
+              }}
             >
-              <DeleteOutlined className="senai-icon" />
+              Vincular Equipe
             </Button>
           </Tooltip>
-  
-          <Tooltip title="Detalhes">
+          <Tooltip title="Editar">
             <Button
-              className="senai-btn-info"
-              shape="circle"
-              onClick={() => {}}
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                navigate("/Ações/Editar Ações");
+              }}
             >
-              <InfoOutlined className="senai-icon" />
-            </Button>
-          </Tooltip>
-  
-          <Tooltip
-            title={record.ativo ? 'Desativar Exame' : 'Ativar Exame'}
-          >
-            <Button
-              className={
-                record.ativo ? 'senai-btn-success' : 'senai-btn-danger'
-              }
-              shape="circle"
-              onClick={() => {}}
-            >
-              {record.ativo ? (
-                <CloseCircleOutlined className="senai-icon" />
-              ) : (
-                <CheckCircleOutlined className="senai-icon" />
-              )}
+              Editar
             </Button>
           </Tooltip>
         </Space>
@@ -137,25 +117,87 @@ export default function Acoes() {
     },
   ];
 
+  // Valores fake para as ações
+  const data: DataType[] = [
+    {
+      key: "1",
+      nome: "Curso de Informática Básica",
+      projeto: projetos[0],
+      tipoAcao: "Curso",
+      publicoAlvo: "Público Alvo 1",
+      instituicaoAtendida: "Instituição 1",
+      numeroVagas: 10,
+      duracao: "2 horas",
+      horarioInicio: "08:00",
+      horarioTermino: "10:00",
+    },
+    {
+      key: "2",
+      nome: "Palestra",
+      projeto: projetos[1],
+      tipoAcao: "Palestra",
+      publicoAlvo: "Público Alvo 2",
+      instituicaoAtendida: "Instituição 2",
+      numeroVagas: 20,
+      duracao: "3 horas",
+      horarioInicio: "14:00",
+      horarioTermino: "17:00",
+    },
+    {
+      key: "3",
+      nome: "Visita Guiada",
+      projeto: projetos[2],
+      tipoAcao: "Visita Guiada",
+      publicoAlvo: "Público Alvo 3",
+      instituicaoAtendida: "Instituição 3",
+      numeroVagas: 30,
+      duracao: "4 horas",
+      horarioInicio: "09:00",
+      horarioTermino: "13:00",
+    },
+  ];
+
   return (
     <>
-      <div className="flex justify-content-between pb-1">
+      <div className="flex justify-content-between pb-1" style={{flex: 1}}> 
         {/* Filtros */}
-        <div className="flex filtros-card">
-          <Input placeholder="Código E-social" style={{ width: "200px" }} />
-          <Input placeholder="Exame" style={{ width: "200px" }} />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginLeft: "10px",
-            }}
-          >
-            <Typography.Text style={{ marginRight: "8px" }}>
-              Ativo:
-            </Typography.Text>
-            <Switch defaultChecked />
-          </div>
+        <div className="flex filtros-card" style={{width: "90%"}}>
+        <Select placeholder="Ano">
+            {[
+              { id: 1, nome: "2022" },
+              { id: 2, nome: "2023" },
+              { id: 3, nome: "2024" },
+            ].map((option) => (
+              <Select.Option key={option.id} value={option.nome}>
+                {option.nome}
+              </Select.Option>
+            ))}
+          </Select>
+          <Input placeholder="Nome da Ação" style={{ width: "100px" }} />
+
+          <Select placeholder="Projeto" style={{ width: "150px" }}>
+            {[
+              { id: 1, nome: "Letter" },
+              { id: 2, nome: "Titãs da Robótica" },
+              { id: 3, nome: "Programa-se" },
+            ].map((option) => (
+              <Select.Option key={option.id} value={option.nome}>
+                {option.nome}
+              </Select.Option>
+            ))}
+          </Select>
+
+          <Select placeholder="Tipo Ação" style={{ width: "200px" }}>
+            {[
+              { id: 1, nome: "Curso" },
+              { id: 2, nome: "Visita Guiada" },
+              { id: 3, nome: "Palestra" },
+            ].map((option) => (
+              <Select.Option key={option.id} value={option.nome}>
+                {option.nome}
+              </Select.Option>
+            ))}
+          </Select>
         </div>
 
         <div>
@@ -171,7 +213,9 @@ export default function Acoes() {
         </div>
       </div>
 
-      <Table columns={columns} dataSource={[]} />
+      <Table columns={columns} dataSource={data} />
     </>
   );
-}
+};
+
+export default Acoes;

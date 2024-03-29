@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  BankOutlined,
   BarChartOutlined,
   BookOutlined,
   CalendarOutlined,
@@ -16,6 +17,7 @@ import {
   MedicineBoxOutlined,
   PaperClipOutlined,
   PlayCircleOutlined,
+  ProfileOutlined,
   QuestionCircleOutlined,
   SafetyCertificateOutlined,
   SearchOutlined,
@@ -65,37 +67,15 @@ const items: MenuProps["items"] = [
   getItem("Início", "inicio", <HomeOutlined />, "/Inicio"),
 
   getItem("Cadastros", "consultas", <FileTextOutlined />, "/Consultas", [
-    getItem(
-      "Equipe de Execução",
-      "equipeexecucao",
-      <CheckCircleOutlined />,
-      "/Equipe de Execução"
-    ),
-    getItem("Turma", "turma", <CalendarOutlined />, "/Turmas"),
-    getItem(
-      "Coordenador",
-      "coordenador",
-      <PaperClipOutlined />,
-      "/Coordenador"
-    ),
+    getItem("Instituição", "instituicao", <BankOutlined />, "Cadastros/Instituições"),
+    getItem("Tipo Ação", "tipoAcao", <FileTextOutlined />, "Cadastros/Tipo Ações"),
+    getItem("Pessoas", "pessoas", <TeamOutlined  />, "Cadastros/Pessoas"),
+    getItem("Função", "funcao", <IdcardOutlined />, "Cadastros/Funções"),
+    getItem("Projetos", "projetos", <ProfileOutlined />, "Cadastros/Projetos"),
   ]),
 
-  getItem("Documentos", "consultas", <FileTextOutlined />, "/Consultas", [
-    getItem(
-      "Relatórios",
-      "voluntario",
-      <BarChartOutlined />,
-      "/Cadastros/Usuários"
-    ),
-    getItem("Ano", "ano", <CalendarOutlined />, "/Cadastros/Exames"),
-    getItem(
-      "Anexar Documentos",
-      "servidores",
-      <PaperClipOutlined />,
-      "/Cadastros/Exames"
-    ),
-  ]),
-  getItem("Ações", "acoes", <PlayCircleOutlined />, "/Ações"),
+  getItem("Relatórios", "relatorios", <BarChartOutlined />, "/Relatórios", ),
+  getItem("Evento", "evento", <PlayCircleOutlined />, "/Ações"),
 ];
 
 function MenuLeft({ isIconClicked }: any) {
@@ -176,7 +156,6 @@ function MenuLeft({ isIconClicked }: any) {
             inlineCollapsed={!isIconClicked}
             items={items}
           ></Menu>
-
         </div>
       )}
     </>

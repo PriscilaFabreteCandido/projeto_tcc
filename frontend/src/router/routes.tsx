@@ -5,13 +5,17 @@ import Login from "../views/app/Login";
 import Logout from "../views/app/Logout";
 import CadastroUsuario from "../views/Cadastros/Usuario/CadastroUsuario";
 import Usuarios from "../views/Cadastros/Usuario";
-import Consultas from "../views/Consultas";
 import Relatorios from "../views/Relatorios";
 import Error404 from "../components/404";
 import EquipesExecucao from "../views/Cadastros/EquipeExecucao";
 import Acoes from "../views/Acoes";
 import CadastrarAcoes from "../views/Acoes/CadastrarAcoes";
 import CadastrarEquipesExecucao from "../views/Cadastros/EquipeExecucao/CadastrarEquipe";
+import Instituicoes from "../views/Cadastros/Instituicao";
+import Pessoas from "../views/Cadastros/Pessoas";
+import Funcao from "../views/Cadastros/Funcao";
+import Projetos from "../views/Cadastros/Projeto";
+import TiposAcoes from "../views/Cadastros/TipoAcoes";
 
 export interface RouteConfig {
   path: string;
@@ -21,7 +25,7 @@ export interface RouteConfig {
 }
 
 const routes: RouteConfig[] = [
-  { path: "/login", element: <Login />, permissions: "" },
+  // { path: "/login", element: <Login />, permissions: "" },
   { path: "/logout", element: <Logout />, permissions: "" },
   {
     path: "",
@@ -33,12 +37,12 @@ const routes: RouteConfig[] = [
 
       //Cadastros
       { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
-      { path: "Equipe de Execução", element: <EquipesExecucao />, permissions: "" },
-      { path: "/Equipes de Execução/Cadastrar", element: <CadastrarEquipesExecucao />, permissions: "" },
-
-      //Consultas
-      { path: "Consultas", element: <Consultas />, permissions: "" },
-
+      { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
+      { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
+      { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
+      { path: "Cadastros/Projetos", element: <Projetos />, permissions: "" },
+      { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },
+     
       //Ações
       { path: "Ações", element: <Acoes />, permissions: "" },
       { path: "Ações/Cadastrar Ações", element: <CadastrarAcoes />, permissions: "" },

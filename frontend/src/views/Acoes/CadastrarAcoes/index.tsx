@@ -33,29 +33,8 @@ const { Option } = Select;
 export default function CadastrarAcoes() {
   const [form] = Form.useForm();
   const [equipeExecucaoOptions, setEquipeExecucaoOptions] = useState<any[]>();
+  const [tipoAcaoehCurso, setTipoAcaoehCurso] = useState<boolean>(false);
   const [tiposAcoesOptions, setTiposAcoesOptions] = useState<any>([
-    {
-      title: "Projeto",
-      value: "Projeto",
-      children: [
-        {
-          title: "Curso",
-          value: "Curso",
-        },
-        {
-          title: "Oficina",
-          value: "Oficina",
-        },
-        {
-          title: "Palestra",
-          value: "Palestra",
-        },
-        {
-          title: "Visitas Guiadas",
-          value: "Visitas Guiadas",
-        },
-      ],
-    },
     {
       title: "Cursos",
       value: "Cursos",
@@ -91,6 +70,168 @@ export default function CadastrarAcoes() {
   return (
     <>
       <h3 style={{ paddingBottom: "1rem" }}>Cadastrar Ações</h3>
+
+      <Divider orientation="left" plain>
+        <h3>Tipo de Ação</h3>
+      </Divider>
+
+      <Form.Item
+            name="projeto"
+            label="Projeto"
+            rules={[
+              { required: true, message: "Por favor, selecione a instituição da pessoa!" },
+            ]}
+          >
+            <Select>
+              {[{id: 1, nome: "Letter"}, {id: 2, nome: "Titãs da Robótica"}, {id: 3, nome: "Programa-se"}].map((option) => (
+                <Select.Option key={option.id} value={option.nome}>
+                  {option.nome}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+      <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+        {/* Equipe de Execução */}
+        <Form.Item label="Tipo Ação" name="tipoAcao">
+          <TreeSelect
+            showSearch
+            style={{ width: "100%" }}
+            dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+            placeholder="Selecione"
+            allowClear
+            treeDefaultExpandAll
+            onChange={(e) => {
+              if (e == "Cursos") {
+                setTipoAcaoehCurso(true);
+              } else {
+                setTipoAcaoehCurso(false);
+              }
+            }}
+            treeData={tiposAcoesOptions}
+          />
+        </Form.Item>
+
+        {tipoAcaoehCurso && (
+          <>
+            <Row gutter={16}>
+              {/* Primeira Linha */}
+              <Col span={8}>
+                {/* Turma */}
+                <Form.Item label="Turma" name="turma">
+                  <TreeSelect
+                    showSearch
+                    style={{ width: "100%" }}
+                    dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                    placeholder="Selecione"
+                    allowClear
+                    treeDefaultExpandAll
+                    onChange={() => {}}
+                    treeData={[
+                      { label: "Turma A", value: "Turma A" },
+                      { label: "Turma B", value: "Turma B" },
+                      // Adicione outras turmas conforme necessário
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                {/* Período Semestre */}
+                <Form.Item label="Período Semestre" name="periodoSemestre">
+                  <TreeSelect
+                    showSearch
+                    style={{ width: "100%" }}
+                    dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                    placeholder="Selecione"
+                    allowClear
+                    treeDefaultExpandAll
+                    onChange={() => {}}
+                    treeData={[
+                      { label: "Semestre 1", value: "Semestre 1" },
+                      { label: "Semestre 2", value: "Semestre 2" },
+                      // Adicione outros períodos semestre conforme necessário
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                {/* Carga Horária */}
+                <Form.Item label="Carga Horária" name="cargaHoraria">
+                  <Input></Input>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              {/* Primeira Linha */}
+              <Col span={8}>
+                {/* Modalidade */}
+                <Form.Item label="Modalidade" name="modalidade">
+                  <Input></Input>
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                {/* Número do Processo */}
+                <Form.Item label="Número do Processo" name="numeroProcesso">
+                  <TreeSelect
+                    showSearch
+                    style={{ width: "100%" }}
+                    dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                    placeholder="Selecione"
+                    allowClear
+                    treeDefaultExpandAll
+                    onChange={() => {}}
+                    treeData={[
+                      { label: "123456", value: "123456" },
+                      { label: "789012", value: "789012" },
+                      // Adicione outros números de processo conforme necessário
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                {/* Carga Horária */}
+                <Form.Item label="Carga Horária" name="cargaHoraria">
+                  <Input></Input>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              {/* Primeira Linha */}
+              <Col span={8}>
+                {/* Data Inicio */}
+                <Form.Item
+                  label="Data Inicio"
+                  name="dataInicio"
+                  rules={[{ required: true, message: "Campo obrigatório" }]}
+                >
+                  <DatePicker />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                {/* Data fim */}
+                <Form.Item
+                  label="Data Fim"
+                  name="dataFim"
+                  rules={[{ required: true, message: "Campo obrigatório" }]}
+                >
+                  <DatePicker />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                {/* Público Alvo */}
+                <Form.Item label="Público Alvo" name="publicoAlvo">
+                  <Input></Input>
+                </Form.Item>
+              </Col>
+            </Row>
+          </>
+        )}
+      </Form>
+
       <Divider orientation="left" plain>
         <h3>Informações Gerais</h3>
       </Divider>
@@ -204,156 +345,7 @@ export default function CadastrarAcoes() {
               </Button>
             </Form.Item>
           </Col>
-          <Col span={6}>
-            <Form.Item label="Equipe de Execução" name="equipeExecucao">
-              <Select
-                mode="multiple"
-                placeholder="Selecione os membros da equipe"
-                style={{ width: "100%" }}
-              >
-                {equipeExecucaoOptions?.map((membro) => (
-                  <Option key={membro.id} value={membro.nome}>
-                    {membro.nome}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-      </Form>
-
-      <Divider orientation="left" plain>
-        <h3>Tipo Ação</h3>
-      </Divider>
-
-      <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-        {/* Equipe de Execução */}
-        <Form.Item label="Tipo Ação" name="tipoAcao">
-          <TreeSelect
-            showSearch
-            style={{ width: "100%" }}
-            dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-            placeholder="Selecione"
-            allowClear
-            treeDefaultExpandAll
-            onChange={() => {}}
-            treeData={tiposAcoesOptions}
-          />
-        </Form.Item>
-
-        <Row gutter={16}>
-          {/* Primeira Linha */}
-          <Col span={8}>
-            {/* Turma */}
-            <Form.Item label="Turma" name="turma">
-              <TreeSelect
-                showSearch
-                style={{ width: "100%" }}
-                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                placeholder="Selecione"
-                allowClear
-                treeDefaultExpandAll
-                onChange={() => {}}
-                treeData={[
-                  { label: "Turma A", value: "Turma A" },
-                  { label: "Turma B", value: "Turma B" },
-                  // Adicione outras turmas conforme necessário
-                ]}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            {/* Período Semestre */}
-            <Form.Item label="Período Semestre" name="periodoSemestre">
-              <TreeSelect
-                showSearch
-                style={{ width: "100%" }}
-                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                placeholder="Selecione"
-                allowClear
-                treeDefaultExpandAll
-                onChange={() => {}}
-                treeData={[
-                  { label: "Semestre 1", value: "Semestre 1" },
-                  { label: "Semestre 2", value: "Semestre 2" },
-                  // Adicione outros períodos semestre conforme necessário
-                ]}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            {/* Carga Horária */}
-            <Form.Item label="Carga Horária" name="cargaHoraria">
-              <Input></Input>
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          {/* Primeira Linha */}
-          <Col span={8}>
-            {/* Modalidade */}
-            <Form.Item label="Modalidade" name="modalidade">
-              <Input></Input>
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
-            {/* Número do Processo */}
-            <Form.Item label="Número do Processo" name="numeroProcesso">
-              <TreeSelect
-                showSearch
-                style={{ width: "100%" }}
-                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                placeholder="Selecione"
-                allowClear
-                treeDefaultExpandAll
-                onChange={() => {}}
-                treeData={[
-                  { label: "123456", value: "123456" },
-                  { label: "789012", value: "789012" },
-                  // Adicione outros números de processo conforme necessário
-                ]}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
-            {/* Carga Horária */}
-            <Form.Item label="Carga Horária" name="cargaHoraria">
-              <Input></Input>
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          {/* Primeira Linha */}
-          <Col span={8}>
-            {/* Data Inicio */}
-            <Form.Item
-              label="Data Inicio"
-              name="dataInicio"
-              rules={[{ required: true, message: "Campo obrigatório" }]}
-            >
-              <DatePicker />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            {/* Data fim */}
-            <Form.Item
-              label="Data Fim"
-              name="dataFim"
-              rules={[{ required: true, message: "Campo obrigatório" }]}
-            >
-              <DatePicker />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            {/* Público Alvo */}
-            <Form.Item label="Público Alvo" name="publicoAlvo">
-              <Input></Input>
-            </Form.Item>
-          </Col>
+          
         </Row>
       </Form>
     </>
