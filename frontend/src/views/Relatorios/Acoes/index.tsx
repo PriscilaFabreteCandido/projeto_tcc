@@ -30,7 +30,7 @@ interface DataType {
 
 const { Option } = Select;
 
-const Relatorios: React.FC = () => {
+const ConsultarAcoes: React.FC = () => {
   const navigate = useNavigate();
 
   const projetos = ["Programa-se", "Titãs da Robótica", "Letter"];
@@ -173,4 +173,4 @@ const Relatorios: React.FC = () => {
   );
 };
 
-export default Relatorios;
+export default ConsultarAcoes;

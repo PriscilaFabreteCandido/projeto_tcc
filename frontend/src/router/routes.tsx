@@ -1,11 +1,10 @@
 import { Navigate } from "react-router";
 import Home from "../views/app/home";
 import RootLayout from "../layout";
-import Login from "../views/app/Login";
 import Logout from "../views/app/Logout";
 import CadastroUsuario from "../views/Cadastros/Usuario/CadastroUsuario";
 import Usuarios from "../views/Cadastros/Usuario";
-import Relatorios from "../views/Relatorios";
+import Relatorios from "../views/Relatorios/Acoes";
 import Error404 from "../components/404";
 import EquipesExecucao from "../views/Cadastros/EquipeExecucao";
 import Acoes from "../views/Acoes";
@@ -16,6 +15,8 @@ import Pessoas from "../views/Cadastros/Pessoas";
 import Funcao from "../views/Cadastros/Funcao";
 import Projetos from "../views/Cadastros/Projeto";
 import TiposAcoes from "../views/Cadastros/TipoAcoes";
+import ConsultarAcoes from "../views/Relatorios/Acoes";
+import ConsultasPessoas from "../views/Relatorios/pessoas";
 
 export interface RouteConfig {
   path: string;
@@ -44,12 +45,11 @@ const routes: RouteConfig[] = [
       { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },
      
       //Ações
-      { path: "Ações", element: <Acoes />, permissions: "" },
-      { path: "Ações/Cadastrar Ações", element: <CadastrarAcoes />, permissions: "" },
-      
-
+      { path: "Eventos", element: <Acoes />, permissions: "" },
+     
       //Relatórios
-      { path: "Relatórios", element: <Relatorios />, permissions: "" },
+      { path: "Consultar Eventos", element: <ConsultarAcoes />, permissions: "" },
+      { path: "Consultar Pessoas", element: <ConsultasPessoas />, permissions: "" },
      
       {
         path: "*",

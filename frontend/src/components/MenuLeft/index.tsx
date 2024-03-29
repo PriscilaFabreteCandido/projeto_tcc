@@ -66,16 +66,19 @@ function getItem(
 const items: MenuProps["items"] = [
   getItem("Início", "inicio", <HomeOutlined />, "/Inicio"),
 
-  getItem("Cadastros", "consultas", <FileTextOutlined />, "/Consultas", [
+  getItem("Cadastros", "cadastros", <FileTextOutlined />, "/Consultas", [
     getItem("Instituição", "instituicao", <BankOutlined />, "Cadastros/Instituições"),
     getItem("Tipo Ação", "tipoAcao", <FileTextOutlined />, "Cadastros/Tipo Ações"),
     getItem("Pessoas", "pessoas", <TeamOutlined  />, "Cadastros/Pessoas"),
     getItem("Função", "funcao", <IdcardOutlined />, "Cadastros/Funções"),
     getItem("Projetos", "projetos", <ProfileOutlined />, "Cadastros/Projetos"),
   ]),
-
-  getItem("Relatórios", "relatorios", <BarChartOutlined />, "/Relatórios", ),
-  getItem("Evento", "evento", <PlayCircleOutlined />, "/Ações"),
+  getItem("Consultas", "consultas", <FileTextOutlined />, "/Consultas", [
+    getItem("Pessoas", "pessoas", <BankOutlined />, "Consultar Pessoas"),
+    getItem("Eventos", "eventos", <FileTextOutlined />, "Consultar Eventos"),
+  
+  ]),
+  getItem("Evento", "evento", <PlayCircleOutlined />, "/Eventos"),
 ];
 
 function MenuLeft({ isIconClicked }: any) {
