@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Input,
-  Select,
-  Space,
-  Table,
-} from "antd";
+import { Button, Input, Select, Space, Table } from "antd";
 import { InfoOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/es/table";
@@ -17,6 +11,8 @@ interface DataType {
   projeto: string;
   tipoAcao: string;
   anoNivel: string;
+  evento: string;
+  tipoparticipante: string;
 }
 
 const { Option } = Select;
@@ -43,6 +39,11 @@ const ConsultasPessoas: React.FC = () => {
       key: "projeto",
     },
     {
+      title: "Evento",
+      dataIndex: "evento",
+      key: "evento",
+    },
+    {
       title: "Tipo de Ação",
       dataIndex: "tipoAcao",
       key: "tipoAcao",
@@ -53,35 +54,16 @@ const ConsultasPessoas: React.FC = () => {
       key: "anoNivel",
     },
     {
-      title: "Ações",
-      key: "actions",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            icon={<InfoOutlined />}
-            onClick={() => {
-              // Implementar a lógica para visualizar participantes
-            }}
-          >
-            Visualizar
-          </Button>
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => {
-              navigate("/Ações/Editar Ações");
-            }}
-          >
-            Editar
-          </Button>
-        </Space>
-      ),
+      title: "Tipo Participante",
+      dataIndex: "tipoparticipante",
+      key: "tipoparticipante",
     },
+    
   ];
 
-  const data: DataType[] = [
-    // Seus dados aqui...
+  const data: any[] = [
+    {nome: "João", matricula: '45', anoNivel: "Superior", evento: "Curso de Informatica", projeto: "Titas da Rbotica", tipoAcao: "Curso", tipoparticipante: "Bolsita"},
+    {nome: "Maria",  matricula: '45', anoNivel: "Superior", evento: "Curso de Informatica", projeto: "Titas da Rbotica", tipoAcao: "Curso", tipoparticipante: "Partipante"}
   ];
 
   return (
@@ -89,41 +71,62 @@ const ConsultasPessoas: React.FC = () => {
       <div className="flex justify-content-between pb-1" style={{ flex: 1 }}>
         {/* Filtros */}
         <div className="flex filtros-card" style={{ width: "90%" }}>
-          <Button
-            type="primary"
-            style={{ marginLeft: "10px" }}
-            onClick={() => {
-              // Implementar a lógica para procurar pessoas
-            }}
+          <Select
+            defaultValue="Titãs da Robótica"
+            style={{ width: "150px", marginLeft: "10px" }}
           >
-            Procurar Pessoa
-          </Button>
-          <Select defaultValue="Titãs da Robótica" style={{ width: "150px", marginLeft: "10px" }}>
             {projetos.map((projeto) => (
               <Option key={projeto} value={projeto}>
                 {projeto}
               </Option>
             ))}
           </Select>
-          <Select placeholder="Tipo Ação" style={{ width: "150px", marginLeft: "10px" }}>
-            {/* Opções do select */}
-          </Select>
-          <Select placeholder="Ano" style={{ width: "100px", marginLeft: "10px" }}>
-            {/* Opções do select */}
-          </Select>
-          <Select placeholder="Nível" style={{ width: "100px", marginLeft: "10px" }}>
-            {/* Opções do select */}
-          </Select>
-        </div>
-        <div>
-          <Button
-            type="primary"
-            onClick={() => {
-              navigate("/Pessoas");
-            }}
+
+          <Select
+            placeholder="Tipo Ação"
+            style={{ width: "150px", marginLeft: "10px" }}
           >
-            Selecionar Participantes
-          </Button>
+             {["Palestra", "Curso"].map((projeto) => (
+              <Option key={projeto} value={projeto}>
+                {projeto}
+              </Option>
+            ))}
+          </Select>
+
+          <Select
+            placeholder="Evento"
+            style={{ width: "250px", marginLeft: "10px" }}
+          >
+            {["Palestra de Informática"].map((projeto) => (
+              <Option key={projeto} value={projeto}>
+                {projeto}
+              </Option>
+            ))}
+          </Select>
+
+          
+          <Select
+            placeholder="Ano"
+            style={{ width: "100px", marginLeft: "10px" }}
+          >
+             {["2023"].map((projeto) => (
+              <Option key={projeto} value={projeto}>
+                {projeto}
+              </Option>
+            ))}
+          </Select>
+
+          <Select
+            placeholder="Instituição Atendida"
+            style={{ width: "200px", marginLeft: "10px" }}
+          >
+             {["IFES", "Conde de Linhares"].map((projeto) => (
+              <Option key={projeto} value={projeto}>
+                {projeto}
+              </Option>
+            ))}
+          </Select>
+          
         </div>
       </div>
       <Table columns={columns} dataSource={data} />

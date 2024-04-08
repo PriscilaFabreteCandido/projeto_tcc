@@ -74,8 +74,9 @@ const items: MenuProps["items"] = [
     getItem("Projetos", "projetos", <ProfileOutlined />, "Cadastros/Projetos"),
   ]),
   getItem("Consultas", "consultas", <FileTextOutlined />, "/Consultas", [
-    getItem("Pessoas", "pessoas", <BankOutlined />, "Consultar Pessoas"),
-    getItem("Eventos", "eventos", <FileTextOutlined />, "Consultar Eventos"),
+    getItem("Pessoas", "cpessoas", <BankOutlined />, "Consultas/Pessoas"),
+    getItem("Eventos", "ceventos", <FileTextOutlined />, "Consultas/Eventos"),
+    getItem("Histórico de Participação", "cpessoas", <BankOutlined />, "Consultas/Pessoas"),
   
   ]),
   getItem("Evento", "evento", <PlayCircleOutlined />, "/Eventos"),

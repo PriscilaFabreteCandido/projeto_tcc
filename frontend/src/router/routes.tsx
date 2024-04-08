@@ -17,6 +17,7 @@ import Projetos from "../views/Cadastros/Projeto";
 import TiposAcoes from "../views/Cadastros/TipoAcoes";
 import ConsultarAcoes from "../views/Relatorios/Acoes";
 import ConsultasPessoas from "../views/Relatorios/pessoas";
+import VincularEquipeExecucao from "../views/Acoes/VincularEquipeExecucao";
 
 export interface RouteConfig {
   path: string;
@@ -46,10 +47,11 @@ const routes: RouteConfig[] = [
      
       //Ações
       { path: "Eventos", element: <Acoes />, permissions: "" },
+      { path: "Eventos/Vincular Equipe de Execução", element: <VincularEquipeExecucao />, permissions: "" },
      
       //Relatórios
-      { path: "Consultar Eventos", element: <ConsultarAcoes />, permissions: "" },
-      { path: "Consultar Pessoas", element: <ConsultasPessoas />, permissions: "" },
+      { path: "Consultas/Eventos", element: <ConsultarAcoes />, permissions: "" },
+      { path: "Consultas/Pessoas", element: <ConsultasPessoas />, permissions: "" },
      
       {
         path: "*",
