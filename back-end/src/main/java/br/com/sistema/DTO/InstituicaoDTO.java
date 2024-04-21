@@ -25,7 +25,7 @@ public class InstituicaoDTO {
 
     private String descricao;
 
-    private List<PessoaDTO> pessoas = new ArrayList<>();
+    //private List<PessoaDTO> pessoas = new ArrayList<>();
 
-    private List<AcaoDTO> acoes = new ArrayList<>();
+    //private List<AcaoDTO> acoes = new ArrayList<>();
 }

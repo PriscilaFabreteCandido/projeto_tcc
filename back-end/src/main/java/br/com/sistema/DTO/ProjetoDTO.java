@@ -11,6 +11,6 @@ public class ProjetoDTO {
 
     private Long id;
     private String nome;
-    private List<AcaoDTO> acoes = new ArrayList<>();
+    //private List<AcaoDTO> acoes = new ArrayList<>();
 
 }

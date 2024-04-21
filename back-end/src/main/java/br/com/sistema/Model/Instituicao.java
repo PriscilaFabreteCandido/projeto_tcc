@@ -32,9 +32,9 @@ public class Instituicao {
     @Column
     private String descricao;
 
-    @OneToMany(mappedBy = "instituicao")
-    private List<Pessoa> pessoas = new ArrayList<>();
+    //@OneToMany(mappedBy = "instituicao")
+    //private List<Pessoa> pessoas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "instituicao")
-    private List<Acao> acoes = new ArrayList<>();
+    //@OneToMany(mappedBy = "instituicao")
+    //private List<Acao> acoes = new ArrayList<>();
 }

@@ -17,7 +17,7 @@ public class Projeto {
     @Column
     private String nome;
 
-    @OneToMany(mappedBy = "projeto")
-    private List<Acao> acoes = new ArrayList<>();
+    //@OneToMany(mappedBy = "projeto")
+    //private List<Acao> acoes = new ArrayList<>();
 
 }

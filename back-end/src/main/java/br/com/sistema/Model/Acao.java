@@ -23,6 +23,10 @@ public class Acao {
     @Column
     private String localRealizacao;
 
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "acao_pai_id")
+    //private Acao acaoPai;
+
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;

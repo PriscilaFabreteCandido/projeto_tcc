@@ -14,6 +14,6 @@ public class FuncaoDTO {
 
     private String nome;
 
-    private List<PessoaDTO> pessoas = new ArrayList<>();
+    //private List<PessoaDTO> pessoas = new ArrayList<>();
 
 }
