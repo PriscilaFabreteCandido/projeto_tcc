@@ -1,30 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Select, Switch } from "antd";
 import { useLocation } from "react-router";
+import { InstituicaoType } from "../Instituicao";
+import { get } from "../../../api/axios";
 
-const InstituicoesOptions = [
-  { id: 1, nome: "IFES" },
-  // Adicione outras opções conforme necessário
-];
+export interface VinculoType {
+  id: number;
+  nome: string;
+}
 
-const GraduacaoOptions = [
-  { id: 1, nome: "Ensino Médio" },
-  { id: 2, nome: "Graduação" },
-  { id: 3, nome: "Pós-Graduação" },
-  // Adicione outras opções conforme necessário
-];
+export interface FuncoesType {
+  id: number;
+  nome: string;
+}
 
-const FuncoesOptions = [
-  { id: 1, nome: "Estudante" },
-  { id: 2, nome: "Professor" },
-  // Adicione outras opções conforme necessário
-];
+export interface GraduacaoType {
+  id: number;
+  nome: string;
+}
 
 const CadastrarPessoa = () => {
   const [form] = Form.useForm();
   const location = useLocation();
- 
+  const [vinculos, setVinculos] = useState<VinculoType[]>([]);
+  const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
+  const [graduacoes, setGraduacoes] = useState<GraduacaoType[]>([]);
+  const [funcoes, setFuncoes] = useState<GraduacaoType[]>([]);
   const { pessoa } = location.state || {};
+  const [loading, setLoading] = useState<boolean>(false);
   
   React.useEffect(() => {
     if (pessoa) {
@@ -42,6 +45,21 @@ const CadastrarPessoa = () => {
       });
     }
   }, [pessoa, form]);
+
+  const getContextData = async () => {
+    setLoading(true);
+    try {
+      const response: any = await get("tipoInstituicoes");
+      setInstituicoes(response.instituicoes);
+      setGraduacoes(response.graduacoes);
+      setVinculos(response.vinculos);
+      setFuncoes(response.funcoes)
+    } catch (error) {
+      console.error("Erro ao obter instituições:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Form form={form} layout="vertical">
@@ -148,7 +166,7 @@ const CadastrarPessoa = () => {
               ]}
             >
               <Select>
-                {InstituicoesOptions.map((option) => (
+                {instituicoes.map((option) => (
                   <Select.Option key={option.id} value={option.nome}>
                     {option.nome}
                   </Select.Option>
@@ -168,7 +186,7 @@ const CadastrarPessoa = () => {
               ]}
             >
               <Select>
-                {GraduacaoOptions.map((option) => (
+                {graduacoes.map((option) => (
                   <Select.Option key={option.id} value={option.nome}>
                     {option.nome}
                   </Select.Option>
@@ -188,7 +206,7 @@ const CadastrarPessoa = () => {
               ]}
             >
               <Select>
-                {FuncoesOptions.map((option) => (
+                {funcoes.map((option) => (
                   <Select.Option key={option.id} value={option.nome}>
                     {option.nome}
                   </Select.Option>
@@ -197,9 +215,7 @@ const CadastrarPessoa = () => {
             </Form.Item>
           </div>
         </div>
-      </div>
-      <div style={{ marginBottom: "20px" }}>
-        <h3>Informações de Login</h3>
+
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <div style={{ flex: 1, marginRight: "10px" }}>
             <Form.Item
@@ -217,50 +233,25 @@ const CadastrarPessoa = () => {
           </div>
           <div style={{ flex: 1, marginRight: "10px" }}>
             <Form.Item
-              name="senha"
-              label="Senha"
+              name="vinculo"
+              label="Vínculo"
               rules={[
                 {
                   required: true,
-                  message: "Por favor, insira a senha da pessoa!",
+                  message: "Por favor, selecione a vinculo da pessoa!",
                 },
               ]}
             >
-              <Input.Password />
+              <Select>
+                {vinculos.map((option) => (
+                  <Select.Option key={option.id} value={option.nome}>
+                    {option.nome}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </div>
-          <div style={{ flex: 1,  marginRight: "10px"}}>
-            <Form.Item
-              name="confirmarSenha"
-              label="Confirmar Senha"
-              dependencies={["senha"]}
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor, confirme a senha!",
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("senha") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error("As senhas inseridas não conferem!")
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-          </div>
-
-          <div style={{ flex: 0.5, marginRight: '10px' }}>
-            <Form.Item name="ativo" label="Ativo" valuePropName="checked">
-              <Switch />
-            </Form.Item>
-          </div>
+          <div style={{ flex: 1 }}></div>
         </div>
       </div>
     </Form>

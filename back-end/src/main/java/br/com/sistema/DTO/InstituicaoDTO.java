@@ -1,12 +1,6 @@
 package br.com.sistema.DTO;
 
-import br.com.sistema.Model.Acao;
-import br.com.sistema.Model.Pessoa;
-import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class InstituicaoDTO {
@@ -17,13 +11,14 @@ public class InstituicaoDTO {
 
     private String cep;
 
-    private String avenida;
+    private String bairro;
 
     private String rua;
 
     private String numero;
 
     private String descricao;
+    private TipoInstituicaoDTO tipoInstiuicaoDTO;
 
     //private List<PessoaDTO> pessoas = new ArrayList<>();
 

@@ -9,64 +9,38 @@ import {
   message,
   Popconfirm,
   Space,
+  Select,
 } from "antd";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
+import { useNavigate } from "react-router";
 
-interface InstituicaoType {
+export interface TipoInstituicaoType {
+  id: number;
+  nome: string;
+}
+export interface InstituicaoType {
   key: React.Key;
   id: number;
   nome: string;
   endereco: string;
+  bairro: string;
+  rua: string;
+  estado: string;
   cep: string;
   numero: string;
-  rua: string;
-  avenida: string;
-  estado: string;
+  descricao: string;
+  email: string;
+  tipoInstituicao: TipoInstituicaoType;
 }
 
 const Instituicoes: React.FC = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [instituicaoToEdit, setInstituicaoToEdit] =
-    useState<InstituicaoType | null>(null);
-  const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([
-    {
-      key: 1,
-      id: 1,
-      nome: "Instituição A",
-      cep: "12345-678",
-      avenida: "Avenida Principal",
-      numero: "123",
-      rua: "Rua das Flores",
-      endereco: "Avenida Principal, 123 - Rua das Flores",
-      estado: "ES"
-    },
-    {
-      key: 2,
-      id: 2,
-      nome: "Instituição B",
-      cep: "54321-876",
-      avenida: "Avenida Secundária",
-      numero: "456",
-      rua: "Rua das Árvores",
-      endereco: "Avenida Secundária, 456 - Rua das Árvores",
-      estado: "ES"
-    },
-  ]);
-  const [form] = Form.useForm();
+  const [instituicaoToEdit, setInstituicaoToEdit] = useState<InstituicaoType | null>(null);
+  const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const showModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const handleCancel = () => {
-    form.resetFields();
-    setInstituicaoToEdit(null);
-    setIsOpenModal(false);
-  };
+  const navigate = useNavigate() as any;
 
   const getInstituicoes = async () => {
     setLoading(true);
@@ -83,43 +57,6 @@ const Instituicoes: React.FC = () => {
   useEffect(() => {
     getInstituicoes();
   }, []);
-
-  const handleOk = async () => {
-    try {
-      await form.validateFields();
-      const values = form.getFieldsValue();
-
-      const instituicaoData = {
-        nome: values.nome,
-        endereco: values.endereco,
-        cep: values.cep,
-        numero: values.numero,
-        rua: values.rua,
-        id: instituicaoToEdit ? instituicaoToEdit.id : null,
-      };
-
-      if (!instituicaoToEdit) {
-        const response = await post("instituicoes/create", instituicaoData);
-        setInstituicoes([...instituicoes, response]);
-        message.success("Instituição criada com sucesso");
-      } else {
-        const response = await put(
-          `instituicoes/update/${instituicaoToEdit.id}`,
-          instituicaoData
-        );
-        setInstituicoes(
-          instituicoes.map((instituicao) =>
-            instituicao.id === response.id ? response : instituicao
-          )
-        );
-        message.success("Instituição editada com sucesso");
-      }
-
-      handleCancel();
-    } catch (error) {
-      console.error("Erro ao processar o formulário:", error);
-    }
-  };
 
   const onDelete = async (id: number) => {
     try {
@@ -139,26 +76,17 @@ const Instituicoes: React.FC = () => {
       dataIndex: "nome",
     },
     {
-      title: "CEP",
-      dataIndex: "cep",
+      title: "Tipo Instituição",
+      dataIndex: "Tipo Instituição",
     },
     {
-      title: "Estado",
-      dataIndex: "estado",
+      title: "Endereco",
+      dataIndex: "endereco",
+      render: (_, record) => (
+        <p>{`${record.rua}, ${record.numero}, ${record.bairro}, ${record.estado}`}</p>
+      ),
     },
-    {
-      title: "Avenida",
-      dataIndex: "avenida",
-    },
-    {
-      title: "Rua",
-      dataIndex: "rua",
-    },
-  
-    {
-      title: "Número",
-      dataIndex: "numero",
-    },
+
     {
       title: "Ações",
       key: "actions",
@@ -170,14 +98,10 @@ const Instituicoes: React.FC = () => {
               shape="circle"
               onClick={() => {
                 setInstituicaoToEdit(record);
-                form.setFieldsValue({
-                  nome: record.nome,
-                  endereco: record.endereco,
-                  cep: record.cep,
-                  numero: record.numero,
-                  rua: record.rua,
+
+                navigate("/Cadastros/Pessoas/Cadastrar", {
+                  state: { instituicao: record }
                 });
-                setIsOpenModal(true);
               }}
             >
               <EditOutlined className="ifes-icon" />
@@ -218,7 +142,13 @@ const Instituicoes: React.FC = () => {
           </div>
 
           <div>
-            <Button type="primary" onClick={showModal} icon={<PlusOutlined />}>
+            <Button
+              type="primary"
+              onClick={() => {
+                navigate("/Cadastros/Instituições/Cadastrar Instituição");
+              }}
+              icon={<PlusOutlined />}
+            >
               Adicionar
             </Button>
           </div>
@@ -227,91 +157,6 @@ const Instituicoes: React.FC = () => {
 
       {/* Tabela */}
       <Table columns={columns} dataSource={instituicoes} loading={loading} />
-
-      {/* Modal */}
-      <Modal
-        title="Adicionar Instituição"
-        visible={isOpenModal}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="nome"
-            label="Nome"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira o nome da instituição!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="cep"
-            label="CEP"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira o CEP da instituição!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="Estado"
-            label="Estado"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira o endereço da instituição!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="avenida"
-            label="Avenida"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira o endereço da instituição!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="rua"
-            label="Rua"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira a rua da instituição!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="numero"
-            label="Número"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira o número da instituição!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
-      </Modal>
     </>
   );
 };

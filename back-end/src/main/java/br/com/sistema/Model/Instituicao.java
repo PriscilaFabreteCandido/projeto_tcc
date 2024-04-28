@@ -21,7 +21,10 @@ public class Instituicao {
     private String cep;
 
     @Column
-    private String avenida;
+    private String bairro;
+
+    @Column
+    private String estado;
 
     @Column
     private String rua;
@@ -32,9 +35,10 @@ public class Instituicao {
     @Column
     private String descricao;
 
-    //@OneToMany(mappedBy = "instituicao")
-    //private List<Pessoa> pessoas = new ArrayList<>();
+    @Column
+    private String email;
 
-    //@OneToMany(mappedBy = "instituicao")
-    //private List<Acao> acoes = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "tipo_instituicao_id")
+    private TipoInstituicao instituicao;
 }

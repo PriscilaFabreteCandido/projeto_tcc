@@ -19,6 +19,7 @@ import ConsultarAcoes from "../views/Relatorios/Acoes";
 import ConsultasPessoas from "../views/Relatorios/pessoas";
 import VincularEquipeExecucao from "../views/Acoes/VincularEquipeExecucao";
 import CadastrarPessoa from "../views/Cadastros/Pessoas/CadastrarPessoa";
+import CadastrarInstituicao from "../views/Cadastros/Instituicao/CadastrarInstituicao";
 
 export interface RouteConfig {
   path: string;
@@ -41,6 +42,7 @@ const routes: RouteConfig[] = [
       //Cadastros
       { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
       { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
+      { path: "Cadastros/Instituições/Cadastrar Instituição", element: <CadastrarInstituicao />, permissions: "" },
       { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
       { path: "Cadastros/Pessoas/Cadastrar", element: <CadastrarPessoa />, permissions: "" },
       { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },

@@ -12,7 +12,9 @@
   --colorDanger: #DC2626;
 }
 
-
+:where(.css-dev-only-do-not-override-gfulgj).ant-btn-primary {
+  box-shadow: none
+}
 .senai-btn-primary {
   background-color: var(--colorPrimary) !important;
   color: white;
