@@ -21,7 +21,7 @@ const config = {
     colorWarning: "#f3ab15",
     colorHelp: "#511b9e",
     colorDanger: "#DC2626",
-    //fontFamily: "Roboto, Montserrat, sans-serif",
+    fontFamily: " Montserrat, sans-serif",
     fontSize: 16,
     fontSizeIcon: 16,
     fontFamilyCode: "monospace",

@@ -95,7 +95,7 @@ const Acoes: React.FC = () => {
               type="primary"
               icon={<InfoOutlined />}
               onClick={() => {
-                navigate("/Eventos/Vincular Equipe de Execução");
+                navigate("/Ações/Vincular Equipe de Execução");
               }}
             >
               Vincular Equipe

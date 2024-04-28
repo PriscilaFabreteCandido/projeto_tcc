@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   Col,
   DatePicker,
   Divider,
@@ -9,35 +8,36 @@ import {
   Row,
   Select,
   Space,
-  Table,
-  Tooltip,
+  TimePicker,
   TreeSelect,
   Upload,
 } from "antd";
 
 import "../styles.css";
 import {
-  BankOutlined,
+  ApartmentOutlined,
   CloseOutlined,
-  EyeOutlined,
-  SaveOutlined,
+  InfoCircleOutlined,
   SolutionOutlined,
   UploadOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import moment from "moment";
 
 const { Option } = Select;
 
 export default function CadastrarAcoes() {
   const [form] = Form.useForm();
-  const [equipeExecucaoOptions, setEquipeExecucaoOptions] = useState<any[]>();
-  const [tipoAcaoehCurso, setTipoAcaoehCurso] = useState<boolean>(false);
+  const [selectedTipoAcao, setSelectedTipoAcao] = useState<string>("");
   const [tiposAcoesOptions, setTiposAcoesOptions] = useState<any>([
     {
-      title: "Cursos",
-      value: "Cursos",
+      title: "Curso",
+      value: "Curso",
+    },
+    {
+      title: "Projeto",
+      value: "Projeto",
     },
     {
       title: "Oficinas",
@@ -50,6 +50,10 @@ export default function CadastrarAcoes() {
     {
       title: "Visitas Guiadas",
       value: "Visitas Guiadas",
+    },
+    {
+      title: "Evento",
+      value: "Evento",
     },
   ]);
   const [selectedTipoAcoes, setSelectedTipoAcoes] = useState<any>();
@@ -67,58 +71,105 @@ export default function CadastrarAcoes() {
 
   const navigate = useNavigate();
 
+  const eventos = [
+    {
+      value: 'Evento 1',
+      title: 'Evento 1',
+      children: [
+        {
+          value: 'Evento 1-0',
+          title: 'Evento 1-0',
+        },
+        {
+          value: 'Evento 1-1',
+          title: 'Evento 1-1',
+          children: [
+            {
+              value: 'leaf3',
+              title: <b style={{ color: '#08c' }}>leaf3</b>,
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
   return (
     <>
       <h3 style={{ paddingBottom: "1rem" }}>Cadastrar Ações</h3>
 
-      <Divider orientation="left" plain>
-        <h3>Tipo de Ação</h3>
+      <Divider orientation="left" plain style={{ borderColor: "#333" }}>
+        <h3>
+          <ApartmentOutlined /> Tipo de Ação
+        </h3>
       </Divider>
 
-      <Form.Item
-            name="projeto"
-            label="Projeto"
-            rules={[
-              { required: true, message: "Por favor, selecione a instituição da pessoa!" },
-            ]}
-          >
-            <Select>
-              {[{id: 1, nome: "Letter"}, {id: 2, nome: "Titãs da Robótica"}, {id: 3, nome: "Programa-se"}].map((option) => (
-                <Select.Option key={option.id} value={option.nome}>
-                  {option.nome}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-      <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+      <Form>
         {/* Equipe de Execução */}
-        <Form.Item label="Tipo Ação" name="tipoAcao">
-          <TreeSelect
-            showSearch
-            style={{ width: "100%" }}
-            dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-            placeholder="Selecione"
-            allowClear
-            treeDefaultExpandAll
-            onChange={(e) => {
-              if (e == "Cursos") {
-                setTipoAcaoehCurso(true);
-              } else {
-                setTipoAcaoehCurso(false);
-              }
-            }}
-            treeData={tiposAcoesOptions}
-          />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item
+              label="Tipo Ação"
+              name="tipoAcao"
+              rules={[
+                {
+                  required: true,
+                  message: "Por favor, selecione um projeto!",
+                },
+              ]}
+            >
+              <Select
+                onChange={(e) => {
+                  setSelectedTipoAcao(e);
+                }}
+              >
+                {tiposAcoesOptions.map((option: any) => (
+                  <Select.Option key={option.value} value={option.title}>
+                    {option.title}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Projeto" name="projeto">
+              <Select placeholder="Selecione um projeto" disabled={selectedTipoAcao == "Projeto"}>
+                {[
+                  { id: 1, nome: "Letter" },
+                  { id: 2, nome: "Titãs da Robótica" },
+                  { id: 3, nome: "Programa-se" },
+                ].map((option) => (
+                  <Select.Option key={option.id} value={option.nome}>
+                    {option.nome}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
 
-        {tipoAcaoehCurso && (
+          <Col span={8}>
+            <Form.Item label="Evento" name="evento">
+              <TreeSelect
+              disabled={selectedTipoAcao == "Projeto"}
+                showSearch
+                style={{ width: "100%" }}
+                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                placeholder="Selecione um evento"
+                allowClear
+                treeDefaultExpandAll
+                treeData={eventos}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        {selectedTipoAcao == "Curso" && (
           <>
             <Row gutter={16}>
               {/* Primeira Linha */}
               <Col span={8}>
                 {/* Turma */}
-                <Form.Item label="Turma" name="turma">
+                <Form.Item label="Turma" name="turma" required>
                   <TreeSelect
                     showSearch
                     style={{ width: "100%" }}
@@ -135,6 +186,7 @@ export default function CadastrarAcoes() {
                   />
                 </Form.Item>
               </Col>
+
               <Col span={8}>
                 {/* Período Semestre */}
                 <Form.Item label="Período Semestre" name="periodoSemestre">
@@ -155,9 +207,9 @@ export default function CadastrarAcoes() {
                 </Form.Item>
               </Col>
               <Col span={8}>
-                {/* Carga Horária */}
-                <Form.Item label="Carga Horária" name="cargaHoraria">
-                  <Input></Input>
+                {/* Modalidade */}
+                <Form.Item label="Modalidade" name="modalidade" required>
+                  <Input />
                 </Form.Item>
               </Col>
             </Row>
@@ -165,36 +217,60 @@ export default function CadastrarAcoes() {
             <Row gutter={16}>
               {/* Primeira Linha */}
               <Col span={8}>
-                {/* Modalidade */}
-                <Form.Item label="Modalidade" name="modalidade">
-                  <Input></Input>
+                {/* Horário de Início */}
+                <Form.Item
+                  label="Horário de Início"
+                  name="inicio"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Por favor, insira o horário de início!",
+                    },
+                  ]}
+                >
+                  <TimePicker
+                    format="HH:mm"
+                    placeholder="00:00"
+                    // defaultValue={moment("00:00", "HH:mm")}
+                    style={{ width: "100%" }}
+                  />
                 </Form.Item>
               </Col>
 
               <Col span={8}>
-                {/* Número do Processo */}
-                <Form.Item label="Número do Processo" name="numeroProcesso">
-                  <TreeSelect
-                    showSearch
+                {/* Horário de Término */}
+                <Form.Item
+                  label="Horário de Término"
+                  name="fim"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Por favor, insira o horário de término!",
+                    },
+                  ]}
+                >
+                  <TimePicker
+                    format="HH:mm"
+                    placeholder="00:00"
+                    // defaultValue={moment("00:00", "HH:mm")}
                     style={{ width: "100%" }}
-                    dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                    placeholder="Selecione"
-                    allowClear
-                    treeDefaultExpandAll
-                    onChange={() => {}}
-                    treeData={[
-                      { label: "123456", value: "123456" },
-                      { label: "789012", value: "789012" },
-                      // Adicione outros números de processo conforme necessário
-                    ]}
                   />
                 </Form.Item>
               </Col>
 
               <Col span={8}>
                 {/* Carga Horária */}
-                <Form.Item label="Carga Horária" name="cargaHoraria">
-                  <Input></Input>
+                <Form.Item
+                  label="Carga Horária"
+                  name="cargaHoraria"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Por favor, insira a carga horária!",
+                    },
+                  ]}
+                >
+                  <Input type="number" />
                 </Form.Item>
               </Col>
             </Row>
@@ -202,52 +278,43 @@ export default function CadastrarAcoes() {
             <Row gutter={16}>
               {/* Primeira Linha */}
               <Col span={8}>
-                {/* Data Inicio */}
+                {/* Número do Processo */}
                 <Form.Item
-                  label="Data Inicio"
-                  name="dataInicio"
-                  rules={[{ required: true, message: "Campo obrigatório" }]}
+                  label="Número do Processo"
+                  name="numeroProcesso"
+                  required
                 >
-                  <DatePicker />
+                  <Input />
                 </Form.Item>
               </Col>
-              <Col span={8}>
-                {/* Data fim */}
-                <Form.Item
-                  label="Data Fim"
-                  name="dataFim"
-                  rules={[{ required: true, message: "Campo obrigatório" }]}
-                >
-                  <DatePicker />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                {/* Público Alvo */}
-                <Form.Item label="Público Alvo" name="publicoAlvo">
-                  <Input></Input>
-                </Form.Item>
-              </Col>
+
+              <Col span={8}></Col>
+
+              <Col span={8}></Col>
             </Row>
           </>
         )}
       </Form>
 
-      <Divider orientation="left" plain>
-        <h3>Informações Gerais</h3>
+      <Divider orientation="left" plain style={{ borderColor: "#333" }}>
+        <h3>
+          <InfoCircleOutlined /> Informações Gerais
+        </h3>
       </Divider>
+
       <Form onFinish={onFinish}>
         <Row gutter={16}>
           {/* Primeira Linha */}
-          <Col span={8}>
+          <Col span={10}>
             <Form.Item
-              label="Nome da Oficina"
-              name="nomeOficina"
+              label="Nome da Ação"
+              name="nomeAcao"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={10}>
             <Form.Item
               label="Público Alvo"
               name="publicoAlvo"
@@ -256,13 +323,13 @@ export default function CadastrarAcoes() {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={4}>
             <Form.Item
-              label="Data"
-              name="data"
+              label="Ano"
+              name="ano"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
-              <DatePicker />
+              <Input type="number" />
             </Form.Item>
           </Col>
         </Row>
@@ -302,7 +369,7 @@ export default function CadastrarAcoes() {
           {/* Terceira Linha */}
           <Col span={8}>
             <Form.Item
-              label="Endereço (CEP)"
+              label="Endereço"
               name="enderecoCep"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
@@ -315,7 +382,20 @@ export default function CadastrarAcoes() {
               name="instituicaoAtendida"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
-              <Input />
+              <TreeSelect
+                showSearch
+                style={{ width: "100%" }}
+                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                placeholder="Selecione"
+                allowClear
+                treeDefaultExpandAll
+                onChange={() => {}}
+                treeData={[
+                  { label: "Instituição A", value: "Instituição A" },
+
+                  // Adicione outras turmas conforme necessário
+                ]}
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -339,13 +419,19 @@ export default function CadastrarAcoes() {
               <Upload>
                 <Button icon={<UploadOutlined />}>Upload</Button>
               </Upload>
-
-              <Button type="primary" icon={<EyeOutlined />}>
-                Visualizar Participantes
-              </Button>
             </Form.Item>
           </Col>
-          
+
+          <Col span={12}>
+            <Form.Item
+              label="Documentos (Anexar PDF/Excel/Doc)"
+              name="documentos"
+            >
+              <Upload>
+                <Button icon={<UploadOutlined />}>Upload</Button>
+              </Upload>
+            </Form.Item>
+          </Col>
         </Row>
       </Form>
     </>

@@ -18,6 +18,7 @@ import TiposAcoes from "../views/Cadastros/TipoAcoes";
 import ConsultarAcoes from "../views/Relatorios/Acoes";
 import ConsultasPessoas from "../views/Relatorios/pessoas";
 import VincularEquipeExecucao from "../views/Acoes/VincularEquipeExecucao";
+import CadastrarPessoa from "../views/Cadastros/Pessoas/CadastrarPessoa";
 
 export interface RouteConfig {
   path: string;
@@ -41,12 +42,14 @@ const routes: RouteConfig[] = [
       { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
       { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
       { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
+      { path: "Cadastros/Pessoas/Cadastrar", element: <CadastrarPessoa />, permissions: "" },
       { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
       { path: "Cadastros/Projetos", element: <Projetos />, permissions: "" },
       { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },
      
       //Ações
-      { path: "Eventos", element: <Acoes />, permissions: "" },
+      { path: "Ações", element: <Acoes />, permissions: "" },
+      { path: "Ações/Cadastrar Ações", element: <CadastrarAcoes />, permissions: "" },
       { path: "Eventos/Vincular Equipe de Execução", element: <VincularEquipeExecucao />, permissions: "" },
      
       //Relatórios

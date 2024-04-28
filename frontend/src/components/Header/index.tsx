@@ -51,12 +51,7 @@ const itemsMenu: MenuProps["items"] = [
       <FormOutlined />,
       "/RedefinirSenha"
     ),
-    getItem(
-      "Gerenciar Usuários",
-      "redefinirSenha",
-      <UserOutlined />,
-      "/RedefinirSenha"
-    ),
+    
   ]),
 ];
 
@@ -134,10 +129,15 @@ function Header({ onIconClick }: any) {
         <div className="flex gap-1">
           {/* Informações do Usuário */}
 
-          <Avatar className="white-icon" size={24} icon={<UserOutlined />} />
+          <Avatar className="white-icon" size={24} icon={<UserOutlined />}  style={{ 
+            margin: "0", position: "relative",
+              top: "18px",
+              left: "-1px",}}/>
 
           <div className="cor-white info-user flex flex-column btn-info-user">
-            <h6 className="font-14" style={{ margin: "0" }}>
+            <h6 className="font-14" style={{ margin: "0", position: "relative",
+              top: "12px",
+              left: "-1px",}}>
               Administrador
             </h6>
           </div>

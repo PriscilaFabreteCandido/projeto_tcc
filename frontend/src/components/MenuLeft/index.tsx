@@ -71,15 +71,10 @@ const items: MenuProps["items"] = [
     getItem("Tipo Ação", "tipoAcao", <FileTextOutlined />, "Cadastros/Tipo Ações"),
     getItem("Pessoas", "pessoas", <TeamOutlined  />, "Cadastros/Pessoas"),
     getItem("Função", "funcao", <IdcardOutlined />, "Cadastros/Funções"),
-    getItem("Projetos", "projetos", <ProfileOutlined />, "Cadastros/Projetos"),
   ]),
-  getItem("Consultas", "consultas", <FileTextOutlined />, "/Consultas", [
-    getItem("Pessoas", "cpessoas", <BankOutlined />, "Consultas/Pessoas"),
-    getItem("Eventos", "ceventos", <FileTextOutlined />, "Consultas/Eventos"),
-    getItem("Histórico de Participação", "cpessoas", <BankOutlined />, "Consultas/Pessoas"),
-  
-  ]),
-  getItem("Evento", "evento", <PlayCircleOutlined />, "/Eventos"),
+  getItem("Ações", "acoes", <PlayCircleOutlined />, "/Ações"),
+  getItem("Dúvidas Frequentes", "duvidas", <PlayCircleOutlined />, "/Ações"),
+  getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <PlayCircleOutlined />, "/Ações"),
 ];
 
 function MenuLeft({ isIconClicked }: any) {

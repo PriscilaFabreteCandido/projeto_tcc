@@ -15,6 +15,7 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
+import { Link, useNavigate } from "react-router-dom";
 
 interface PessoaType {
   key: React.Key;
@@ -53,7 +54,7 @@ const Pessoas: React.FC = () => {
       dataNascimento: "01/02/2002",
       email: "fulano@gmail.com",
       instituicao: "IFES",
-      graduacao: "Ensino Médio"
+      graduacao: "Ensino Médio",
     },
     {
       key: 2,
@@ -64,7 +65,7 @@ const Pessoas: React.FC = () => {
       dataNascimento: "10/05/1995",
       email: "maria@gmail.com",
       instituicao: "UFES",
-      graduacao: "Graduação"
+      graduacao: "Graduação",
     },
     {
       key: 3,
@@ -75,13 +76,14 @@ const Pessoas: React.FC = () => {
       dataNascimento: "20/11/1988",
       email: "joao@gmail.com",
       instituicao: "IFMG",
-      graduacao: "Pós Graduação"
+      graduacao: "Pós Graduação",
     },
   ]);
 
   const [form] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
-
+  const navigate = useNavigate();
+  
   const showModal = () => {
     setIsOpenModal(true);
   };
@@ -247,129 +249,28 @@ const Pessoas: React.FC = () => {
               placeholder="Matricula"
               style={{ width: "200px", marginRight: "10px" }}
             />
-            <Select placeholder="Instituição" style={{ width: "200px" }}>
-              {InstituicoesOptions.map((option) => (
-                <Select.Option key={option.id} value={option.nome}>
-                  {option.nome}
-                </Select.Option>
-              ))}
-            </Select>
+            
           </div>
 
-          <div>
-            <Button type="primary" onClick={showModal} icon={<PlusOutlined />}>
-              Adicionar
-            </Button>
-          </div>
+        
+
+        <div>
+          <Button
+            className="senai-btn-success"
+            onClick={() => {
+              navigate("/Cadastros/Pessoas/Cadastrar");
+            }}
+          >
+            <PlusOutlined className="senai-icon" />
+            Adicionar
+          </Button>
+        </div>
         </div>
       </CardFooter>
 
       {/* Tabela */}
       <Table columns={columns} dataSource={pessoas} loading={loading} />
 
-      {/* Modal */}
-      <Modal
-        title="Adicionar Pessoa"
-        visible={isOpenModal}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="nome"
-            label="Nome"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira o nome da pessoa!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="cpf"
-            label="CPF"
-            rules={[
-              { required: true, message: "Por favor, insira o CPF da pessoa!" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="matricula"
-            label="Matrícula"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira a matrícula da pessoa!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="dataNascimento"
-            label="Data de Nascimento"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira a data de nascimento da pessoa!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, insira o email da pessoa!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="instituicao"
-            label="Instituição"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, selecione a instituição da pessoa!",
-              },
-            ]}
-          >
-            <Select>
-              {InstituicoesOptions.map((option) => (
-                <Select.Option key={option.id} value={option.nome}>
-                  {option.nome}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="graduacao"
-            label="Graduação"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, selecione a graduação da pessoa!",
-              },
-            ]}
-          >
-            <Select>
-              {GraduacaoOptions.map((option) => (
-                <Select.Option key={option.id} value={option.nome}>
-                  {option.nome}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
     </>
   );
 };

@@ -23,12 +23,38 @@ interface InstituicaoType {
   cep: string;
   numero: string;
   rua: string;
+  avenida: string;
+  estado: string;
 }
 
 const Instituicoes: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [instituicaoToEdit, setInstituicaoToEdit] = useState<InstituicaoType | null>(null);
-  const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
+  const [instituicaoToEdit, setInstituicaoToEdit] =
+    useState<InstituicaoType | null>(null);
+  const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([
+    {
+      key: 1,
+      id: 1,
+      nome: "Instituição A",
+      cep: "12345-678",
+      avenida: "Avenida Principal",
+      numero: "123",
+      rua: "Rua das Flores",
+      endereco: "Avenida Principal, 123 - Rua das Flores",
+      estado: "ES"
+    },
+    {
+      key: 2,
+      id: 2,
+      nome: "Instituição B",
+      cep: "54321-876",
+      avenida: "Avenida Secundária",
+      numero: "456",
+      rua: "Rua das Árvores",
+      endereco: "Avenida Secundária, 456 - Rua das Árvores",
+      estado: "ES"
+    },
+  ]);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -98,7 +124,9 @@ const Instituicoes: React.FC = () => {
   const onDelete = async (id: number) => {
     try {
       await remove(`instituicoes/delete/${id}`);
-      setInstituicoes(instituicoes.filter((instituicao) => instituicao.id !== id));
+      setInstituicoes(
+        instituicoes.filter((instituicao) => instituicao.id !== id)
+      );
       message.success("Instituição excluída com sucesso");
     } catch (error) {
       console.error("Erro ao excluir instituição:", error);
@@ -111,20 +139,25 @@ const Instituicoes: React.FC = () => {
       dataIndex: "nome",
     },
     {
-      title: "Endereço",
-      dataIndex: "endereco",
-    },
-    {
       title: "CEP",
       dataIndex: "cep",
     },
     {
-      title: "Número",
-      dataIndex: "numero",
+      title: "Estado",
+      dataIndex: "estado",
+    },
+    {
+      title: "Avenida",
+      dataIndex: "avenida",
     },
     {
       title: "Rua",
       dataIndex: "rua",
+    },
+  
+    {
+      title: "Número",
+      dataIndex: "numero",
     },
     {
       title: "Ações",
@@ -177,7 +210,12 @@ const Instituicoes: React.FC = () => {
       <CardFooter>
         <div className="flex justify-content-between">
           {/* Filtros */}
-          <div className="flex filtros-card"></div>
+          <div className="flex filtros-card">
+            <Input
+              placeholder="Nome"
+              style={{ width: "200px", marginRight: "10px" }}
+            />
+          </div>
 
           <div>
             <Button type="primary" onClick={showModal} icon={<PlusOutlined />}>
@@ -202,34 +240,48 @@ const Instituicoes: React.FC = () => {
             name="nome"
             label="Nome"
             rules={[
-              { required: true, message: "Por favor, insira o nome da instituição!" },
+              {
+                required: true,
+                message: "Por favor, insira o nome da instituição!",
+              },
             ]}
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            name="endereco"
-            label="Endereço"
-            rules={[
-              { required: true, message: "Por favor, insira o endereço da instituição!" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+
           <Form.Item
             name="cep"
             label="CEP"
             rules={[
-              { required: true, message: "Por favor, insira o CEP da instituição!" },
+              {
+                required: true,
+                message: "Por favor, insira o CEP da instituição!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="Estado"
+            label="Estado"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira o endereço da instituição!",
+              },
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="numero"
-            label="Número"
+            name="avenida"
+            label="Avenida"
             rules={[
-              { required: true, message: "Por favor, insira o número da instituição!" },
+              {
+                required: true,
+                message: "Por favor, insira o endereço da instituição!",
+              },
             ]}
           >
             <Input />
@@ -238,7 +290,22 @@ const Instituicoes: React.FC = () => {
             name="rua"
             label="Rua"
             rules={[
-              { required: true, message: "Por favor, insira a rua da instituição!" },
+              {
+                required: true,
+                message: "Por favor, insira a rua da instituição!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="numero"
+            label="Número"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira o número da instituição!",
+              },
             ]}
           >
             <Input />

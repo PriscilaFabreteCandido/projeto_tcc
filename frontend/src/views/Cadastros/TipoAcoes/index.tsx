@@ -26,6 +26,7 @@ const TiposAcoesOptions = [
   { id: 2, descricao: "Apoio Técnico" },
   { id: 3, descricao: "Visita Guiada" },
   { id: 4, descricao: "Palestra" },
+  { id: 4, descricao: "Evento" },
 ];
 
 const TiposAcoes: React.FC = () => {
