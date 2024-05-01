@@ -42,7 +42,7 @@ const routes: RouteConfig[] = [
       //Cadastros
       { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
       { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
-      { path: "Cadastros/Instituições/Cadastrar Instituição", element: <CadastrarInstituicao />, permissions: "" },
+      { path: "Cadastros/Instituições/:action", element: <CadastrarInstituicao />, permissions: "" },
       { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
       { path: "Cadastros/Pessoas/Cadastrar", element: <CadastrarPessoa />, permissions: "" },
       { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },

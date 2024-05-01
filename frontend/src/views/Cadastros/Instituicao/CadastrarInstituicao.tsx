@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Select, Switch } from "antd";
-import { useLocation } from "react-router";
+import { Button, Form, Input, Select, Switch, message } from "antd";
+import { useLocation, useNavigate } from "react-router";
 import { TipoInstituicaoType } from ".";
-import { get } from "../../../api/axios";
+import { get, post, put } from "../../../api/axios";
 
 const CadastrarInstituicao = () => {
   const [form] = Form.useForm();
   const location = useLocation();
-  const [tipoInstituicoes, setTipoInstituicoes] = useState<
-    TipoInstituicaoType[]
-  >([]);
+  const [tipoInstituicoes, setTipoInstituicoes] = useState<TipoInstituicaoType[]>([]);
+  const navigate = useNavigate() as any;
   const [loading, setLoading] = useState<boolean>(false);
 
   const { instituicao } = location.state || {};
@@ -52,11 +51,47 @@ const CadastrarInstituicao = () => {
     console.log("Operação cancelada!");
   };
 
-  const handleCadastrar = () => {
-    // Adicione aqui a lógica para cadastrar
-    console.log("Cadastro realizado com sucesso!");
+  
+  const handleCancel = () => {
+    form.resetFields();
   };
 
+  const handleCadastrar = async () => {
+    try {
+      await form.validateFields();
+      const values = form.getFieldsValue();
+
+      const instituicaoToCreateOrEdit = {
+        nome: values.nome,
+        id: instituicao ? instituicao.id : null,
+        cep: values.cep,
+        estado: values.estado,
+        bairro: values.bairro,
+        rua: values.rua,
+        numero: values.numero,
+        descricao: values.descricao,
+        email: values.email,
+        tipoInstituicao: values.tipoInstituicao
+      };
+
+      if (!instituicao) {
+        const response = await post("instituicoes/create", instituicaoToCreateOrEdit);
+        navigate("/Cadastros/Instituições/Cadastrar Instituição");
+        message.success("Coordenadoria criada com sucesso");
+      } else {
+        const response = await put(
+          `instituicoes/update/${instituicao.id}`,
+          instituicaoToCreateOrEdit
+        );
+       
+        message.success("Coordenadoria editada com sucesso");
+      }
+
+      handleCancel();
+    } catch (error: any) {
+     
+    }
+  };
 
   return (
     <div>
@@ -196,9 +231,9 @@ const CadastrarInstituicao = () => {
         </div>
       </Form>
 
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button type="default" onClick={handleCancelar}>
-          Cancelar
+      <div style={{ display: "flex", justifyContent: "end", gap: 16 }}>
+        <Button type="default" onClick={handleCancelar} >
+          {instituicao ? "Editar": "Cadastrar"}
         </Button>
         <Button type="primary" onClick={handleCadastrar}>
           Cadastrar

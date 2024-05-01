@@ -98,10 +98,10 @@ const Instituicoes: React.FC = () => {
               shape="circle"
               onClick={() => {
                 setInstituicaoToEdit(record);
-
-                navigate("/Cadastros/Pessoas/Cadastrar", {
+                navigate("/Cadastros/Instituições/Editar Instituição", {
                   state: { instituicao: record }
                 });
+               
               }}
             >
               <EditOutlined className="ifes-icon" />
