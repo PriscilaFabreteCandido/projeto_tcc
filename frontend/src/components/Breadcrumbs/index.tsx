@@ -1,16 +1,16 @@
 import { Breadcrumb } from 'antd';
 import React from 'react';
 import './styles.css';
-
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Breadcrumbs() {
-  const navigate = useNavigate();
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
+  const navigate = useNavigate() as any;
 
-  const handleNavigate = (path: any) => {
-    navigate(path);
+  const handleNavigate = (e: any, routeTo: any) => {
+    e.preventDefault();
+    navigate(routeTo);
   };
 
   // Verificar se a rota atual é desconhecida (404)
@@ -36,7 +36,7 @@ export default function Breadcrumbs() {
             {!hasRoute ?  (
               <span style={{ color: '#511B9E' }}>{decodedPath}</span>
             ) : (
-              <a style={{ color: '#511B9E' }} href={routeTo} onClick={() => handleNavigate(routeTo)}>
+              <a style={{ color: '#511B9E' }} href={routeTo} onClick={(e) => handleNavigate(e, routeTo)}>
                 {decodedPath}
               </a>
             )}

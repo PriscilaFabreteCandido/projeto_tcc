@@ -68,6 +68,8 @@ const items: MenuProps["items"] = [
 
   getItem("Cadastros", "cadastros", <FileTextOutlined />, "/Consultas", [
     getItem("Instituição", "instituicao", <BankOutlined />, "Cadastros/Instituições"),
+    getItem("Turma", "turma", <SolutionOutlined  />, "Cadastros/Turmas"),
+    getItem("Semestre Letivos", "semestre", <CalendarOutlined  />, "Cadastros/Semestres Letivos"),
     getItem("Tipo Ação", "tipoAcao", <FileTextOutlined />, "Cadastros/Tipo Ações"),
     getItem("Pessoas", "pessoas", <TeamOutlined  />, "Cadastros/Pessoas"),
     getItem("Função", "funcao", <IdcardOutlined />, "Cadastros/Funções"),

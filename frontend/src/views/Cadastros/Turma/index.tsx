@@ -15,23 +15,16 @@ import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
 
-interface ActionType {
+interface TurmaType {
   key: React.Key;
   id: number;
   nome: string;
 }
 
-// const TiposAcoesOptions = [
-//   { id: 1, descricao: "Curso" },
-//   { id: 2, descricao: "Apoio Técnico" },
-//   { id: 3, descricao: "Visita Guiada" },
-//   { id: 4, descricao: "Palestra" },
-//   { id: 4, descricao: "Evento" },
-// ];
-const TiposAcoes: React.FC = () => {
+const Turmas: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [tipoAcaoToEdit, setTipoAcaoToEdit] = useState<ActionType | null>(null);
-  const [tiposAcoes, setTiposAcoes] = useState<ActionType[]>([]);
+  const [turmaToEdit, setTurmaToEdit] = useState<TurmaType | null>(null);
+  const [turmas, setTurmas] = useState<TurmaType[]>([]);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -41,25 +34,24 @@ const TiposAcoes: React.FC = () => {
 
   const handleCancel = () => {
     form.resetFields();
-    setTipoAcaoToEdit(null);
+    setTurmaToEdit(null);
     setIsOpenModal(false);
   };
 
-
-  const getTiposAcoes = async () => {
+  const getTurmas = async () => {
     setLoading(true);
     try {
-      const response: ActionType[] = await get("tipoAcoes");
-      setTiposAcoes(response);
+      const response: TurmaType[] = await get("turmas");
+      setTurmas(response);
     } catch (error) {
-      console.error("Erro ao obter instituições:", error);
+      console.error("Erro ao obter turmas:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    getTiposAcoes();
+    getTurmas();
   }, []);
 
   const handleOk = async () => {
@@ -67,26 +59,26 @@ const TiposAcoes: React.FC = () => {
       await form.validateFields();
       const values = form.getFieldsValue();
 
-      const tipoAcaoData = {
+      const turmaData = {
         nome: values.nome,
-        id: tipoAcaoToEdit ? tipoAcaoToEdit.id : null,
+        id: turmaToEdit ? turmaToEdit.id : null,
       };
 
-      if (!tipoAcaoToEdit) {
-        const response = await post("tipoAcoes/create", tipoAcaoData);
-        message.success("Tipo de ação criado com sucesso");
-        setTiposAcoes([...tiposAcoes, response]); // Adiciona o novo tipo de ação ao array
+      if (!turmaToEdit) {
+        const response = await post("turmas/create", turmaData);
+        message.success("Turma criada com sucesso");
+        setTurmas([...turmas, response]); // Adiciona a nova turma ao array
       } else {
-        const response = await put(`tipoAcoes/update/${tipoAcaoToEdit.id}`, tipoAcaoData);
-        message.success("Tipo de ação editado com sucesso");
-        const updatedTiposAcoes = tiposAcoes.map(tipoAcao => {
-          if (tipoAcao.id === response.id) {
-            return response; // Substitui o tipo de ação editado no array
+        const response = await put(`turmas/update/${turmaToEdit.id}`, turmaData);
+        message.success("Turma editada com sucesso");
+        const updatedTurmas = turmas.map(turma => {
+          if (turma.id === response.id) {
+            return response; // Substitui a turma editada no array
           } else {
-            return tipoAcao;
+            return turma;
           }
         });
-        setTiposAcoes(updatedTiposAcoes);
+        setTurmas(updatedTurmas);
       }
 
       handleCancel();
@@ -97,15 +89,15 @@ const TiposAcoes: React.FC = () => {
 
   const onDelete = async (id: number) => {
     try {
-      await remove(`tipoAcoes/delete/${id}`);
-      getTiposAcoes();
-      message.success("Instituição excluída com sucesso");
+      await remove(`turmas/delete/${id}`);
+      getTurmas();
+      message.success("Turma excluída com sucesso");
     } catch (error) {
-      console.error("Erro ao excluir instituição:", error);
+      console.error("Erro ao excluir turma:", error);
     }
   };
 
-  const columns: ColumnsType<ActionType> = [
+  const columns: ColumnsType<TurmaType> = [
     {
       title: "Nome",
       dataIndex: "nome",
@@ -120,7 +112,7 @@ const TiposAcoes: React.FC = () => {
               className="ifes-btn-warning"
               shape="circle"
               onClick={() => {
-                setTipoAcaoToEdit(record);
+                setTurmaToEdit(record);
                 form.setFieldsValue({
                   nome: record.nome
                 });
@@ -132,7 +124,7 @@ const TiposAcoes: React.FC = () => {
           </Tooltip>
           <Tooltip title="Excluir">
             <Popconfirm
-              title="Tem certeza que deseja excluir este tipo de ação?"
+              title="Tem certeza que deseja excluir esta turma?"
               onConfirm={() => onDelete(record.id)}
               okText="Sim"
               cancelText="Cancelar"
@@ -168,11 +160,11 @@ const TiposAcoes: React.FC = () => {
       </CardFooter>
 
       {/* Tabela */}
-      <Table columns={columns} dataSource={tiposAcoes} loading={loading} />
+      <Table columns={columns} dataSource={turmas} loading={loading} />
 
       {/* Modal */}
       <Modal
-        title="Adicionar Tipo de Ação"
+        title={turmaToEdit ? "Editar Turma" : "Adicionar Turma"}
         visible={isOpenModal}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -182,7 +174,7 @@ const TiposAcoes: React.FC = () => {
             name="nome"
             label="Nome"
             rules={[
-              { required: true, message: "Por favor, insira o nome do tipo de ação!" },
+              { required: true, message: "Por favor, insira o nome da turma!" },
             ]}
           >
             <Input />
@@ -193,4 +185,4 @@ const TiposAcoes: React.FC = () => {
   );
 };
 
-export default TiposAcoes;
+export default Turmas;

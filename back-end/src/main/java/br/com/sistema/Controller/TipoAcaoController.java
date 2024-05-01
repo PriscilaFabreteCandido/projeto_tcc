@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/tipo-acoes")
+@RequestMapping("/api/tipoAcoes")
 public class TipoAcaoController {
 
     private final TipoAcaoService tipoAcaoService;

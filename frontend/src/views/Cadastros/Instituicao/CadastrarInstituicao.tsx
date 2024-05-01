@@ -46,6 +46,26 @@ const CadastrarInstituicao = () => {
     getTipoInstituicoes();
   }, []);
 
+  const buscarEnderecoPorCEP = async (cep: string) => {
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        message.error("CEP não encontrado");
+        return;
+      }
+
+      form.setFieldsValue({
+        estado: data.uf,
+        bairro: data.bairro,
+        rua: data.logradouro,
+      });
+    } catch (error) {
+      console.error("Erro ao buscar endereço pelo CEP:", error);
+    }
+  };
+
   const handleCancelar = () => {
     // Adicione aqui a lógica para cancelar
     console.log("Operação cancelada!");
@@ -71,7 +91,9 @@ const CadastrarInstituicao = () => {
         numero: values.numero,
         descricao: values.descricao,
         email: values.email,
-        tipoInstituicao: values.tipoInstituicao
+        tipoInstituicao: {
+          id: values.tipoInstituicao
+        }
       };
 
       if (!instituicao) {
@@ -124,13 +146,13 @@ const CadastrarInstituicao = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input placeholder="00000-00" onChange={(e) => buscarEnderecoPorCEP(e.target.value)} />
               </Form.Item>
             </div>
             <div style={{ flex: 1 }}>
               <Form.Item
                 name="estado"
-                label="Estado"
+                label="UF"
                 rules={[
                   {
                     required: true,
@@ -187,27 +209,9 @@ const CadastrarInstituicao = () => {
             </div>
           </div>
 
-          <div style={{ marginBottom: "20px" }}>
-            <Form.Item
-              name="descricao"
-              label="Descrição"
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor, insira a descrição da instituição!",
-                },
-              ]}
-            >
-              <Input.TextArea />
-            </Form.Item>
-          </div>
+          
           <div style={{ display: "flex", marginBottom: "20px" }}>
-            <div style={{ flex: 1, marginRight: "10px" }}>
-              <Form.Item name="email" label="Email">
-                <Input />
-              </Form.Item>
-            </div>
-            <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, marginRight: "10px" }}>
               <Form.Item
                 name="tipoInstituicao"
                 label="Tipo de Instituição"
@@ -218,25 +222,46 @@ const CadastrarInstituicao = () => {
                   },
                 ]}
               >
-                <Select>
+                <Select >
                   {tipoInstituicoes.map((option) => (
-                    <Select.Option key={option.id} value={option.nome}>
+                    <Select.Option key={option.id} value={option.id}>
                       {option.nome}
                     </Select.Option>
                   ))}
                 </Select>
               </Form.Item>
             </div>
+
+            <div style={{ flex: 1, marginRight: "10px" }}>
+              <Form.Item name="email" label="Email">
+                <Input />
+              </Form.Item>
+            </div>
+            <div style={{ flex: 1}}>
+              <Form.Item name="telefone" label="Telefone">
+                <Input />
+              </Form.Item>
+            </div>
+            
+          </div>
+
+          <div style={{ marginBottom: "20px" }}>
+            <Form.Item
+              name="descricao"
+              label="Descrição"
+            >
+              <Input.TextArea />
+            </Form.Item>
           </div>
         </div>
       </Form>
 
       <div style={{ display: "flex", justifyContent: "end", gap: 16 }}>
         <Button type="default" onClick={handleCancelar} >
-          {instituicao ? "Editar": "Cadastrar"}
+          Cancelar
         </Button>
         <Button type="primary" onClick={handleCadastrar}>
-          Cadastrar
+          {instituicao ? "Editar": "Cadastrar"}
         </Button>
       </div>
     </div>

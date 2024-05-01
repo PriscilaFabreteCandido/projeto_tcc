@@ -20,6 +20,9 @@ import ConsultasPessoas from "../views/Relatorios/pessoas";
 import VincularEquipeExecucao from "../views/Acoes/VincularEquipeExecucao";
 import CadastrarPessoa from "../views/Cadastros/Pessoas/CadastrarPessoa";
 import CadastrarInstituicao from "../views/Cadastros/Instituicao/CadastrarInstituicao";
+import Turmas from "../views/Cadastros/Turma";
+import Semestres from "../views/Cadastros/Semestre";
+import SemestresLetivos from "../views/Cadastros/Semestre";
 
 export interface RouteConfig {
   path: string;
@@ -44,7 +47,9 @@ const routes: RouteConfig[] = [
       { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
       { path: "Cadastros/Instituições/:action", element: <CadastrarInstituicao />, permissions: "" },
       { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
-      { path: "Cadastros/Pessoas/Cadastrar", element: <CadastrarPessoa />, permissions: "" },
+      { path: "Cadastros/Turmas", element: <Turmas />, permissions: "" },
+      { path: "Cadastros/Semestres Letivos", element: <SemestresLetivos />, permissions: "" },
+      { path: "Cadastros/Pessoas/:action", element: <CadastrarPessoa />, permissions: "" },
       { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
       { path: "Cadastros/Projetos", element: <Projetos />, permissions: "" },
       { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },

@@ -73,20 +73,20 @@ export default function CadastrarAcoes() {
 
   const eventos = [
     {
-      value: 'Evento 1',
-      title: 'Evento 1',
+      value: "Evento 1",
+      title: "Evento 1",
       children: [
         {
-          value: 'Evento 1-0',
-          title: 'Evento 1-0',
+          value: "Evento 1-0",
+          title: "Evento 1-0",
         },
         {
-          value: 'Evento 1-1',
-          title: 'Evento 1-1',
+          value: "Evento 1-1",
+          title: "Evento 1-1",
           children: [
             {
-              value: 'leaf3',
-              title: <b style={{ color: '#08c' }}>leaf3</b>,
+              value: "leaf3",
+              title: <b style={{ color: "#08c" }}>leaf3</b>,
             },
           ],
         },
@@ -133,7 +133,10 @@ export default function CadastrarAcoes() {
           </Col>
           <Col span={8}>
             <Form.Item label="Projeto" name="projeto">
-              <Select placeholder="Selecione um projeto" disabled={selectedTipoAcao == "Projeto"}>
+              <Select
+                placeholder="Selecione um projeto"
+                disabled={selectedTipoAcao == "Projeto"}
+              >
                 {[
                   { id: 1, nome: "Letter" },
                   { id: 2, nome: "Titãs da Robótica" },
@@ -150,7 +153,7 @@ export default function CadastrarAcoes() {
           <Col span={8}>
             <Form.Item label="Evento" name="evento">
               <TreeSelect
-              disabled={selectedTipoAcao == "Projeto"}
+                disabled={selectedTipoAcao == "Projeto"}
                 showSearch
                 style={{ width: "100%" }}
                 dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
@@ -258,21 +261,7 @@ export default function CadastrarAcoes() {
                 </Form.Item>
               </Col>
 
-              <Col span={8}>
-                {/* Carga Horária */}
-                <Form.Item
-                  label="Carga Horária"
-                  name="cargaHoraria"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Por favor, insira a carga horária!",
-                    },
-                  ]}
-                >
-                  <Input type="number" />
-                </Form.Item>
-              </Col>
+              <Col span={8}></Col>
             </Row>
 
             <Row gutter={16}>
@@ -305,7 +294,7 @@ export default function CadastrarAcoes() {
       <Form onFinish={onFinish}>
         <Row gutter={16}>
           {/* Primeira Linha */}
-          <Col span={10}>
+          <Col span={14}>
             <Form.Item
               label="Nome da Ação"
               name="nomeAcao"
@@ -323,20 +312,11 @@ export default function CadastrarAcoes() {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={4}>
-            <Form.Item
-              label="Ano"
-              name="ano"
-              rules={[{ required: true, message: "Campo obrigatório" }]}
-            >
-              <Input type="number" />
-            </Form.Item>
-          </Col>
         </Row>
 
         <Row gutter={16}>
           {/* Segunda Linha */}
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item
               label="Data Início"
               name="dataInicio"
@@ -345,35 +325,13 @@ export default function CadastrarAcoes() {
               <DatePicker />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item
               label="Data Término"
               name="dataTermino"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
               <DatePicker />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Local"
-              name="local"
-              rules={[{ required: true, message: "Campo obrigatório" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          {/* Terceira Linha */}
-          <Col span={8}>
-            <Form.Item
-              label="Endereço"
-              name="enderecoCep"
-              rules={[{ required: true, message: "Campo obrigatório" }]}
-            >
-              <Input />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -398,6 +356,30 @@ export default function CadastrarAcoes() {
               />
             </Form.Item>
           </Col>
+
+          <Col span={4}>
+            <Form.Item
+              label="Ano"
+              name="ano"
+              rules={[{ required: true, message: "Campo obrigatório" }]}
+            >
+              <Input type="number" />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          {/* Terceira Linha */}
+          <Col span={16}>
+            <Form.Item
+              label="Endereço de realização"
+              name="enderecoCep"
+              rules={[{ required: true, message: "Campo obrigatório" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+
           <Col span={8}>
             <Form.Item
               label="Qtde de Participantes"
@@ -407,6 +389,26 @@ export default function CadastrarAcoes() {
               <Input type="number" />
             </Form.Item>
           </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={8}>
+            {/* Carga Horária */}
+            <Form.Item
+              label="Carga Horária"
+              name="cargaHoraria"
+              rules={[
+                {
+                  required: true,
+                  message: "Por favor, insira a carga horária!",
+                },
+              ]}
+            >
+              <Input type="text" placeholder="00:00" />
+            </Form.Item>
+          </Col>
+          <Col span={8}></Col>
+          <Col span={8}></Col>
         </Row>
 
         <Row gutter={16}>
