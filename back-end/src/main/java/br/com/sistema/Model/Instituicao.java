@@ -40,5 +40,10 @@ public class Instituicao {
 
     @ManyToOne
     @JoinColumn(name = "tipo_instituicao_id")
-    private TipoInstituicao instituicao;
+    private TipoInstituicao tipoInstituicao;
+
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "acao_pai_id")
+    //private Acao acaoPai;
+
 }

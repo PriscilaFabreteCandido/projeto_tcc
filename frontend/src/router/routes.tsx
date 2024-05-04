@@ -23,6 +23,7 @@ import CadastrarInstituicao from "../views/Cadastros/Instituicao/CadastrarInstit
 import Turmas from "../views/Cadastros/Turma";
 import Semestres from "../views/Cadastros/Semestre";
 import SemestresLetivos from "../views/Cadastros/Semestre";
+import Cursos from "../views/Cadastros/Curso";
 
 export interface RouteConfig {
   path: string;
@@ -53,6 +54,7 @@ const routes: RouteConfig[] = [
       { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
       { path: "Cadastros/Projetos", element: <Projetos />, permissions: "" },
       { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },
+      { path: "Cadastros/Cursos", element: <Cursos />, permissions: "" },
      
       //Ações
       { path: "Ações", element: <Acoes />, permissions: "" },

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@ant-design/pro-components": "^2.7.1",
     "@casl/ability": "^6.5.0",
     "@casl/react": "^3.1.0",
     "@testing-library/jest-dom": "^5.17.0",

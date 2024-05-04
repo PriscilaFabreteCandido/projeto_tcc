@@ -82,36 +82,36 @@ export default function EquipesExecucao() {
         <Space size="middle">
           <Tooltip title="Excluir">
             <Button
-              className="senai-btn-danger"
+              className="ifes-btn-danger"
               shape="circle"
               onClick={() => {}}
             >
-              <DeleteOutlined className="senai-icon" />
+              <DeleteOutlined className="ifes-icon" />
             </Button>
           </Tooltip>
 
           <Tooltip title="Detalhes">
             <Button
-              className="senai-btn-info"
+              className="ifes-btn-info"
               shape="circle"
               onClick={() => {}}
             >
-              <InfoOutlined className="senai-icon" />
+              <InfoOutlined className="ifes-icon" />
             </Button>
           </Tooltip>
 
           <Tooltip title={record.ativo ? "Desativar Exame" : "Ativar Exame"}>
             <Button
               className={
-                record.ativo ? "senai-btn-success" : "senai-btn-danger"
+                record.ativo ? "ifes-btn-success" : "ifes-btn-danger"
               }
               shape="circle"
               onClick={() => {}}
             >
               {record.ativo ? (
-                <CloseCircleOutlined className="senai-icon" />
+                <CloseCircleOutlined className="ifes-icon" />
               ) : (
-                <CheckCircleOutlined className="senai-icon" />
+                <CheckCircleOutlined className="ifes-icon" />
               )}
             </Button>
           </Tooltip>
@@ -145,12 +145,12 @@ export default function EquipesExecucao() {
 
         <div>
           <Button
-            className="senai-btn-success"
+            className="ifes-btn-success"
             onClick={() => {
               navigate("/Equipes de Execução/Cadastrar");
             }}
           >
-            <PlusOutlined className="senai-icon" />
+            <PlusOutlined className="ifes-icon" />
             Adicionar
           </Button>
         </div>

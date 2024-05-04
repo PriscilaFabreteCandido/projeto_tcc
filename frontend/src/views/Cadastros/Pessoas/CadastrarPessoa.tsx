@@ -3,6 +3,8 @@ import { Form, Input, Select, Switch } from "antd";
 import { useLocation } from "react-router";
 import { InstituicaoType } from "../Instituicao";
 import { get } from "../../../api/axios";
+import { niveisEscolaridade } from "../../../data/niveisdeescolaridade";
+import { cursos } from "../../../data/cursos";
 
 export interface VinculoType {
   id: number;
@@ -24,11 +26,10 @@ const CadastrarPessoa = () => {
   const location = useLocation();
   const [vinculos, setVinculos] = useState<VinculoType[]>([]);
   const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
-  const [graduacoes, setGraduacoes] = useState<GraduacaoType[]>([]);
   const [funcoes, setFuncoes] = useState<GraduacaoType[]>([]);
   const { pessoa } = location.state || {};
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   React.useEffect(() => {
     if (pessoa) {
       form.setFieldsValue({
@@ -49,11 +50,10 @@ const CadastrarPessoa = () => {
   const getContextData = async () => {
     setLoading(true);
     try {
-      const response: any = await get("tipoInstituicoes");
+      const response: any = await get("pessoas/getContextData");
       setInstituicoes(response.instituicoes);
-      setGraduacoes(response.graduacoes);
       setVinculos(response.vinculos);
-      setFuncoes(response.funcoes)
+      setFuncoes(response.funcoes);
     } catch (error) {
       console.error("Erro ao obter instituições:", error);
     } finally {
@@ -91,7 +91,7 @@ const CadastrarPessoa = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="000.000.000-00"/>
             </Form.Item>
           </div>
           <div style={{ flex: 1 }}>
@@ -126,16 +126,22 @@ const CadastrarPessoa = () => {
           </div>
           <div style={{ flex: 1, marginRight: "10px" }}>
             <Form.Item
-              name="curso"
-              label="Curso"
+              name="instituicao"
+              label="Instituição"
               rules={[
                 {
                   required: true,
-                  message: "Por favor, insira a curso da pessoa!",
+                  message: "Por favor, selecione a instituição da pessoa!",
                 },
               ]}
             >
-              <Input />
+              <Select>
+                {instituicoes.map((option) => (
+                  <Select.Option key={option.id} value={option.nome}>
+                    {option.nome}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </div>
           <div style={{ flex: 1 }}>
@@ -156,22 +162,16 @@ const CadastrarPessoa = () => {
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <div style={{ flex: 1, marginRight: "10px" }}>
             <Form.Item
-              name="instituicao"
-              label="Instituição"
+              name="email"
+              label="Email"
               rules={[
                 {
                   required: true,
-                  message: "Por favor, selecione a instituição da pessoa!",
+                  message: "Por favor, insira o email da pessoa!",
                 },
               ]}
             >
-              <Select>
-                {instituicoes.map((option) => (
-                  <Select.Option key={option.id} value={option.nome}>
-                    {option.nome}
-                  </Select.Option>
-                ))}
-              </Select>
+              <Input />
             </Form.Item>
           </div>
           <div style={{ flex: 1, marginRight: "10px" }}>
@@ -186,9 +186,9 @@ const CadastrarPessoa = () => {
               ]}
             >
               <Select>
-                {graduacoes.map((option) => (
-                  <Select.Option key={option.id} value={option.nome}>
-                    {option.nome}
+                {niveisEscolaridade.map((option) => (
+                  <Select.Option key={option} value={option}>
+                    {option}
                   </Select.Option>
                 ))}
               </Select>
@@ -219,20 +219,6 @@ const CadastrarPessoa = () => {
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <div style={{ flex: 1, marginRight: "10px" }}>
             <Form.Item
-              name="email"
-              label="Email"
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor, insira o email da pessoa!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </div>
-          <div style={{ flex: 1, marginRight: "10px" }}>
-            <Form.Item
               name="vinculo"
               label="Vínculo"
               rules={[
@@ -251,7 +237,18 @@ const CadastrarPessoa = () => {
               </Select>
             </Form.Item>
           </div>
-          <div style={{ flex: 1 }}></div>
+          <div style={{ flex: 1, marginRight: "10px" }}>
+            <Form.Item name="curso" label="Curso">
+              <Select>
+                {cursos.map((option) => (
+                  <Select.Option key={option} value={option}>
+                    {option}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
+          <div style={{ flex: 1, marginRight: "10px" }}></div>
         </div>
       </div>
     </Form>

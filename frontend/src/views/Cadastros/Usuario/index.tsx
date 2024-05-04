@@ -41,12 +41,12 @@ export default function Usuarios() {
 
           <div>
             <Button
-              className="senai-btn-success"
+              className="ifes-btn-success"
               onClick={() => {
                 navigate("/Cadastros/Usuários/Cadastrar");
               }}
             >
-              <PlusOutlined className="senai-icon" />
+              <PlusOutlined className="ifes-icon" />
               Adicionar
             </Button>
           </div>

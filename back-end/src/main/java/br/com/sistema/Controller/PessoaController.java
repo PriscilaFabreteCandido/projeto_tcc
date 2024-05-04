@@ -1,6 +1,7 @@
 package br.com.sistema.Controller;
 
-import br.com.sistema.DTO.PessoaDTO;
+import br.com.sistema.DTO.Pessoa.ContextDataPessoaDTO;
+import br.com.sistema.DTO.Pessoa.PessoaDTO;
 import br.com.sistema.Service.PessoaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,11 @@ public class PessoaController {
     @PostMapping("/create")
     public ResponseEntity<PessoaDTO> createPessoa(@RequestBody PessoaDTO pessoaDTO) {
         return new ResponseEntity<>(pessoaService.create(pessoaDTO), HttpStatus.OK);
+    }
+
+    @PostMapping("/contextData")
+    public ResponseEntity<ContextDataPessoaDTO> getContextData() {
+        return new ResponseEntity<>(pessoaService.getContextData(), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")

@@ -3,63 +3,94 @@ import { Outlet } from "react-router-dom";
 import "./styles.css";
 import Breadcrumbs from "../components/Breadcrumbs";
 import MenuLeft from "../components/MenuLeft";
-import Header from "../components/Header";
+import ifes from "../assets/images/image2vector.svg";
+import logo from "../assets/images/logo.png";
+
 import { useEffect, useState } from "react";
+import Layout, { Content, Header } from "antd/es/layout/layout";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons";
+import { Button, Menu, theme } from "antd";
+import Sider from "antd/es/layout/Sider";
+import { colors } from "../global]/theme/theme";
 
 function RootLayout() {
-  const [isIconClicked, setIsIconClicked] = useState<boolean>(false);
-
-  const handleIconClick = (e: any) => {
-    console.log("e", e);
-    if (e) {
-      document.documentElement.style.setProperty("--column-width", "15%");
-    } else {
-      document.documentElement.style.setProperty("--column-width", "80px");
-    }
-
-    setIsIconClicked(e);
-  };
-
-  useEffect(() => {
-    if (isIconClicked) {
-      document.documentElement.style.setProperty("--column-width", "15%");
-    } else {
-      document.documentElement.style.setProperty("--column-width", "80px");
-    }
-  });
+  const [collapsed, setCollapsed] = useState(false);
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   return (
-    <div className="root-layout grid-container">
-      <header id="pageHeader">
-        <Header onIconClick={handleIconClick} />
-      </header>
-
-      <nav id="pageNav">
-        <MenuLeft isIconClicked={isIconClicked} />
-      </nav>
-
-      <main id="pageMain">
+    <Layout style={{ height: "100vh" }}>
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div className="demo-logo-vertical" />
         <div
           style={{
-            borderRadius: "10px",
-            margin: "0.25rem 0.85rem",
+            width: "100%",
+            height: 64,
+            padding: "5px 0px",
+            display: "flex", // Adiciona display: flex para alinhar verticalmente
+            alignItems: "center", // Alinha o conteúdo verticalmente ao centro
           }}
+          className="logo"
         >
-          <Breadcrumbs />
+          <img
+            src={!collapsed ? ifes : logo}
+            alt="Descrição da imagem"
+            style={{
+              width: "100%",
+              height: "auto", // Alterado para "auto" para manter a proporção da imagem
+              objectFit: "cover",
+            }}
+          />
         </div>
-        <div
+
+        <MenuLeft />
+      </Sider>
+      <Layout >
+        <Header
+          style={{ padding: 0, background: colors.primary }}
+          className="shadow"
+        >
+          <Button
+            type="text"
+            icon={
+              collapsed ? (
+                <MenuUnfoldOutlined style={{color: 'white'}} />
+              ) : (
+                <MenuFoldOutlined style={{color: 'white'}} />
+              )
+            }
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: "16px",
+              width: 64,
+              height: 64,
+            }}
+          />
+        </Header>
+        <Breadcrumbs />
+        <Content
           className="shadow"
           style={{
-            background: "white",
-            borderRadius: "10px",
-            margin: "0rem 0.85rem",
-            padding: "1rem",
+            margin: "0px 16px 8px 16px",
+            padding: 24,
+            minHeight: 280,
+            overflow: "auto",
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
           }}
         >
+          
           <Outlet />
-        </div>
-      </main>
-    </div>
+        </Content>
+      </Layout>
+    </Layout>
   );
 }
 

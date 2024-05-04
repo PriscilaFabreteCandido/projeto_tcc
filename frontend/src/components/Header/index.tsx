@@ -67,18 +67,8 @@ function Header({ onIconClick }: any) {
     onIconClick(!collapsed);
   };
 
-  const handleMenuClick = (item: any) => {
-    // Adicione aqui a lógica específica para lidar com cliques no menu, se necessário.
-    // Por padrão, apenas feche o menu.
-    setMenuVisible(false);
-  };
+  
 
-  const handleDocumentClick = (event: MouseEvent) => {
-    // Verifique se o clique foi fora do menu
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setMenuVisible(false);
-    }
-  };
 
   function encontrarItemDoMenu(items: any[], targetKey: React.Key): void {
     var selectedItem: any = null;

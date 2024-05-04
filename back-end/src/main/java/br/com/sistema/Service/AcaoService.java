@@ -1,7 +1,7 @@
 package br.com.sistema.Service;
 
 import br.com.sistema.DTO.AcaoDTO;
-import br.com.sistema.DTO.PessoaDTO;
+
 import br.com.sistema.Exception.BusinessException;
 import br.com.sistema.Exception.EntityNotFoundException;
 import br.com.sistema.Mapper.AcaoMapper;

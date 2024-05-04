@@ -96,31 +96,31 @@ export default function CadastrarEquipesExecucao() {
         <Space size="middle">
           <Tooltip title="Excluir">
             <Button
-              className="senai-btn-danger"
+              className="ifes-btn-danger"
               shape="circle"
               onClick={() => {}}
             >
-              <DeleteOutlined className="senai-icon" />
+              <DeleteOutlined className="ifes-icon" />
             </Button>
           </Tooltip>
 
           <Tooltip title="Detalhes">
             <Button
-              className="senai-btn-info"
+              className="ifes-btn-info"
               shape="circle"
               onClick={() => {}}
             >
-              <InfoOutlined className="senai-icon" />
+              <InfoOutlined className="ifes-icon" />
             </Button>
           </Tooltip>
 
           <Tooltip title="Ativar/Desativar">
             <Button
-              className="senai-btn-success"
+              className="ifes-btn-success"
               shape="circle"
               onClick={() => {}}
             >
-              <CheckCircleOutlined className="senai-icon" />
+              <CheckCircleOutlined className="ifes-icon" />
             </Button>
           </Tooltip>
         </Space>

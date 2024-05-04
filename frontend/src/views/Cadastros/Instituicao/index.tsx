@@ -16,6 +16,7 @@ import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
 import { useNavigate } from "react-router";
+import { colors } from "../../../global]/theme/theme";
 
 export interface TipoInstituicaoType {
   id: number;
@@ -37,7 +38,8 @@ export interface InstituicaoType {
 }
 
 const Instituicoes: React.FC = () => {
-  const [instituicaoToEdit, setInstituicaoToEdit] = useState<InstituicaoType | null>(null);
+  const [instituicaoToEdit, setInstituicaoToEdit] =
+    useState<InstituicaoType | null>(null);
   const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate() as any;
@@ -99,9 +101,8 @@ const Instituicoes: React.FC = () => {
               onClick={() => {
                 setInstituicaoToEdit(record);
                 navigate("/Cadastros/Instituições/Editar Instituição", {
-                  state: { instituicao: record }
+                  state: { instituicao: record },
                 });
-               
               }}
             >
               <EditOutlined className="ifes-icon" />
@@ -135,10 +136,14 @@ const Instituicoes: React.FC = () => {
         <div className="flex justify-content-between">
           {/* Filtros */}
           <div className="flex filtros-card">
-            <Input
-              placeholder="Nome"
-              style={{ width: "200px", marginRight: "10px" }}
-            />
+            <div >
+              <p style={{marginBottom: 8, fontWeight:"bold"}}>Nome: </p>
+              <Input
+                placeholder="Nome"
+                style={{ width: "200px", marginRight: "10px" }}
+              />
+            </div>
+
           </div>
 
           <div>

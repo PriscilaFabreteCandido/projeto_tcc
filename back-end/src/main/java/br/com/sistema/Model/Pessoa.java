@@ -16,26 +16,24 @@ public class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String nome;
 
-    @Column
+    @Column(nullable = false)
     private String cpf;
 
-    @Column
+    @Column(nullable = true)
     @Email
     private String email;
 
-    @Column
-    private String senha;
-
-    @Column
+    @Column(nullable = true)
     private String matricula;
 
-    @Column
+    @Column(nullable = false)
     private String nivelEscolaridade;
 
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date dtNascimento;
 
     @ManyToOne

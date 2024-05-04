@@ -132,13 +132,13 @@ export default function UsuarioCadastro() {
 
         <div className="footer-cadastro">
           <Tooltip title="Cancelar">
-            <Button className="senai-btn-warning" icon={<CloseOutlined />}>
+            <Button className="ifes-btn-warning" icon={<CloseOutlined />}>
               Cancelar
             </Button>
           </Tooltip>
 
           <Tooltip title="Salvar">
-            <Button className="senai-btn-success" icon={<SaveOutlined />}>
+            <Button className="ifes-btn-success" icon={<SaveOutlined />}>
               Salvar
             </Button>
           </Tooltip>

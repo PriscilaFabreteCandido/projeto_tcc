@@ -7,6 +7,7 @@ import {
   CheckCircleOutlined,
   CloudServerOutlined,
   DatabaseOutlined,
+  DesktopOutlined,
   ExperimentOutlined,
   FileSearchOutlined,
   FileTextOutlined,
@@ -20,6 +21,7 @@ import {
   ProfileOutlined,
   QuestionCircleOutlined,
   SafetyCertificateOutlined,
+  SafetyOutlined,
   SearchOutlined,
   SettingOutlined,
   SolutionOutlined,
@@ -32,8 +34,7 @@ import {
 import type { MenuProps } from "antd";
 import "./styles.css";
 import { Menu } from "antd";
-import transferir from "../../assets/images/ifes.png";
-import logo from "../../assets/images/logo2_menor.png";
+
 import { useNavigate, useLocation } from "react-router-dom";
 
 interface MenuItem {
@@ -67,16 +68,17 @@ const items: MenuProps["items"] = [
   getItem("Início", "inicio", <HomeOutlined />, "/Inicio"),
 
   getItem("Cadastros", "cadastros", <FileTextOutlined />, "/Consultas", [
-    getItem("Instituição", "instituicao", <BankOutlined />, "Cadastros/Instituições"),
-    getItem("Turma", "turma", <SolutionOutlined  />, "Cadastros/Turmas"),
-    getItem("Semestre Letivos", "semestre", <CalendarOutlined  />, "Cadastros/Semestres Letivos"),
-    getItem("Tipo Ação", "tipoAcao", <FileTextOutlined />, "Cadastros/Tipo Ações"),
-    getItem("Pessoas", "pessoas", <TeamOutlined  />, "Cadastros/Pessoas"),
+    getItem("Curso", "cursos", <DesktopOutlined />, "Cadastros/Cursos"),
     getItem("Função", "funcao", <IdcardOutlined />, "Cadastros/Funções"),
+    getItem("Instituição","instituicao",<BankOutlined />,"Cadastros/Instituições"),
+    getItem("Pessoas", "pessoas", <TeamOutlined />, "Cadastros/Pessoas"),
+    getItem("Semestre Letivos","semestre",<CalendarOutlined />,"Cadastros/Semestres Letivos" ),
+    getItem("Tipo Ação","tipoAcao",<FileTextOutlined />,"Cadastros/Tipo Ações"),
+    getItem("Turma", "turma", <SolutionOutlined />, "Cadastros/Turmas"),
   ]),
   getItem("Ações", "acoes", <PlayCircleOutlined />, "/Ações"),
-  getItem("Dúvidas Frequentes", "duvidas", <PlayCircleOutlined />, "/Ações"),
-  getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <PlayCircleOutlined />, "/Ações"),
+  getItem("Dúvidas Frequentes", "duvidas",<QuestionCircleOutlined />, "/Dúvidas Frequentes"),
+  getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined />,"/Ações"),
 ];
 
 function MenuLeft({ isIconClicked }: any) {
@@ -123,23 +125,7 @@ function MenuLeft({ isIconClicked }: any) {
   };
 
   return (
-    <>
-      <div
-        style={{
-          width: "100%",
-          padding: isIconClicked ? "0rem 1rem" : "1rem 0rem 0rem 0rem",
-          height: isIconClicked ? "4rem" : "3rem",
-          borderInlineEnd: "1px solid rgba(5, 5, 5, 0.06)",
-        }}
-        className="logo"
-      >
-        <img
-          src={isIconClicked ? transferir : logo}
-          alt="Descrição da imagem"
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
-
+    <div style={{ overflow: "auto",}}>
       {defaultSelectedKeys && defaultSelectedKeys.length > 0 && (
         <div
           style={{
@@ -149,6 +135,7 @@ function MenuLeft({ isIconClicked }: any) {
           }}
         >
           <Menu
+            theme="dark"
             onClick={onClick}
             style={{ height: "90%" }}
             defaultSelectedKeys={defaultSelectedKeys}
@@ -156,10 +143,10 @@ function MenuLeft({ isIconClicked }: any) {
             mode="inline"
             inlineCollapsed={!isIconClicked}
             items={items}
-          ></Menu>
+          />
         </div>
       )}
-    </>
+    </div>
   );
 }
 

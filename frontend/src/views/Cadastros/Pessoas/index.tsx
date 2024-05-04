@@ -252,16 +252,15 @@ const Pessoas: React.FC = () => {
             
           </div>
 
-        
 
         <div>
           <Button
-            className="senai-btn-success"
+            className="ifes-btn-success"
             onClick={() => {
               navigate("/Cadastros/Pessoas/Cadastrar");
             }}
           >
-            <PlusOutlined className="senai-icon" />
+            <PlusOutlined className="ifes-icon" />
             Adicionar
           </Button>
         </div>

@@ -55,17 +55,17 @@ const columns: ColumnsType<DataType> = [
 
         <Tooltip title="Excluir">
           <Button
-            className="senai-btn-danger"
+            className="ifes-btn-danger"
             shape="circle"
             onClick={() => {}}
           >
-            <DeleteOutlined className="senai-icon" />
+            <DeleteOutlined className="ifes-icon" />
           </Button>
         </Tooltip>
 
         <Tooltip title="Detalhes">
-          <Button className="senai-btn-info" shape="circle" onClick={() => {}}>
-            <InfoOutlined   className="senai-icon" />
+          <Button className="ifes-btn-info" shape="circle" onClick={() => {}}>
+            <InfoOutlined   className="ifes-icon" />
           </Button>
         </Tooltip>
       </Space>

@@ -322,7 +322,7 @@ export default function CadastrarAcoes() {
               name="dataInicio"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
-              <DatePicker />
+              <DatePicker style={{width: "100%"}} format="DD/MM/YYYY" />
             </Form.Item>
           </Col>
           <Col span={6}>
@@ -331,7 +331,7 @@ export default function CadastrarAcoes() {
               name="dataTermino"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
-              <DatePicker />
+              <DatePicker style={{width: "100%"}} format="DD/MM/YYYY" />
             </Form.Item>
           </Col>
           <Col span={8}>

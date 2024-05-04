@@ -1,5 +1,7 @@
-package br.com.sistema.DTO;
+package br.com.sistema.DTO.Pessoa;
 
+import br.com.sistema.DTO.FuncaoDTO;
+import br.com.sistema.DTO.InstituicaoDTO;
 import br.com.sistema.Model.Funcao;
 import br.com.sistema.Model.Instituicao;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,8 +20,6 @@ public class PessoaDTO {
 
     @Email(message = "O e-mail fornecido é inválido.")
     private String email;
-
-    private String senha;
     private String matricula;
     private String nivelEscolaridade;
 

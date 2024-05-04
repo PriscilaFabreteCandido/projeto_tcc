@@ -2,7 +2,7 @@
   position: sticky;
   height: 4rem;
   top: 0;
-  background: linear-gradient(to right, #04652F, #04652F);
+  background: linear-gradient(to right, #04652F, #7eba00);
   z-index: 1000;
   max-width: 100%;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1), 0 2px 7px -2px rgba(0, 0, 0, 0.09),

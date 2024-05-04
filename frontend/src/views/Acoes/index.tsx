@@ -13,8 +13,10 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   DeleteOutlined,
+  EditOutlined,
   InfoOutlined,
   PlusOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/es/table";
@@ -93,23 +95,24 @@ const Acoes: React.FC = () => {
           <Tooltip title="Vincular Equipe de Execução">
             <Button
               type="primary"
-              icon={<InfoOutlined />}
+              icon={<UsergroupAddOutlined />}
               onClick={() => {
                 navigate("/Ações/Vincular Equipe de Execução");
               }}
+              className="ifes-btn-help"
             >
-              Vincular Equipe
+              
             </Button>
           </Tooltip>
           <Tooltip title="Editar">
             <Button
-              type="primary"
-              icon={<PlusOutlined />}
+              className="ifes-btn-warning"
+              icon={<EditOutlined />}
               onClick={() => {
-                navigate("/Ações/Editar Ações");
+              
               }}
             >
-              Editar
+              
             </Button>
           </Tooltip>
         </Space>
@@ -159,10 +162,10 @@ const Acoes: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-content-between pb-1" style={{flex: 1}}> 
+      <div className="flex justify-content-between pb-1" style={{ flex: 1 }}>
         {/* Filtros */}
-        <div className="flex filtros-card" style={{width: "90%"}}>
-        <Select placeholder="Ano">
+        <div className="flex filtros-card" style={{ width: "90%" }}>
+          <Select placeholder="Ano">
             {[
               { id: 1, nome: "2022" },
               { id: 2, nome: "2023" },
@@ -202,12 +205,12 @@ const Acoes: React.FC = () => {
 
         <div>
           <Button
-            className="senai-btn-success"
+            className="ifes-btn-success"
             onClick={() => {
               navigate("/Ações/Cadastrar Ações");
             }}
           >
-            <PlusOutlined className="senai-icon" />
+            <PlusOutlined className="ifes-icon" />
             Adicionar
           </Button>
         </div>
