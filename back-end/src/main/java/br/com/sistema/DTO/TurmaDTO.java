@@ -1,11 +1,17 @@
 package br.com.sistema.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
-@Data
-public class TurmaDTO {
+public record TurmaDTO(
+        Long id,
+        @NotBlank String nome) {
 
-    private Long id;
-    private String nome;
+    public TurmaDTO(Long id, TurmaDTO turma) {
+        this(id, turma.nome());
+    }
+
 }
 

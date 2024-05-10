@@ -43,6 +43,7 @@ const Turmas: React.FC = () => {
     try {
       const response: TurmaType[] = await get("turmas");
       setTurmas(response);
+      console.log(turmas);
     } catch (error) {
       console.error("Erro ao obter turmas:", error);
     } finally {
@@ -59,15 +60,19 @@ const Turmas: React.FC = () => {
       await form.validateFields();
       const values = form.getFieldsValue();
 
+      console.log('turma to edit:');
+      console.log(turmaToEdit);
       const turmaData = {
         nome: values.nome,
         id: turmaToEdit ? turmaToEdit.id : null,
       };
 
+
       if (!turmaToEdit) {
         const response = await post("turmas/create", turmaData);
         message.success("Turma criada com sucesso");
         setTurmas([...turmas, response]); // Adiciona a nova turma ao array
+        getTurmas();
       } else {
         const response = await put(`turmas/update/${turmaToEdit.id}`, turmaData);
         message.success("Turma editada com sucesso");
@@ -112,6 +117,8 @@ const Turmas: React.FC = () => {
               className="ifes-btn-warning"
               shape="circle"
               onClick={() => {
+                console.log('record: ');
+                console.log(record);
                 setTurmaToEdit(record);
                 form.setFieldsValue({
                   nome: record.nome

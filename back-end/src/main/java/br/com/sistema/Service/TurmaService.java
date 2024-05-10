@@ -18,15 +18,19 @@ public class TurmaService {
     private final TurmaMapper mapper;
 
 
-    public TurmaDTO create(TurmaDTO turmaDTO){
+    public TurmaDTO create(TurmaDTO turmaDTO) {
+
 
         Turma entity = mapper.toEntity(turmaDTO);
+        if (entity.getId() == null) {
+            entity.setId(0L);
+        }
         repository.save(entity);
-
         return mapper.toDto(entity);
+
     }
 
-    public TurmaDTO update(TurmaDTO turmaDTO, Long id){
+    public TurmaDTO update(TurmaDTO turmaDTO, Long id) {
 
         findById(id);
 
@@ -44,14 +48,14 @@ public class TurmaService {
         repository.delete(entity);
     }
 
-    public TurmaDTO findById(Long id){
+    public TurmaDTO findById(Long id) {
         Turma entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Turma com id '" + id + "' não encontrado."));
 
         return mapper.toDto(entity);
     }
 
-    public List<TurmaDTO> findAll(){
+    public List<TurmaDTO> findAll() {
         return mapper.toDto(repository.findAll());
     }
 
