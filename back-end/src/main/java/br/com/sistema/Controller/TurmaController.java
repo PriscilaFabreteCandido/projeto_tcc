@@ -35,7 +35,7 @@ public class TurmaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TurmaDTO> findCursoById(@PathVariable Long id) {
+    public ResponseEntity<TurmaDTO> findTurmaById(@PathVariable Long id) {
         return new ResponseEntity<>(turmaService.findById(id), HttpStatus.OK);
     }
 
