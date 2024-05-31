@@ -1,13 +1,9 @@
 package br.com.sistema.Service;
 
-import br.com.sistema.DTO.AcaoDTO;
 import br.com.sistema.DTO.CursoDTO;
 import br.com.sistema.Exception.EntityNotFoundException;
-import br.com.sistema.Mapper.AcaoMapper;
 import br.com.sistema.Mapper.CursoMapper;
-import br.com.sistema.Model.Acao;
 import br.com.sistema.Model.Curso;
-import br.com.sistema.Repository.AcaoRepository;
 import br.com.sistema.Repository.CursoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

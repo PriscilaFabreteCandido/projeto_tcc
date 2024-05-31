@@ -1,22 +1,19 @@
 package br.com.sistema.Service;
 
-import br.com.sistema.DTO.AcaoDTO;
+import br.com.sistema.DTO.Acao.AcaoContextDataDTO;
+import br.com.sistema.DTO.Acao.AcaoDTO;
 
-import br.com.sistema.Exception.BusinessException;
+import br.com.sistema.DTO.InstituicaoDTO;
+import br.com.sistema.DTO.PeriodoAcademicoDTO;
+import br.com.sistema.DTO.TurmaDTO;
 import br.com.sistema.Exception.EntityNotFoundException;
 import br.com.sistema.Mapper.AcaoMapper;
-import br.com.sistema.Mapper.PessoaMapper;
 import br.com.sistema.Model.Acao;
-import br.com.sistema.Model.Pessoa;
 import br.com.sistema.Repository.AcaoRepository;
-import br.com.sistema.Repository.PessoaRepository;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +21,9 @@ public class AcaoService {
 
     private final AcaoRepository repository;
     private final AcaoMapper mapper;
+    private final InstituicaoService instituicaoService;
+    private final TurmaService turmaService;
+    private final PeriodoAcademicoService periodoAcademicoService;
 
 
     public AcaoDTO create(AcaoDTO acaoDTO){
@@ -32,6 +32,29 @@ public class AcaoService {
         repository.save(entity);
 
         return mapper.toDto(entity);
+    }
+
+    public List<AcaoDTO> getProjetos(){
+
+        return new ArrayList<>();
+    }
+
+    public List<AcaoDTO> getEventos(){
+
+        return new ArrayList<>();
+    }
+    public AcaoContextDataDTO getContextData() {
+        AcaoContextDataDTO acaoContextDataDTO = new AcaoContextDataDTO();
+        List<InstituicaoDTO> instituicaoDTOS = instituicaoService.findAll();
+        acaoContextDataDTO.setInstituicoes(instituicaoDTOS);
+        List<PeriodoAcademicoDTO> periodoAcademicoDTOS = periodoAcademicoService.findAll();
+        acaoContextDataDTO.setPeriodos(periodoAcademicoDTOS);
+        List<TurmaDTO> turmaDTOS = turmaService.findAll();
+        List<AcaoDTO> projetos = getProjetos();
+        List<AcaoDTO> eventos = getEventos();
+        acaoContextDataDTO.setTurmas(turmaDTOS);
+
+        return acaoContextDataDTO;
     }
 
     public AcaoDTO update(AcaoDTO acaoDTO, Long id){
@@ -51,6 +74,8 @@ public class AcaoService {
 
         repository.delete(entity);
     }
+
+
 
 
     //=============================================================================================

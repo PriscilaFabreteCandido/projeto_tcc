@@ -1,8 +1,6 @@
 package br.com.sistema.Mapper;
 
-import br.com.sistema.DTO.AcaoDTO;
 import br.com.sistema.DTO.CursoDTO;
-import br.com.sistema.Model.Acao;
 import br.com.sistema.Model.Curso;
 import org.mapstruct.Mapper;
 

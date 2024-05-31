@@ -1,8 +1,7 @@
 package br.com.sistema.Controller;
 
-import br.com.sistema.DTO.AcaoDTO;
-import br.com.sistema.DTO.AcaoDTO;
-import br.com.sistema.Service.AcaoService;
+import br.com.sistema.DTO.Acao.AcaoContextDataDTO;
+import br.com.sistema.DTO.Acao.AcaoDTO;
 import br.com.sistema.Service.AcaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +28,11 @@ public class AcaoController {
     @PutMapping("/update/{id}")
     public ResponseEntity<AcaoDTO> updateAcao(@RequestBody AcaoDTO acaoDTO, @PathVariable Long id) {
         return new ResponseEntity<>(acaoService.update(acaoDTO, id), HttpStatus.OK);
+    }
+
+    @GetMapping("/contextData")
+    public ResponseEntity<AcaoContextDataDTO> getContextData() {
+        return new ResponseEntity<>(acaoService.getContextData(), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
