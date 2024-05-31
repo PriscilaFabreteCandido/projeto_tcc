@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   BankOutlined,
+  BarChartOutlined,
   CalendarOutlined,
   DesktopOutlined,
+  FileSearchOutlined,
   FileTextOutlined,
   HomeOutlined,
   IdcardOutlined,
@@ -58,7 +60,12 @@ const items: MenuProps["items"] = [
     getItem("Tipo Ação","tipoAcao",<FileTextOutlined style={{color: "white"}}/>,"Cadastros/Tipo Ações"),
     getItem("Turma", "turma", <SolutionOutlined style={{color: "white"}}/>, "Cadastros/Turmas"),
   ]),
-  getItem("Ações", "acoes", <PlayCircleOutlined style={{color: "white"}}/>, "/Ações"),
+  getItem("Ações", "acoes", <PlayCircleOutlined style={{color: "white"}} />, "/Consultas", [
+    getItem("Nova Ação", "novaAcao", <DesktopOutlined style={{color: "white"}} />, "/Ações/Cadastrar Nova Ação"),
+    getItem("Emitir Relatórios", "emitirRelatorios", <FileSearchOutlined style={{color: "white"}} />, "Ações/Emitir Relatório"),
+    getItem("Consultar Ação", "consultarAcao", <BarChartOutlined style={{color: "white"}} />, "/Ações/Consultar Ação"),
+  ]),
+
   getItem("Dúvidas Frequentes", "duvidas",<QuestionCircleOutlined style={{color: "white"}}/>, "/Dúvidas Frequentes"),
   getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined style={{color: "white"}}/>,"/Ações"),
 ];

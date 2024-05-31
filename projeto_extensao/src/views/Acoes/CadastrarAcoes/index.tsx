@@ -22,8 +22,7 @@ import {
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { get } from "../../../api/axios";
-import Turmas from "../../Cadastros/Turma";
-import { TipoInstituicaoType } from "../../Cadastros/Instituicao";
+
 
 const { Option } = Select;
 

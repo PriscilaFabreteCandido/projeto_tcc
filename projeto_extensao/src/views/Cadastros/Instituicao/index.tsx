@@ -16,7 +16,7 @@ import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
 import { useNavigate } from "react-router";
-import { colors } from "../../../global]/theme/theme";
+
 
 export interface TipoInstituicaoType {
   id: number;

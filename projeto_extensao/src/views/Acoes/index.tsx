@@ -30,7 +30,6 @@ interface DataType {
   horarioTermino: string;
 }
 
-const { Option } = Select;
 
 const Acoes: React.FC = () => {
   const navigate = useNavigate();
