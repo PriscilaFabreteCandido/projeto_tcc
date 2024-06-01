@@ -18,15 +18,11 @@ const config = {
     fontSize: 16,
     fontSizeIcon: 18,
     fontFamilyCode: "monospace",
-    
-    
   },
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <ConfigProvider locale={ptBR} theme={config}>
-      <App />
-    </ConfigProvider>
-  </React.StrictMode>
+  <ConfigProvider locale={ptBR} theme={config}>
+    <App />
+  </ConfigProvider>
 );

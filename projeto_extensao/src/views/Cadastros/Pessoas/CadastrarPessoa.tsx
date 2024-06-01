@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Select, Spin, Switch, message } from "antd";
+import { Button, Form, Input, Select, Spin, message } from "antd";
 import { useLocation, useNavigate } from "react-router";
 import { InstituicaoType } from "../Instituicao";
 import { get, post, put } from "../../../api/axios";
 import { niveisEscolaridade } from "../../../data/niveisdeescolaridade";
-import { cursos } from "../../../data/cursos";
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { vinculos } from "../../../data/vinculos";
 
-export interface VinculoType {
-  id: number;
-  nome: string;
-}
 
 export interface FuncoesType {
   id: number;
@@ -25,9 +21,8 @@ export interface GraduacaoType {
 const CadastrarPessoa = () => {
   const [form] = Form.useForm();
   const location = useLocation();
-  const [vinculos, setVinculos] = useState<VinculoType[]>([]);
   const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
-  const [cursos, setCursos] =useState<any[]>()
+  const [cursos, setCursos] =useState<any[]>([])
   const [funcoes, setFuncoes] = useState<GraduacaoType[]>([]);
   const { pessoa } = location.state || {};
   const [loading, setLoading] = useState<boolean>(false);
@@ -60,9 +55,8 @@ const CadastrarPessoa = () => {
       const response = await get("pessoas/getContextData");
       
       setInstituicoes(response.instituicoes);
-      setVinculos(response.vinculos);
       setFuncoes(response.funcoes);
-      setFuncoes(response.cursos);
+      setCursos(response.cursos);
     } catch (error) {
       console.error("Erro ao obter instituições:", error);
     } finally {
@@ -274,8 +268,8 @@ const CadastrarPessoa = () => {
               >
                 <Select>
                   {vinculos.map((option) => (
-                    <Select.Option key={option.id} value={option.nome}>
-                      {option.nome}
+                    <Select.Option key={option} value={option}>
+                      {option}
                     </Select.Option>
                   ))}
                 </Select>
