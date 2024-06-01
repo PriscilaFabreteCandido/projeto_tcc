@@ -8,9 +8,6 @@
 
 
 .seu-elemento {
-  /* Outras propriedades */
-  /* ... */
-  
-  /* Propriedade box-shadow */
-  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.1); /* offsetX, offsetY, blurRadius, color */
+
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.1); 
 }

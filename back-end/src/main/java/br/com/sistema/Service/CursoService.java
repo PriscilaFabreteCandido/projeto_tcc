@@ -21,7 +21,7 @@ public class CursoService {
     public CursoDTO create(CursoDTO cursoDTO){
 
         Curso entity = mapper.toEntity(cursoDTO);
-        repository.save(entity);
+        entity = repository.save(entity);
 
         return mapper.toDto(entity);
     }

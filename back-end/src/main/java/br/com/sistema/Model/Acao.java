@@ -3,6 +3,8 @@ package br.com.sistema.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @Entity
 public class Acao {
@@ -13,6 +15,15 @@ public class Acao {
 
     @Column
     private String nome;
+
+    @Column
+    private String turma;
+
+    @Column
+    private String semestre;//será entidade
+
+    @Column
+    private String modalidade;//será entidade
 
     @Column
     private Integer qtdParticipantes;
@@ -36,6 +47,10 @@ public class Acao {
     private TipoAcao tipoAcao;
 
     @ManyToOne
-    @JoinColumn(name = "projeto_id")
-    private Projeto projeto;
+    @JoinColumn(name = "acao_id")
+    private Acao projeto;
+
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private Date dtCriacao;
 }

@@ -14,9 +14,8 @@ public class InstituicaoDTO {
     private String numero;
     private String descricao;
     private String email;
-    private TipoInstituicaoDTO tipoInstituicao;
+    private String telefone;
+    private String tipoInstituicao;
 
-    //private List<PessoaDTO> pessoas = new ArrayList<>();
 
-    //private List<AcaoDTO> acoes = new ArrayList<>();
 }

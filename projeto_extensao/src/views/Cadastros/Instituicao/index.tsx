@@ -79,13 +79,13 @@ const Instituicoes: React.FC = () => {
     },
     {
       title: "Tipo Instituição",
-      dataIndex: "Tipo Instituição",
+      dataIndex: "tipoInstituicao",
     },
     {
       title: "Endereco",
       dataIndex: "endereco",
       render: (_, record) => (
-        <p>{`${record.rua}, ${record.numero}, ${record.bairro}, ${record.estado}`}</p>
+        <div>{`${record.rua}, ${record.numero}, ${record.bairro}, ${record.estado}`}</div>
       ),
     },
 

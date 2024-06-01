@@ -22,7 +22,7 @@ import {
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { get } from "../../../api/axios";
-
+import { modalidades } from "../../../data/modalidades";
 
 const { Option } = Select;
 
@@ -31,9 +31,8 @@ export interface AcaoContextDataType {
   eventos: any[];
   turmas: any[];
   periodos: any[];
-  tiposAcoes:any[];
-  instituicoes: any[]
-  
+  tiposAcoes: any[];
+  instituicoes: any[];
 }
 
 export default function CadastrarAcoes() {
@@ -67,7 +66,7 @@ export default function CadastrarAcoes() {
     },
   ]);
   const [selectedTipoAcoes, setSelectedTipoAcoes] = useState<any>();
-  const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>()
+  const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>();
 
   const [loading, setLoading] = useState(false);
 
@@ -111,7 +110,7 @@ export default function CadastrarAcoes() {
     setLoading(true);
     try {
       const response: AcaoContextDataType = await get("acoes/contextData");
-      setAcaoContexData(response)
+      setAcaoContexData(response);
     } catch (error) {
       console.error("Erro ao obter cursos:", error);
     } finally {
@@ -204,13 +203,7 @@ export default function CadastrarAcoes() {
               <Col span={8}>
                 {/* Turma */}
                 <Form.Item label="Turma" name="turma" required>
-                  <Select placeholder="Selecione um projeto">
-                    {acaoContexData?.turmas?.map((option) => (
-                      <Select.Option key={option.id} value={option.nome}>
-                        {option.nome}
-                      </Select.Option>
-                    ))}
-                  </Select>
+                  <Input />
                 </Form.Item>
               </Col>
 
@@ -220,7 +213,9 @@ export default function CadastrarAcoes() {
                   <Select placeholder="Selecione um projeto">
                     {acaoContexData?.periodos?.map((option) => (
                       <Select.Option key={option.id} value={option.nome}>
-                        { option.periodo == "-" ? option.ano  : option.ano + "/" + option.periodo }
+                        {option.periodo == "-"
+                          ? option.ano
+                          : option.ano + "/" + option.periodo}
                       </Select.Option>
                     ))}
                   </Select>
@@ -229,7 +224,13 @@ export default function CadastrarAcoes() {
               <Col span={8}>
                 {/* Modalidade */}
                 <Form.Item label="Modalidade" name="modalidade" required>
-                  <Input />
+                  <Select placeholder="Selecione um projeto">
+                    {modalidades?.periodos?.map((option) => (
+                      <Select.Option key={option} value={option}>
+                        {option}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </Col>
             </Row>
@@ -361,7 +362,7 @@ export default function CadastrarAcoes() {
               name="instituicaoAtendida"
               rules={[{ required: true, message: "Campo obrigatório" }]}
             >
-             <Select
+              <Select
                 onChange={(e) => {
                   setSelectedTipoAcao(e);
                 }}

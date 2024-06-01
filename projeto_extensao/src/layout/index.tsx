@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import "./styles.css";
 import Breadcrumbs from "../components/Breadcrumbs";
 import MenuLeft from "../components/MenuLeft";
-import ifes from "../assets/images/image2vector.svg";
+import ifes from "../assets/images/logocolatina.png";
 import logo from "../assets/images/logo.png";
 
 import {  useState } from "react";
@@ -12,7 +12,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { Button, Menu, theme } from "antd";
+import { Button, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { colors } from "../global/theme/theme";
 
@@ -24,7 +24,7 @@ function RootLayout() {
 
   return (
     <Layout style={{ height: "100vh" }} >
-      <Sider className="seu-elemento" trigger={null} collapsible collapsed={collapsed} width={300} >
+      <Sider className="seu-elemento" trigger={null} collapsible collapsed={collapsed} width={300} style={{background: "white"}} >
         {/* <div className="demo-logo-vertical" /> */}
         <div
           style={{
@@ -77,9 +77,9 @@ function RootLayout() {
         <Content
           className="shadow"
           style={{
-            margin: "0px 1.5rem 8px 1.5rem",
+            margin: "0px 2rem 10px 2rem",
             padding: 24,
-            minHeight: 280,
+            minHeight: "80vh",
             overflow: "auto",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,

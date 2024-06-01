@@ -15,7 +15,7 @@ export default function Breadcrumbs() {
 
   
   return (
-    <Breadcrumb style={{ marginLeft: "1.5rem", padding: "0.5rem 0rem" }}>
+    <Breadcrumb style={{ marginLeft: "2rem", padding: "0.85rem 0rem" }}>
       {pathnames.map((path, index) => {
         const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
         const decodedPath = decodeURIComponent(path);

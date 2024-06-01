@@ -38,9 +38,11 @@ public class Instituicao {
     @Column
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_instituicao_id")
-    private TipoInstituicao tipoInstituicao;
+    @Column
+    private String telefone;
+
+    @Column
+    private String tipoInstituicao;
 
     //@ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "acao_pai_id")

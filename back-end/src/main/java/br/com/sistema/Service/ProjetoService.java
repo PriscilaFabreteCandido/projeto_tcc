@@ -3,7 +3,6 @@ package br.com.sistema.Service;
 import br.com.sistema.DTO.ProjetoDTO;
 import br.com.sistema.Exception.EntityNotFoundException;
 import br.com.sistema.Mapper.ProjetoMapper;
-import br.com.sistema.Model.Projeto;
 import br.com.sistema.Repository.ProjetoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

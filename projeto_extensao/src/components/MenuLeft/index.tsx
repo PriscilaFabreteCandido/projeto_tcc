@@ -49,25 +49,24 @@ function getItem(
 }
 
 const items: MenuProps["items"] = [
-  getItem("Início", "inicio", <HomeOutlined style={{color: "white"}}/>, "/Inicio"),
+  getItem("Início", "inicio", <HomeOutlined />, "/Inicio"),
 
-  getItem("Cadastros", "cadastros", <FileTextOutlined style={{color: "white"}}/>, "/Consultas", [
-    getItem("Curso", "cursos", <DesktopOutlined style={{color: "white"}}/>, "Cadastros/Cursos"),
-    getItem("Função", "funcao", <IdcardOutlined style={{color: "white"}}/>, "Cadastros/Funções"),
-    getItem("Instituição","instituicao",<BankOutlined style={{color: "white"}}/>,"Cadastros/Instituições"),
-    getItem("Pessoas", "pessoas", <TeamOutlined style={{color: "white"}}/>, "Cadastros/Pessoas"),
-    getItem("Semestre Letivos","semestre",<CalendarOutlined style={{color: "white"}}/>,"Cadastros/Semestres Letivos" ),
-    getItem("Tipo Ação","tipoAcao",<FileTextOutlined style={{color: "white"}}/>,"Cadastros/Tipo Ações"),
-    getItem("Turma", "turma", <SolutionOutlined style={{color: "white"}}/>, "Cadastros/Turmas"),
+  getItem("Cadastros", "cadastros", <FileTextOutlined />, "/Consultas", [
+    getItem("Curso", "cursos", <DesktopOutlined />, "Cadastros/Cursos"),
+    getItem("Função", "funcao", <IdcardOutlined />, "Cadastros/Funções"),
+    getItem("Instituição","instituicao",<BankOutlined />,"Cadastros/Instituições"),
+    getItem("Pessoas", "pessoas", <TeamOutlined />, "Cadastros/Pessoas"),
+    getItem("Semestre Letivos","semestre",<CalendarOutlined />,"Cadastros/Semestres Letivos" ),
+    getItem("Tipo Ação","tipoAcao",<FileTextOutlined />,"Cadastros/Tipo Ações"),
   ]),
-  getItem("Ações", "acoes", <PlayCircleOutlined style={{color: "white"}} />, "/Consultas", [
-    getItem("Nova Ação", "novaAcao", <DesktopOutlined style={{color: "white"}} />, "/Ações/Cadastrar Nova Ação"),
-    getItem("Emitir Relatórios", "emitirRelatorios", <FileSearchOutlined style={{color: "white"}} />, "Ações/Emitir Relatório"),
-    getItem("Consultar Ação", "consultarAcao", <BarChartOutlined style={{color: "white"}} />, "/Ações/Consultar Ação"),
+  getItem("Ações", "acoes", <PlayCircleOutlined  />, "/Consultas", [
+    getItem("Nova Ação", "novaAcao", <DesktopOutlined  />, "/Ações/Cadastrar Nova Ação"),
+    getItem("Emitir Relatórios", "emitirRelatorios", <FileSearchOutlined  />, "Ações/Emitir Relatório"),
+    getItem("Consultar Ação", "consultarAcao", <BarChartOutlined  />, "/Ações/Consultar Ação"),
   ]),
 
-  getItem("Dúvidas Frequentes", "duvidas",<QuestionCircleOutlined style={{color: "white"}}/>, "/Dúvidas Frequentes"),
-  getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined style={{color: "white"}}/>,"/Ações"),
+  getItem("Dúvidas Frequentes", "duvidas",<QuestionCircleOutlined />, "/Dúvidas Frequentes"),
+  getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined />,"/Ações"),
 ];
 
 function MenuLeft({ isIconClicked }: any) {
@@ -124,15 +123,14 @@ function MenuLeft({ isIconClicked }: any) {
           }}
         >
           <Menu
-            theme="dark"
-            
+            mode="inline"
             onClick={onClick}
             style={{ height: "90%" }}
             defaultSelectedKeys={defaultSelectedKeys}
             defaultOpenKeys={["sub1"]}
-            mode="inline"
             inlineCollapsed={!isIconClicked}
             items={items}
+            
             
           />
         </div>

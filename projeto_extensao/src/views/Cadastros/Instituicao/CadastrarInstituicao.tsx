@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Select, Switch, message } from "antd";
+import React, { useEffect } from "react";
+import { Button, Form, Input, Select,  message } from "antd";
 import { useLocation, useNavigate } from "react-router";
-import { TipoInstituicaoType } from ".";
-import { get, post, put } from "../../../api/axios";
+
+import {  post, put } from "../../../api/axios";
+import { tipoInstituicoes } from "../../../data/tipoInstituicoes";
 
 const CadastrarInstituicao = () => {
   const [form] = Form.useForm();
   const location = useLocation();
-  const [tipoInstituicoes, setTipoInstituicoes] = useState<TipoInstituicaoType[]>([]);
   const navigate = useNavigate() as any;
-  const [loading, setLoading] = useState<boolean>(false);
-
+  
   const { instituicao } = location.state || {};
 
   React.useEffect(() => {
@@ -24,26 +23,13 @@ const CadastrarInstituicao = () => {
         numero: instituicao.numero,
         descricao: instituicao.descricao,
         email: instituicao.email,
+        telefone: instituicao.telefone,
         tipoInstituicao: instituicao.tipoInstituicao,
       });
     }
   }, [instituicao, form]);
 
-  const getTipoInstituicoes = async () => {
-    setLoading(true);
-    try {
-      const response: TipoInstituicaoType[] = await get("tipoInstituicoes");
-      if (response?.length) setTipoInstituicoes(response);
-    } catch (error) {
-      console.error("Erro ao obter tipo instituições:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    console.log("veio aqui");
-    getTipoInstituicoes();
   }, []);
 
   const buscarEnderecoPorCEP = async (cep: string) => {
@@ -91,9 +77,9 @@ const CadastrarInstituicao = () => {
         numero: values.numero,
         descricao: values.descricao,
         email: values.email,
-        tipoInstituicao: {
-          id: values.tipoInstituicao
-        }
+        telefone: values.telefone,
+        tipoInstituicao:  values.tipoInstituicao
+        
       };
 
       if (!instituicao) {
@@ -222,10 +208,10 @@ const CadastrarInstituicao = () => {
                   },
                 ]}
               >
-                <Select >
+                <Select showSearch>
                   {tipoInstituicoes.map((option) => (
-                    <Select.Option key={option.id} value={option.id}>
-                      {option.nome}
+                    <Select.Option key={option} value={option}>
+                      {option}
                     </Select.Option>
                   ))}
                 </Select>

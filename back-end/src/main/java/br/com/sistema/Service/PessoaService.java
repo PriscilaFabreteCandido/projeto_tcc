@@ -1,5 +1,6 @@
 package br.com.sistema.Service;
 
+import br.com.sistema.DTO.CursoDTO;
 import br.com.sistema.DTO.FuncaoDTO;
 import br.com.sistema.DTO.InstituicaoDTO;
 import br.com.sistema.DTO.Pessoa.ContextDataPessoaDTO;
@@ -7,18 +8,9 @@ import br.com.sistema.DTO.Pessoa.PessoaDTO;
 import br.com.sistema.DTO.VinculoDTO;
 import br.com.sistema.Exception.BusinessException;
 import br.com.sistema.Exception.EntityNotFoundException;
-import br.com.sistema.Mapper.FuncaoMapper;
-import br.com.sistema.Mapper.InstituicaoMapper;
-import br.com.sistema.Mapper.PessoaMapper;
-import br.com.sistema.Mapper.VinculoMapper;
-import br.com.sistema.Model.Funcao;
-import br.com.sistema.Model.Instituicao;
-import br.com.sistema.Model.Pessoa;
-import br.com.sistema.Model.Vinculo;
-import br.com.sistema.Repository.FuncaoRepository;
-import br.com.sistema.Repository.InstituicaoRepository;
-import br.com.sistema.Repository.PessoaRepository;
-import br.com.sistema.Repository.VinculoRepository;
+import br.com.sistema.Mapper.*;
+import br.com.sistema.Model.*;
+import br.com.sistema.Repository.*;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +28,13 @@ public class PessoaService {
     private final PessoaRepository repository;
     private final InstituicaoRepository instituicaoRepository;
     private final VinculoRepository vinculoRepository;
+    private final CursoRepository cursoRepository;
 
     private final FuncaoRepository funcaoRepository;
     private final PessoaMapper mapper;
     private final InstituicaoMapper instituicaoMapper;
     private final VinculoMapper vinculoMapper;
+    private final CursoMapper cursoMapper;
     private final FuncaoMapper funcaoMapper;
     private final Validator validator;
 
@@ -48,7 +42,7 @@ public class PessoaService {
         validatePessoa(pessoaDTO);
 
         Pessoa entity = mapper.toEntity(pessoaDTO);
-        repository.save(entity);
+        entity = repository.save(entity);
 
         return mapper.toDto(entity);
     }
@@ -58,6 +52,7 @@ public class PessoaService {
         List<Instituicao> instituicoes = instituicaoRepository.findAll();
         List<Vinculo> vinculos = vinculoRepository.findAll();
         List<Funcao> funcoes = funcaoRepository.findAll();
+        List<Curso> cursos = cursoRepository.findAll();
 
         // Mapeamento de entidades para DTOs
         List<InstituicaoDTO> instituicoesDTO = instituicoes.stream()
@@ -75,9 +70,15 @@ public class PessoaService {
                 .map(funcaoMapper::toDto)
                 .collect(Collectors.toList());
 
+        List<CursoDTO> cursosDTO = cursos.stream()
+                .filter(Objects::nonNull)
+                .map(cursoMapper::toDto)
+                .collect(Collectors.toList());
+
         contextDataPessoaDTO.setInstituicoes(instituicoesDTO);
         contextDataPessoaDTO.setVinculos(vinculosDTO);
         contextDataPessoaDTO.setFuncoes(funcoesDTO);
+        contextDataPessoaDTO.setCursos(cursosDTO);
 
         return contextDataPessoaDTO;
     }

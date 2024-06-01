@@ -14,8 +14,6 @@ public class Curso {
     @Column
     private String nome;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "instituicao_id")
-//    private Instituicao instituicao;
+    @Column
+    private String nivel;
 }

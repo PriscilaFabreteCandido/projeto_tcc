@@ -21,7 +21,7 @@ interface CursoType {
   key: React.Key;
   id: number;
   nome: string;
-  instituicao: string;
+  nivel: string;
 }
 
 const Cursos: React.FC = () => {
@@ -89,7 +89,7 @@ const Cursos: React.FC = () => {
 
       const cursoToCreateOrEdit = {
         nome: values.nome,
-        instituicao: values.instituicao,
+        nivel: values.nivel,
         id: cursoToEdit ? cursoToEdit.id : null,
       };
 
@@ -131,7 +131,7 @@ const Cursos: React.FC = () => {
                 setCursoToEdit(record);
                 form.setFieldsValue({
                   nome: record.nome,
-                  instituicao: record.instituicao,
+                  nivel: record.nivel,
                 });
                 setIsOpenModal(true);
               }}
@@ -207,7 +207,7 @@ const Cursos: React.FC = () => {
             ]}
           >
             <Select>
-              {instituicoes.map((option) => (
+              {niveisEscolaridade.map((option) => (
                 <Select.Option key={option.id} value={option.nome}>
                   {option.nome}
                 </Select.Option>

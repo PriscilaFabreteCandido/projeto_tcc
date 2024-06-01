@@ -29,69 +29,21 @@ interface PessoaType {
   graduacao: string;
 }
 
-const InstituicoesOptions = [
-  { id: 1, nome: "IFES" },
-  // Adicione outras opções conforme necessário
-];
 
-const GraduacaoOptions = [
-  { id: 1, nome: "Ensino Médio" },
-  { id: 2, nome: "Graduação" },
-  { id: 3, nome: "Pós-Graduação" },
-  // Adicione outras opções conforme necessário
-];
 
 const Pessoas: React.FC = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const [pessoaToEdit, setPessoaToEdit] = useState<PessoaType | null>(null);
-  const [pessoas, setPessoas] = useState<PessoaType[]>([
-    {
-      key: 1,
-      id: 1,
-      nome: "Fulano",
-      cpf: "111.222.333.44-55",
-      matricula: "20211564452",
-      dataNascimento: "01/02/2002",
-      email: "fulano@gmail.com",
-      instituicao: "IFES",
-      graduacao: "Ensino Médio",
-    },
-    {
-      key: 2,
-      id: 2,
-      nome: "Maria",
-      cpf: "222.333.444.55-66",
-      matricula: "20211568888",
-      dataNascimento: "10/05/1995",
-      email: "maria@gmail.com",
-      instituicao: "UFES",
-      graduacao: "Graduação",
-    },
-    {
-      key: 3,
-      id: 3,
-      nome: "João",
-      cpf: "333.444.555.66-77",
-      matricula: "20211569999",
-      dataNascimento: "20/11/1988",
-      email: "joao@gmail.com",
-      instituicao: "IFMG",
-      graduacao: "Pós Graduação",
-    },
-  ]);
+  const [pessoas, setPessoas] = useState<PessoaType[]>([]);
 
   const [form] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   
-  const showModal = () => {
-    setIsOpenModal(true);
-  };
-
+  
   const handleCancel = () => {
     form.resetFields();
     setPessoaToEdit(null);
-    setIsOpenModal(false);
+
   };
 
   const getPessoas = async () => {
@@ -110,44 +62,7 @@ const Pessoas: React.FC = () => {
     getPessoas();
   }, []);
 
-  const handleOk = async () => {
-    try {
-      await form.validateFields();
-      const values = form.getFieldsValue();
-
-      const pessoaData = {
-        nome: values.nome,
-        cpf: values.cpf,
-        matricula: values.matricula,
-        dataNascimento: values.dataNascimento,
-        email: values.email,
-        instituicao: values.instituicao,
-        id: pessoaToEdit ? pessoaToEdit.id : null,
-      };
-
-      if (!pessoaToEdit) {
-        const response = await post("pessoas/create", pessoaData);
-        setPessoas([...pessoas, response]);
-        message.success("Pessoa criada com sucesso");
-      } else {
-        const response = await put(
-          `pessoas/update/${pessoaToEdit.id}`,
-          pessoaData
-        );
-        setPessoas(
-          pessoas.map((pessoa) =>
-            pessoa.id === response.id ? response : pessoa
-          )
-        );
-        message.success("Pessoa editada com sucesso");
-      }
-
-      handleCancel();
-    } catch (error) {
-      console.error("Erro ao processar o formulário:", error);
-    }
-  };
-
+ 
   const onDelete = async (id: number) => {
     try {
       await remove(`pessoas/delete/${id}`);

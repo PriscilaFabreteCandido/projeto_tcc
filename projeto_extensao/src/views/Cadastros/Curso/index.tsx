@@ -15,13 +15,13 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
-import { InstituicaoType } from "../Instituicao";
+import { niveisEscolaridade } from "../../../data/niveisdeescolaridade";
 
 interface CursoType {
   key: React.Key;
   id: number;
   nome: string;
-  instituicao: string;
+  nivel: string;
 }
 
 const Cursos: React.FC = () => {
@@ -29,7 +29,6 @@ const Cursos: React.FC = () => {
   const [cursoToEdit, setCursoToEdit] = useState<CursoType | null>(null);
   const [cursos, setCursos] = useState<CursoType[]>([]);
   const [form] = Form.useForm();
-  const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const showModal = () => {
@@ -54,18 +53,6 @@ const Cursos: React.FC = () => {
     }
   };
 
-  const getInstituicoes = async () => {
-    setLoading(true);
-    try {
-      const response: InstituicaoType[] = await get("instituicoes");
-      setInstituicoes(response);
-    } catch (error) {
-      console.error("Erro ao obter instituições:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const onDelete = async (id: number) => {
     try {
       await remove(`cursos/delete/${id}`);
@@ -77,30 +64,36 @@ const Cursos: React.FC = () => {
   };
 
   useEffect(() => {
-    getInstituicoes();
     getCursos();
-   
   }, []);
 
   const handleCadastrar = async () => {
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
-
+      console.log('values', values)
       const cursoToCreateOrEdit = {
         nome: values.nome,
-        instituicao: values.instituicao,
+        nivel: values.nivel,
         id: cursoToEdit ? cursoToEdit.id : null,
       };
 
       if (!cursoToEdit) {
-        await post("cursos/create", cursoToCreateOrEdit);
+        const resp = await post("cursos/create", cursoToCreateOrEdit);
         setIsOpenModal(false);
         message.success("Curso criado com sucesso");
+        setCursos(cursos.concat(resp))
       } else {
-        await put(`cursos/update/${cursoToEdit.id}`, cursoToCreateOrEdit);
+        const resp = await put(
+          `cursos/update/${cursoToEdit.id}`,
+          cursoToCreateOrEdit
+        );
         setIsOpenModal(false);
         message.success("Curso editado com sucesso");
+        const updatedCursos = cursos.map((curso) =>
+          curso.id === cursoToEdit.id ? resp : curso
+        );
+        setCursos(updatedCursos);
       }
 
       handleCancel();
@@ -115,8 +108,8 @@ const Cursos: React.FC = () => {
       dataIndex: "nome",
     },
     {
-      title: "Instituição",
-      dataIndex: "instituicao",
+      title: "Nível de Escolaridade",
+      dataIndex: "nivel",
     },
     {
       title: "Ações",
@@ -131,7 +124,7 @@ const Cursos: React.FC = () => {
                 setCursoToEdit(record);
                 form.setFieldsValue({
                   nome: record.nome,
-                  instituicao: record.instituicao,
+                  nivel: record.nivel,
                 });
                 setIsOpenModal(true);
               }}
@@ -197,8 +190,8 @@ const Cursos: React.FC = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="instituicao"
-            label="Instituição"
+            name="nivel"
+            label="Nível de escolaridade"
             rules={[
               {
                 required: true,
@@ -207,9 +200,9 @@ const Cursos: React.FC = () => {
             ]}
           >
             <Select>
-              {instituicoes.map((option) => (
-                <Select.Option key={option.id} value={option.nome}>
-                  {option.nome}
+              {niveisEscolaridade.map((option) => (
+                <Select.Option key={option} value={option}>
+                  {option}
                 </Select.Option>
               ))}
             </Select>
