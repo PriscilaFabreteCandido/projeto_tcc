@@ -71,7 +71,7 @@ const Cursos: React.FC = () => {
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
-      console.log('values', values)
+      
       const cursoToCreateOrEdit = {
         nome: values.nome,
         nivel: values.nivel,

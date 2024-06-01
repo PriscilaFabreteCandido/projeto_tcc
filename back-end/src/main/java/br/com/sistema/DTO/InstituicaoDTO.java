@@ -17,5 +17,4 @@ public class InstituicaoDTO {
     private String telefone;
     private String tipoInstituicao;
 
-
 }

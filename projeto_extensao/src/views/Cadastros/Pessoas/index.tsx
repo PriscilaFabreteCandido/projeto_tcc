@@ -11,17 +11,20 @@ import {
   Collapse,
   CollapseProps,
   Typography,
+  Select,
 } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
+  FilterOutlined,
   PlusOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
-import { get, remove } from "../../../api/axios";
+import { get, post, remove } from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { niveisEscolaridade } from "../../../data/niveisdeescolaridade";
 
 interface PessoaType {
   key: React.Key;
@@ -38,7 +41,7 @@ const { Title } = Typography;
 
 const Pessoas: React.FC = () => {
   const [pessoas, setPessoas] = useState<PessoaType[]>([]);
-
+  const [expanded, setExpanded] = useState(false);
   const [formFilter] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -129,32 +132,71 @@ const Pessoas: React.FC = () => {
     },
   ];
 
+  const onFilter = async () => {
+    try {
+      setLoading(true)
+      const values = formFilter.getFieldsValue()
+      const resp = await post(`pessoas/filter`, values);
+      setPessoas(resp);
+     
+    } catch (error) {
+      console.error("Erro ao excluir pessoa:", error);
+    }finally{
+      setLoading(false)
+    }
+  }
+
   const items: CollapseProps["items"] = [
     {
       key: "1",
       label: (
         <div
           className="title-container"
-          style={{ display: "flex", alignItems: "center" }}
+          style={{
+            display: "flex",
+            
+            justifyContent: "space-between",
+          }}
         >
-          <UserOutlined style={{ fontSize: "18px", marginRight: "8px" }} />
-          <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-            Cadastro de Pessoas
-          </span>
-          <Button
-            className="ifes-btn-success"
-            onClick={() => {
-              navigate("/Cadastros/Pessoas/Cadastrar");
-            }}
-            style={{
-              marginLeft: "auto",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <PlusOutlined className="ifes-icon" />
-            <span style={{ marginLeft: "5px" }}>Adicionar</span>
-          </Button>
+          <div  className="flex gap-1" style={{alignItems: "center",}}>
+            <UserOutlined style={{ fontSize: "18px", marginRight: "8px" }} />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              Cadastro de Pessoas
+            </span>
+          </div>
+
+          <div className="flex gap-1" style={{alignItems: "center", gap:"1rem"}}>
+            {expanded && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  onFilter()
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <FilterOutlined className="ifes-icon" />
+                <span style={{ marginLeft: "5px" }}>Filtrar</span>
+              </Button>
+            )}
+
+            <Button
+              className="ifes-btn-success"
+              onClick={() => {
+                navigate("/Cadastros/Pessoas/Cadastrar");
+              }}
+              style={{
+                marginLeft: "auto",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <PlusOutlined className="ifes-icon" />
+              <span style={{ marginLeft: "5px" }}>Adicionar</span>
+            </Button>
+          </div>
         </div>
       ),
       children: (
@@ -175,8 +217,14 @@ const Pessoas: React.FC = () => {
               <Input placeholder="Nome" style={{ width: "200px" }} />
             </Form.Item>
 
-            <Form.Item name="matricula" label="Matricula">
-              <Input placeholder="Matricula" style={{ width: "200px" }} />
+            <Form.Item name="nivelEscolaridade" label="Nível de Escolaridade">
+              <Select placeholder="selecione">
+                {niveisEscolaridade.map((option) => (
+                  <Select.Option key={option} value={option}>
+                    {option}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Form>
         </div>
@@ -188,7 +236,11 @@ const Pessoas: React.FC = () => {
     <>
       {/* Header */}
       <CardFooter>
-        <Collapse accordion items={items} />
+        <Collapse
+          accordion
+          items={items}
+          onChange={(key) => setExpanded(key.includes("1"))}
+        />
       </CardFooter>
 
       {/* Tabela */}

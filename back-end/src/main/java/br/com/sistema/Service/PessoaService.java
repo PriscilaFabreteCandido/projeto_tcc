@@ -5,6 +5,7 @@ import br.com.sistema.DTO.FuncaoDTO;
 import br.com.sistema.DTO.InstituicaoDTO;
 import br.com.sistema.DTO.Pessoa.ContextDataPessoaDTO;
 import br.com.sistema.DTO.Pessoa.PessoaDTO;
+import br.com.sistema.DTO.Pessoa.PessoaFilterDTO;
 import br.com.sistema.DTO.VinculoDTO;
 import br.com.sistema.Exception.BusinessException;
 import br.com.sistema.Exception.EntityNotFoundException;
@@ -47,9 +48,23 @@ public class PessoaService {
         return mapper.toDto(entity);
     }
 
+    public List<PessoaDTO> filter(PessoaFilterDTO filterDTO) {
+        return repository.findAll().stream()
+                .filter(pessoa -> (filterDTO.getNome() == null || pessoa.getNome().contains(filterDTO.getNome())) &&
+                        (filterDTO.getCpf() == null || pessoa.getCpf().contains(filterDTO.getCpf())) &&
+                        (filterDTO.getMatricula() == null || pessoa.getMatricula().contains(filterDTO.getMatricula())))
+                .filter(Objects::nonNull)
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     public ContextDataPessoaDTO getContextData(){
         ContextDataPessoaDTO contextDataPessoaDTO = new ContextDataPessoaDTO();
+        System.out.println("VEIOOOOOOO         List<Instituicao> instituicoes = instituicaoRepository.findAll();\n");
+
         List<Instituicao> instituicoes = instituicaoRepository.findAll();
+
+        System.out.println("DEPOSSSS\n");
         List<Funcao> funcoes = funcaoRepository.findAll();
         List<Curso> cursos = cursoRepository.findAll();
 
@@ -58,7 +73,6 @@ public class PessoaService {
                 .filter(Objects::nonNull)
                 .map(instituicaoMapper::toDto)
                 .collect(Collectors.toList());
-
 
         List<FuncaoDTO> funcoesDTO = funcoes.stream()
                 .filter(Objects::nonNull)

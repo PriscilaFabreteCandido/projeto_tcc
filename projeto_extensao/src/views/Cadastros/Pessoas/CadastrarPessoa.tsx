@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Select, Spin, message } from "antd";
+import { Button, DatePicker, Form, Input, Select, Spin, message } from "antd";
 import { useLocation, useNavigate } from "react-router";
 import { InstituicaoType } from "../Instituicao";
 import { get, post, put } from "../../../api/axios";
 import { niveisEscolaridade } from "../../../data/niveisdeescolaridade";
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { vinculos } from "../../../data/vinculos";
+import moment from "moment";
 
 
 export interface FuncoesType {
@@ -27,24 +28,7 @@ const CadastrarPessoa = () => {
   const { pessoa } = location.state || {};
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  React.useEffect(() => {
-    if (pessoa) {
-      form.setFieldsValue({
-        nome: pessoa.nome,
-        cpf: pessoa.cpf,
-        matricula: pessoa.matricula,
-        dataNascimento: pessoa.dataNascimento,
-        telefone: pessoa.telefone,
-        curso: pessoa.curso,
-        instituicao: pessoa.instituicao,
-        graduacao: pessoa.graduacao,
-        funcao: pessoa.funcao,
-        ativo: pessoa.ativo,
-      });
-    }
-  }, [pessoa, form]);
-
+  
   useEffect(() => {
     getContextData();
   }, []);
@@ -52,7 +36,7 @@ const CadastrarPessoa = () => {
   const getContextData = async () => {
     setLoading(true);
     try {
-      const response = await get("pessoas/getContextData");
+      const response = await get("pessoas/contextData");
       
       setInstituicoes(response.instituicoes);
       setFuncoes(response.funcoes);
@@ -64,38 +48,70 @@ const CadastrarPessoa = () => {
     }
   };
 
-  const handleOk = async () => {
+  const handleCancel = () => {
+    navigate("Cadastros/Pessoas");
+  };
+
+  useEffect(() => {
+    if (pessoa) {
+      form.setFieldsValue({
+        nome: pessoa.nome,
+        cpf: pessoa.cpf,
+        matricula: pessoa.matricula,
+        dataNascimento: pessoa.dtNascimento ? moment(pessoa.dataNascimento) : null,
+        telefone: pessoa.telefone,
+        curso: pessoa.curso,
+        instituicao: pessoa.instituicao,
+        graduacao: pessoa.graduacao,
+        funcao: pessoa.funcao,
+        vinculo: pessoa.vinculo,
+        email: pessoa.email,
+        nivelEscolaridade: pessoa.nivelEscolaridade,
+      });
+    }
+  }, [pessoa, form]);
+
+  const handleCadastrar = async () => {
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
-
+  
       const pessoaData = {
         nome: values.nome,
         cpf: values.cpf,
         matricula: values.matricula,
-        dataNascimento: values.dataNascimento,
+        dtNascimento: values.dtNascimento,
+        telefone: values.telefone,
         email: values.email,
-        instituicao: values.instituicao,
+        instituicao: {
+          id: values.instituicao
+        },
+        nivelEscolaridade: values.nivelEscolaridade,
+        funcao: {
+          id: values.funcao
+        },
+        vinculo: values.vinculo,
+        curso: {
+          id: values.curso
+        },
         id: pessoa ? pessoa.id : null,
       };
-
+  
       if (!pessoa) {
         await post("pessoas/create", pessoaData);
-
         message.success("Pessoa criada com sucesso");
       } else {
         await put(`pessoas/update/${pessoa.id}`, pessoaData);
-
         message.success("Pessoa editada com sucesso");
       }
+  
+      navigate("/Cadastros/Pessoas");
     } catch (error) {
       console.error("Erro ao processar o formulário:", error);
+      message.error("Erro ao processar o formulário");
     }
   };
-
-  const handleCancel = () => {
-    navigate("Cadastros/Pessoas");
-  };
+  
 
   return (
     <Spin spinning={loading}>
@@ -135,12 +151,7 @@ const CadastrarPessoa = () => {
               <Form.Item
                 name="matricula"
                 label="Matrícula"
-                rules={[
-                  {
-                    required: true,
-                    message: "Por favor, insira a matrícula da pessoa!",
-                  },
-                ]}
+
               >
                 <Input />
               </Form.Item>
@@ -149,7 +160,7 @@ const CadastrarPessoa = () => {
           <div style={{ display: "flex", marginBottom: "20px" }}>
             <div style={{ flex: 1, marginRight: "10px" }}>
               <Form.Item
-                name="dataNascimento"
+                name="dtNascimento"
                 label="Data de Nascimento"
                 rules={[
                   {
@@ -159,7 +170,7 @@ const CadastrarPessoa = () => {
                   },
                 ]}
               >
-                <Input />
+                <DatePicker format="DD/MM/YYYY" style={{ width: '100%' }} />
               </Form.Item>
             </div>
             <div style={{ flex: 1, marginRight: "10px" }}>
@@ -214,7 +225,7 @@ const CadastrarPessoa = () => {
             </div>
             <div style={{ flex: 1, marginRight: "10px" }}>
               <Form.Item
-                name="graduacao"
+                name="nivelEscolaridade"
                 label="Nivel de Escolaridade"
                 rules={[
                   {
@@ -277,10 +288,10 @@ const CadastrarPessoa = () => {
             </div>
             <div style={{ flex: 1, marginRight: "10px" }}>
               <Form.Item name="curso" label="Curso">
-                <Select>
+              <Select>
                   {cursos.map((option) => (
-                    <Select.Option key={option} value={option}>
-                      {option}
+                    <Select.Option key={option.id} value={option.nome}>
+                      {option.nome}
                     </Select.Option>
                   ))}
                 </Select>
@@ -297,6 +308,7 @@ const CadastrarPessoa = () => {
               type="primary"
               htmlType="submit"
               style={{ marginLeft: "8px" }}
+              onClick={() =>  handleCadastrar()}
             >
               Cadastrar <PlusOutlined />
             </Button>

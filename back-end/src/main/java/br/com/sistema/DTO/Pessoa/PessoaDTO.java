@@ -1,5 +1,6 @@
 package br.com.sistema.DTO.Pessoa;
 
+import br.com.sistema.DTO.CursoDTO;
 import br.com.sistema.DTO.FuncaoDTO;
 import br.com.sistema.DTO.InstituicaoDTO;
 import br.com.sistema.Model.Funcao;
@@ -28,4 +29,5 @@ public class PessoaDTO {
 
     private FuncaoDTO funcao;
     private InstituicaoDTO instituicao;
+    private CursoDTO cursoDTO;
 }

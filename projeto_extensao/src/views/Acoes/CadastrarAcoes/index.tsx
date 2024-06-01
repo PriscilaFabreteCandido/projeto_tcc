@@ -16,7 +16,9 @@ import {
 import "../styles.css";
 import {
   ApartmentOutlined,
+  CloseOutlined,
   InfoCircleOutlined,
+  PlusOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
@@ -38,7 +40,6 @@ export interface AcaoContextDataType {
 export default function CadastrarAcoes() {
   const [form] = Form.useForm();
   const [selectedTipoAcao, setSelectedTipoAcao] = useState<string>("");
-  // const [tiposAcoesOptions, setTiposAcoesOptions] = useState<any>([]);
   const [tiposAcoesOptions, setTiposAcoesOptions] = useState<any[]>([
     {
       title: "Curso",
@@ -225,7 +226,7 @@ export default function CadastrarAcoes() {
                 {/* Modalidade */}
                 <Form.Item label="Modalidade" name="modalidade" required>
                   <Select placeholder="Selecione um projeto">
-                    {modalidades?.periodos?.map((option) => (
+                    {modalidades?.map((option) => (
                       <Select.Option key={option} value={option}>
                         {option}
                       </Select.Option>
@@ -454,6 +455,19 @@ export default function CadastrarAcoes() {
             </Form.Item>
           </Col>
         </Row>
+
+        <div style={{ display: "flex", justifyContent: "end" }}>
+          <Button type="default" onClick={() => {}}>
+            <CloseOutlined /> Cancelar
+          </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ marginLeft: "8px" }}
+          >
+            Cadastrar <PlusOutlined />
+          </Button>
+        </div>
       </Form>
     </Spin>
   );

@@ -13,6 +13,7 @@ import {
 } from "antd";
 import {
   EditOutlined,
+  FilterOutlined,
   InfoCircleOutlined,
   PlusOutlined,
   SolutionOutlined,
@@ -37,32 +38,68 @@ const { Option } = Select;
 
 const Acoes: React.FC = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [formFilter] = Form.useForm();
 
+  const onFilter = () => {
+
+  }
+  
   const items: CollapseProps["items"] = [
     {
       key: "1",
       label: (
         <div
           className="title-container"
-          style={{ display: "flex", alignItems: "center" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          <SolutionOutlined style={{ fontSize: "18px", marginRight: "8px" }} />
-          <span style={{ fontSize: "16px", fontWeight: "bold" }}>Ações</span>
-          <Button
-            className="ifes-btn-success"
-            onClick={() => {
-              navigate("/Cadastros/Acoes/Cadastrar Nova Ação");
-            }}
-            style={{
-              marginLeft: "auto",
-              display: "flex",
-              alignItems: "center",
-            }}
+          <div className="flex gap-1" style={{ alignItems: "center" }}>
+            <SolutionOutlined
+              style={{ fontSize: "18px", marginRight: "8px" }}
+            />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>Ações</span>
+          </div>
+
+          <div
+            className="flex gap-1"
+            style={{ alignItems: "center", gap: "1rem" }}
           >
-            <PlusOutlined className="ifes-icon" />
-            <span style={{ marginLeft: "5px" }}>Adicionar</span>
-          </Button>
+            {expanded && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  onFilter();
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <FilterOutlined className="ifes-icon" />
+                <span style={{ marginLeft: "5px" }}>Filtrar</span>
+              </Button>
+            )}
+
+            <Button
+              className="ifes-btn-success"
+              onClick={() => {
+                navigate("/Cadastros/Acoes/Cadastrar Nova Ação");
+              }}
+              style={{
+                marginLeft: "auto",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <PlusOutlined className="ifes-icon" />
+              <span style={{ marginLeft: "5px" }}>Adicionar</span>
+            </Button>
+          </div>
         </div>
       ),
       children: (
@@ -71,6 +108,7 @@ const Acoes: React.FC = () => {
           style={{ padding: "10px 0", display: "flex", gap: "20px" }}
         >
           <Form
+            form={formFilter}
             layout="vertical"
             style={{ display: "flex", alignItems: "center", gap: "1rem" }}
           >
@@ -251,10 +289,14 @@ const Acoes: React.FC = () => {
   return (
     <>
       <div className="" style={{ flex: 1 }}>
-        <Collapse accordion items={items} />
+        <Collapse
+          accordion
+          items={items}
+          onChange={(key) => setExpanded(key.includes("1"))}
+        />
       </div>
 
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} loading={loading} />
     </>
   );
 };

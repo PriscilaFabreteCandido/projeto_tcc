@@ -44,4 +44,8 @@ public class Pessoa {
     @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;
 
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
+
 }
