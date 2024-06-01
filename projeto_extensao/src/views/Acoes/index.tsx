@@ -1,6 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
+  Collapse,
+  CollapseProps,
+  DatePicker,
+  Form,
   Input,
   Select,
   Space,
@@ -11,11 +15,11 @@ import {
   EditOutlined,
   InfoCircleOutlined,
   PlusOutlined,
+  SolutionOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/es/table";
-import { get } from "../../api/axios";
 
 interface DataType {
   key: React.Key;
@@ -29,12 +33,81 @@ interface DataType {
   horarioInicio: string;
   horarioTermino: string;
 }
-
+const { Option } = Select;
 
 const Acoes: React.FC = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
 
-  const projetos = ["Programa-se", "Titãs da Robótica", "Letter"];
+  const items: CollapseProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <div
+          className="title-container"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <SolutionOutlined style={{ fontSize: "18px", marginRight: "8px" }} />
+          <span style={{ fontSize: "16px", fontWeight: "bold" }}>Ações</span>
+          <Button
+            className="ifes-btn-success"
+            onClick={() => {
+              navigate("/Cadastros/Acoes/Cadastrar Nova Ação");
+            }}
+            style={{
+              marginLeft: "auto",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <PlusOutlined className="ifes-icon" />
+            <span style={{ marginLeft: "5px" }}>Adicionar</span>
+          </Button>
+        </div>
+      ),
+      children: (
+        <div
+          className="flex filtros-card"
+          style={{ padding: "10px 0", display: "flex", gap: "20px" }}
+        >
+          <Form
+            layout="vertical"
+            style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+          >
+            <Form.Item name="nomeAcao" label="Nome Ação">
+              <Input placeholder="Nome Ação" style={{ width: "200px" }} />
+            </Form.Item>
+
+            <Form.Item name="projeto" label="Projeto">
+              <Select
+                placeholder="Selecione um projeto"
+                style={{ width: "200px" }}
+              >
+                <Option value="projeto1">Projeto 1</Option>
+                <Option value="projeto2">Projeto 2</Option>
+                <Option value="projeto3">Projeto 3</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item name="dataCriacao" label="Data de Criação">
+              <DatePicker
+                placeholder="Data de Criação"
+                style={{ width: "200px" }}
+              />
+            </Form.Item>
+
+            <Form.Item name="tipoAcao" label="Tipo Ação">
+              <Select placeholder="Selecione o tipo" style={{ width: "200px" }}>
+                <Option value="tipo1">Tipo 1</Option>
+                <Option value="tipo2">Tipo 2</Option>
+                <Option value="tipo3">Tipo 3</Option>
+              </Select>
+            </Form.Item>
+          </Form>
+        </div>
+      ),
+    },
+  ];
 
   const columns: ColumnsType<DataType> = [
     {
@@ -95,9 +168,7 @@ const Acoes: React.FC = () => {
                 navigate("/Ações/Vincular Equipe de Execução");
               }}
               className="ifes-btn-info"
-            >
-              
-            </Button>
+            ></Button>
           </Tooltip>
           <Tooltip title="Vincular Equipe de Execução">
             <Button
@@ -107,20 +178,14 @@ const Acoes: React.FC = () => {
                 navigate("/Ações/Vincular Equipe de Execução");
               }}
               className="ifes-btn-help"
-            >
-              
-            </Button>
+            ></Button>
           </Tooltip>
           <Tooltip title="Editar">
             <Button
               className="ifes-btn-warning"
               icon={<EditOutlined />}
-              onClick={() => {
-              
-              }}
-            >
-              
-            </Button>
+              onClick={() => {}}
+            ></Button>
           </Tooltip>
         </Space>
       ),
@@ -132,7 +197,7 @@ const Acoes: React.FC = () => {
     {
       key: "1",
       nome: "Curso de Informática Básica",
-      projeto: projetos[0],
+      projeto: "",
       tipoAcao: "Curso",
       publicoAlvo: "Público Alvo 1",
       instituicaoAtendida: "Instituição 1",
@@ -144,7 +209,7 @@ const Acoes: React.FC = () => {
     {
       key: "2",
       nome: "Palestra",
-      projeto: projetos[1],
+      projeto: "",
       tipoAcao: "Palestra",
       publicoAlvo: "Público Alvo 2",
       instituicaoAtendida: "Instituição 2",
@@ -156,7 +221,7 @@ const Acoes: React.FC = () => {
     {
       key: "3",
       nome: "Visita Guiada",
-      projeto: projetos[2],
+      projeto: "",
       tipoAcao: "Visita Guiada",
       publicoAlvo: "Público Alvo 3",
       instituicaoAtendida: "Instituição 3",
@@ -170,8 +235,8 @@ const Acoes: React.FC = () => {
   const getContextData = async () => {
     setLoading(true);
     try {
-      const response: AcaoContextDataType = await get("acoes/contextData");
-      setAcaoContexData(response)
+      //const response: AcaoContextDataType = await get("acoes/contextData");
+      //setAcaoContexData(response);
     } catch (error) {
       console.error("Erro ao obter cursos:", error);
     } finally {
@@ -182,62 +247,11 @@ const Acoes: React.FC = () => {
   useEffect(() => {
     getContextData();
   }, []);
-  
+
   return (
     <>
-      <div className="flex justify-content-between pb-1" style={{ flex: 1 }}>
-        {/* Filtros */}
-        <div className="flex filtros-card" style={{ width: "90%" }}>
-          <Select placeholder="Ano">
-            {[
-              { id: 1, nome: "2022" },
-              { id: 2, nome: "2023" },
-              { id: 3, nome: "2024" },
-            ].map((option) => (
-              <Select.Option key={option.id} value={option.nome}>
-                {option.nome}
-              </Select.Option>
-            ))}
-          </Select>
-          <Input placeholder="Nome da Ação" style={{ width: "100px" }} />
-
-          <Select placeholder="Projeto" style={{ width: "150px" }}>
-            {[
-              { id: 1, nome: "Letter" },
-              { id: 2, nome: "Titãs da Robótica" },
-              { id: 3, nome: "Programa-se" },
-            ].map((option) => (
-              <Select.Option key={option.id} value={option.nome}>
-                {option.nome}
-              </Select.Option>
-            ))}
-          </Select>
-
-          <Select placeholder="Tipo Ação" style={{ width: "200px" }}>
-            {[
-              { id: 1, nome: "Curso" },
-              { id: 2, nome: "Visita Guiada" },
-              { id: 3, nome: "Palestra" },
-            ].map((option) => (
-              <Select.Option key={option.id} value={option.nome}>
-                {option.nome}
-              </Select.Option>
-            ))}
-          </Select>
-        </div>
-
-        <div>
-          <Button
-            className="ifes-btn-success"
-            onClick={() => {
-              navigate("/Ações/Cadastrar Ações");
-            }}
-            value="large"
-          >
-            <PlusOutlined className="ifes-icon" />
-            Adicionar
-          </Button>
-        </div>
+      <div className="" style={{ flex: 1 }}>
+        <Collapse accordion items={items} />
       </div>
 
       <Table columns={columns} dataSource={data} />

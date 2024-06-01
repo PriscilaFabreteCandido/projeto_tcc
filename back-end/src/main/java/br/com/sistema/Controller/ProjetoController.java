@@ -1,9 +1,6 @@
 package br.com.sistema.Controller;
 
 import br.com.sistema.DTO.ProjetoDTO;
-import br.com.sistema.DTO.ProjetoDTO;
-import br.com.sistema.Service.ProjetoService;
-import br.com.sistema.Service.ProjetoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

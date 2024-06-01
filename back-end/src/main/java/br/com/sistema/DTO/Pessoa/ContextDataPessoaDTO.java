@@ -13,7 +13,6 @@ import java.util.List;
 public class ContextDataPessoaDTO {
     private List<FuncaoDTO> funcoes = new ArrayList<>();
     private List<InstituicaoDTO> instituicoes = new ArrayList<>();
-    private List<VinculoDTO> vinculos = new ArrayList<>();
     private List<CursoDTO> cursos = new ArrayList<>();
 
 

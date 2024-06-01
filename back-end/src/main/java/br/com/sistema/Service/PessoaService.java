@@ -50,7 +50,6 @@ public class PessoaService {
     public ContextDataPessoaDTO getContextData(){
         ContextDataPessoaDTO contextDataPessoaDTO = new ContextDataPessoaDTO();
         List<Instituicao> instituicoes = instituicaoRepository.findAll();
-        List<Vinculo> vinculos = vinculoRepository.findAll();
         List<Funcao> funcoes = funcaoRepository.findAll();
         List<Curso> cursos = cursoRepository.findAll();
 
@@ -60,10 +59,6 @@ public class PessoaService {
                 .map(instituicaoMapper::toDto)
                 .collect(Collectors.toList());
 
-        List<VinculoDTO> vinculosDTO = vinculos.stream()
-                .filter(Objects::nonNull)
-                .map(vinculoMapper::toDto)
-                .collect(Collectors.toList());
 
         List<FuncaoDTO> funcoesDTO = funcoes.stream()
                 .filter(Objects::nonNull)
@@ -76,7 +71,6 @@ public class PessoaService {
                 .collect(Collectors.toList());
 
         contextDataPessoaDTO.setInstituicoes(instituicoesDTO);
-        contextDataPessoaDTO.setVinculos(vinculosDTO);
         contextDataPessoaDTO.setFuncoes(funcoesDTO);
         contextDataPessoaDTO.setCursos(cursosDTO);
 
