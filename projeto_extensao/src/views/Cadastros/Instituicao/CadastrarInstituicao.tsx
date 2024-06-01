@@ -10,6 +10,7 @@ const CadastrarInstituicao = () => {
   const location = useLocation();
   const navigate = useNavigate() as any;
   
+
   const { instituicao } = location.state || {};
 
   React.useEffect(() => {

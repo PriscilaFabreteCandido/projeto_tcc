@@ -44,8 +44,6 @@ public class Instituicao {
     @Column
     private String tipoInstituicao;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "acao_pai_id")
-    //private Acao acaoPai;
-
+    @OneToMany(mappedBy = "instituicao")
+    private List<Pessoa> pessoas;
 }

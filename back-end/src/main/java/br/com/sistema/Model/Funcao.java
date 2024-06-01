@@ -17,7 +17,7 @@ public class Funcao {
     @Column
     private String nome;
 
-    //@OneToMany(mappedBy = "funcao", fetch = FetchType.LAZY)
-    //private List<Pessoa> pessoas = new ArrayList<>();
+    @OneToMany(mappedBy = "funcao")
+    private List<Pessoa> pessoas;
 
 }

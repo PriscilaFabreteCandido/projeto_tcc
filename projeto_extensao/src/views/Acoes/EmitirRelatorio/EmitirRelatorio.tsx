@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Input,
@@ -14,14 +14,17 @@ import {
   FileOutlined,
   FilePdfOutlined,
   FilterOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
+import { get } from "../../../api/axios";
+import { ActionType } from "../../Cadastros/TipoAcoes";
 
 const { Option } = Select;
 
 const EmitirRelatorio = () => {
   const [expanded, setExpanded] = useState(true);
   const [formFilter] = Form.useForm();
+  const [tiposAcoes, setTiposAcoes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const data = [
     {
@@ -127,14 +130,16 @@ const EmitirRelatorio = () => {
               <Input type="number" maxLength={4} />
             </Form.Item>
 
-            <Form.Item name="vinculo" label="Vinculo">
+            <Form.Item name="tipoAcao" label="Tipo Ação">
               <Select
                 placeholder="Selecione um projeto"
                 style={{ width: "200px" }}
               >
-                <Option value="projeto1">Projeto 1</Option>
-                <Option value="projeto2">Projeto 2</Option>
-                <Option value="projeto3">Projeto 3</Option>
+                {tiposAcoes?.map((option: any) => (
+                  <Select.Option key={option.id} value={option.id}>
+                    {option.nome}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Form>
@@ -156,6 +161,23 @@ const EmitirRelatorio = () => {
     },
   ];
 
+ 
+  const getTiposAcoes = async () => {
+    setLoading(true);
+    try {
+      const response: ActionType[] = await get("tipoAcoes");
+      setTiposAcoes(response);
+    } catch (error) {
+      console.error("Erro ao obter instituições:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getTiposAcoes();
+  }, []);
+
   return (
     <div>
       <div className="" style={{ flex: 1, marginBottom: "1rem" }}>
@@ -166,7 +188,7 @@ const EmitirRelatorio = () => {
           onChange={(key) => setExpanded(key.includes("1"))}
         />
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} loading={loading} />
     </div>
   );
 };

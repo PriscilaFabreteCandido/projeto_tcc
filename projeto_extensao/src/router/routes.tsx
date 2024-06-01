@@ -21,6 +21,7 @@ import SemestresLetivos from "../views/Cadastros/Semestre";
 import Cursos from "../views/Cadastros/Curso";
 import Login from "../views/app/Login/Login";
 import EmitirRelatorio from "../views/Acoes/EmitirRelatorio/EmitirRelatorio"
+import GerenciarNiveisAcesso from "../views/GerenciarNiveisAcesso/GerenciarNiveisAcesso";
 
 export interface RouteConfig {
   path: string;
@@ -63,7 +64,7 @@ const routes: RouteConfig[] = [
       //Relatórios
       { path: "Consultas/Eventos", element: <ConsultarAcoes />, permissions: "" },
       { path: "Consultas/Pessoas", element: <ConsultasPessoas />, permissions: "" },
-     
+      { path: "Gerenciar Níveis de Acesso", element: <GerenciarNiveisAcesso />, permissions: "" },
       {
         path: "*",
         permissions: "",

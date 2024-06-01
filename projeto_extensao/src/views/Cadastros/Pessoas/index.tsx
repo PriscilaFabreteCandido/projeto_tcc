@@ -25,6 +25,7 @@ import { ColumnsType } from "antd/es/table";
 import { get, post, remove } from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
 import { niveisEscolaridade } from "../../../data/niveisdeescolaridade";
+import moment from "moment";
 
 interface PessoaType {
   key: React.Key;
@@ -87,7 +88,8 @@ const Pessoas: React.FC = () => {
     },
     {
       title: "Data de Nascimento",
-      dataIndex: "dataNascimento",
+      dataIndex: "dtNascimento",
+      render: (text) => moment(text).format('DD/MM/YYYY'), 
     },
     {
       title: "Email",
@@ -96,6 +98,7 @@ const Pessoas: React.FC = () => {
     {
       title: "Instituição",
       dataIndex: "instituicao",
+      render: (text) => text?.nome
     },
     {
       title: "Ações",
@@ -106,7 +109,10 @@ const Pessoas: React.FC = () => {
             <Button
               className="ifes-btn-warning"
               shape="circle"
-              onClick={() => {}}
+              onClick={() => {
+                console.log('tes', record)
+                navigate("/Cadastros/Pessoas/Cadastrar", { state: { pessoa: record } })
+              }}
             >
               <EditOutlined className="ifes-icon" />
             </Button>
@@ -134,6 +140,7 @@ const Pessoas: React.FC = () => {
 
   const onFilter = async () => {
     try {
+      setPessoas([])
       setLoading(true)
       const values = formFilter.getFieldsValue()
       const resp = await post(`pessoas/filter`, values);

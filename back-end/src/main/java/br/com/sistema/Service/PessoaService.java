@@ -49,10 +49,13 @@ public class PessoaService {
     }
 
     public List<PessoaDTO> filter(PessoaFilterDTO filterDTO) {
-        return repository.findAll().stream()
-                .filter(pessoa -> (filterDTO.getNome() == null || pessoa.getNome().contains(filterDTO.getNome())) &&
-                        (filterDTO.getCpf() == null || pessoa.getCpf().contains(filterDTO.getCpf())) &&
-                        (filterDTO.getMatricula() == null || pessoa.getMatricula().contains(filterDTO.getMatricula())))
+        List<Pessoa> pessoas = repository.findByFilters(
+                filterDTO.getNome(),
+                filterDTO.getCpf(),
+                filterDTO.getMatricula()
+        );
+
+        return pessoas.stream()
                 .filter(Objects::nonNull)
                 .map(mapper::toDto)
                 .collect(Collectors.toList());

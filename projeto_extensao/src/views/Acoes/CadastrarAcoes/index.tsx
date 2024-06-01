@@ -11,6 +11,7 @@ import {
   TimePicker,
   TreeSelect,
   Upload,
+  message,
 } from "antd";
 
 import "../styles.css";
@@ -23,7 +24,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { get } from "../../../api/axios";
+import { get, post, put } from "../../../api/axios";
 import { modalidades } from "../../../data/modalidades";
 
 const { Option } = Select;
@@ -33,7 +34,7 @@ export interface AcaoContextDataType {
   eventos: any[];
   turmas: any[];
   periodos: any[];
-  tiposAcoes: any[];
+  tipoAcoes: any[];
   instituicoes: any[];
 }
 
@@ -66,46 +67,16 @@ export default function CadastrarAcoes() {
       value: "Evento",
     },
   ]);
-  const [selectedTipoAcoes, setSelectedTipoAcoes] = useState<any>();
+  
   const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>();
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const salvarForm = async () => {
-    try {
-      const values = await form.validateFields();
-      // Faça algo com os valores, como enviar para o servidor
-    } catch (errorInfo) {}
-  };
 
   const onFinish = () => {
     //
   };
-
-  const navigate = useNavigate();
-
-  // const eventos = [
-  //   {
-  //     value: "Evento 1",
-  //     title: "Evento 1",
-  //     children: [
-  //       {
-  //         value: "Evento 1-0",
-  //         title: "Evento 1-0",
-  //       },
-  //       {
-  //         value: "Evento 1-1",
-  //         title: "Evento 1-1",
-  //         children: [
-  //           {
-  //             value: "leaf3",
-  //             title: <b style={{ color: "#08c" }}>leaf3</b>,
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ];
 
   const getContextData = async () => {
     setLoading(true);
@@ -123,6 +94,52 @@ export default function CadastrarAcoes() {
     getContextData();
   }, []);
 
+  const handleCadastrar = async () => {
+    console.log('feddd')
+    try {
+      await form.validateFields();
+      const values = form.getFieldsValue();
+
+      const acaoToCreateOrEdit = {
+        nome: values.nomeAcao,
+        tipoAcao: values.tipoAcao,
+        projeto: values.projeto,
+        evento: values.evento,
+        turma: values.turma,
+        periodoSemestre: values.periodoSemestre,
+        modalidade: values.modalidade,
+        inicio: values.inicio,
+        fim: values.fim,
+        numeroProcesso: values.numeroProcesso,
+        publicoAlvo: values.publicoAlvo,
+        dataInicio: values.dataInicio,
+        dataTermino: values.dataTermino,
+        instituicaoAtendida: values.instituicaoAtendida,
+        ano: values.ano,
+        enderecoCep: values.enderecoCep,
+        qtdeParticipantes: values.qtdeParticipantes,
+        cargaHoraria: values.cargaHoraria,
+        participantesPdf: values.participantesPdf?.file,
+        documentos: values.documentos?.fileList,
+      };
+
+      console.log('acaoToCreateOrEdit', acaoToCreateOrEdit)
+      if (!values.id) {
+        await post("acoes/create", acaoToCreateOrEdit);
+        message.success("Ação criada com sucesso");
+        // Adicionar lógica adicional se necessário, como atualizar a lista de ações
+      } else {
+        await put(`acoes/update/${values.id}`, acaoToCreateOrEdit);
+        message.success("Ação editada com sucesso");
+        // Adicionar lógica adicional se necessário, como atualizar a lista de ações
+      }
+
+      navigate("/Consultar Ações");
+    } catch (error: any) {
+      console.error("Erro ao cadastrar/editar ação:", error);
+    }
+  };
+
   return (
     <Spin spinning={loading}>
       <h4 style={{ paddingBottom: "1rem" }} className="poppins-bold">
@@ -139,7 +156,7 @@ export default function CadastrarAcoes() {
         </h5>
       </Divider>
 
-      <Form>
+      <Form form={form}>
         {/* Equipe de Execução */}
         <Row gutter={16}>
           <Col span={8}>
@@ -155,12 +172,12 @@ export default function CadastrarAcoes() {
             >
               <Select
                 onChange={(e) => {
-                  setSelectedTipoAcao(e);
+                  setSelectedTipoAcao(acaoContexData?.tipoAcoes.find(x=> x.id == e).nome);
                 }}
               >
-                {tiposAcoesOptions?.map((option: any) => (
-                  <Select.Option key={option.value} value={option.title}>
-                    {option.title}
+                {acaoContexData?.tipoAcoes?.map((option: any) => (
+                  <Select.Option key={option.value} value={option.id}>
+                    {option.nome}
                   </Select.Option>
                 ))}
               </Select>
@@ -464,6 +481,7 @@ export default function CadastrarAcoes() {
             type="primary"
             htmlType="submit"
             style={{ marginLeft: "8px" }}
+            onClick={() => handleCadastrar()}
           >
             Cadastrar <PlusOutlined />
           </Button>

@@ -64,9 +64,7 @@ const items: MenuProps["items"] = [
     getItem("Emitir Relatórios", "emitirRelatorios", <FileSearchOutlined  />, "Ações/Emitir Relatório"),
     getItem("Consultar Ação", "consultarAcao", <BarChartOutlined  />, "/Ações/Consultar Ação"),
   ]),
-
-  getItem("Dúvidas Frequentes", "duvidas",<QuestionCircleOutlined />, "/Dúvidas Frequentes"),
-  getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined />,"/Ações"),
+  getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined />,"/Gerenciar Níveis de Acesso"),
 ];
 
 function MenuLeft({ isIconClicked }: any) {

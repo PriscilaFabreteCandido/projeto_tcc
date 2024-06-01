@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -34,10 +35,6 @@ public class Acao {
     @Column
     private String localRealizacao;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "acao_pai_id")
-    //private Acao acaoPai;
-
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;
@@ -47,10 +44,30 @@ public class Acao {
     private TipoAcao tipoAcao;
 
     @ManyToOne
-    @JoinColumn(name = "acao_id")
+    @JoinColumn(name = "acao_projeto_id")
     private Acao projeto;
 
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private Date dtCriacao;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "acao_evento_id")
+    private Acao evento;
+
+    @Column
+    private String participantesPDF;
+
+    @Column
+    private List<String> demaisDocumentos;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "acao_pai_id")
+    private Acao acaoPai;
+
+    @PrePersist
+    protected void onCreate() {
+        dtCriacao = new Date();
+    }
+
 }

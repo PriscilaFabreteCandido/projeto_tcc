@@ -23,11 +23,13 @@ public class PessoaDTO {
     private String email;
     private String matricula;
     private String nivelEscolaridade;
+    private String vinculo;
+    private String telefone;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-3")
     private Date dtNascimento;
 
     private FuncaoDTO funcao;
     private InstituicaoDTO instituicao;
-    private CursoDTO cursoDTO;
+    private CursoDTO curso;
 }

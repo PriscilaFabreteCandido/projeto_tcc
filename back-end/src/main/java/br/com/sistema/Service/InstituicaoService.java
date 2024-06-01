@@ -1,5 +1,6 @@
 package br.com.sistema.Service;
 
+import br.com.sistema.DTO.Instituicao.InstituicaoFilterDTO;
 import br.com.sistema.DTO.InstituicaoDTO;
 import br.com.sistema.Exception.EntityNotFoundException;
 import br.com.sistema.Mapper.InstituicaoMapper;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +29,18 @@ public class InstituicaoService {
         repository.save(entity);
 
         return mapper.toDto(entity);
+    }
+
+    public List<InstituicaoDTO> filter(InstituicaoFilterDTO filterDTO) {
+        List<Instituicao> instituicoes = repository.findByFilters(
+                filterDTO.getNome(),
+                filterDTO.getTipoInstituicao()
+        );
+
+        return instituicoes.stream()
+                .filter(Objects::nonNull)
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public InstituicaoDTO update(InstituicaoDTO instituicaoDTO, Long id){

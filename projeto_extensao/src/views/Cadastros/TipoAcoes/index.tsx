@@ -15,7 +15,7 @@ import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
 
-interface ActionType {
+export interface ActionType {
   key: React.Key;
   id: number;
   nome: string;

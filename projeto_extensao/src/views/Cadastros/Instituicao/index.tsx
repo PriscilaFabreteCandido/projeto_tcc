@@ -4,19 +4,25 @@ import {
   Input,
   Table,
   Tooltip,
-  Modal,
   Form,
   message,
   Popconfirm,
   Space,
   Select,
+  Collapse,
 } from "antd";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  BankOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  FilterOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
 import { get, post, put, remove } from "../../../api/axios";
 import { useNavigate } from "react-router";
-
+import { tipoInstituicoes } from "../../../data/tipoInstituicoes";
 
 export interface TipoInstituicaoType {
   id: number;
@@ -38,12 +44,12 @@ export interface InstituicaoType {
 }
 
 const Instituicoes: React.FC = () => {
-  const [instituicaoToEdit, setInstituicaoToEdit] =
-    useState<InstituicaoType | null>(null);
+  const [formFilter] = Form.useForm();
   const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate() as any;
-
+  const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
+  
   const getInstituicoes = async () => {
     setLoading(true);
     try {
@@ -69,6 +75,20 @@ const Instituicoes: React.FC = () => {
       message.success("Instituição excluída com sucesso");
     } catch (error) {
       console.error("Erro ao excluir instituição:", error);
+    }
+  };
+
+  const onFilter = async () => {
+    try {
+      setInstituicoes([]);
+      setLoading(true);
+      const values = formFilter.getFieldsValue();
+      const resp = await post(`instituicoes/filter`, values);
+      setInstituicoes(resp);
+    } catch (error) {
+      console.error("Erro ao excluir pessoa:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,7 +119,6 @@ const Instituicoes: React.FC = () => {
               className="ifes-btn-warning"
               shape="circle"
               onClick={() => {
-                setInstituicaoToEdit(record);
                 navigate("/Cadastros/Instituições/Editar Instituição", {
                   state: { instituicao: record },
                 });
@@ -129,33 +148,97 @@ const Instituicoes: React.FC = () => {
     },
   ];
 
+  const items = [
+    {
+      key: "1",
+      label: (
+        <div
+          className="title-container"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <div className="flex gap-1" style={{ alignItems: "center" }}>
+            <BankOutlined style={{ fontSize: "18px", marginRight: "8px" }} />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              Cadastro de Instituições
+            </span>
+          </div>
+
+          <div
+            className="flex gap-1"
+            style={{ alignItems: "center", gap: "1rem" }}
+          >
+            {expanded && (
+              <Button
+                type="primary"
+                onClick={onFilter}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <FilterOutlined className="ifes-icon" />
+                <span style={{ marginLeft: "5px" }}>Filtrar</span>
+              </Button>
+            )}
+
+            <Button
+              className="ifes-btn-success"
+              onClick={() => {
+                navigate("/Cadastros/Instituições/Cadastrar");
+              }}
+              style={{
+                marginLeft: "auto",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <PlusOutlined className="ifes-icon" />
+              <span style={{ marginLeft: "5px" }}>Adicionar</span>
+            </Button>
+          </div>
+        </div>
+      ),
+      children: (
+        <div
+          className="flex filtros-card"
+          style={{ padding: "10px 0", display: "flex", gap: "20px" }}
+        >
+          <Form
+            form={formFilter}
+            layout="vertical"
+            style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+          >
+            <Form.Item name="nome" label="Nome">
+              <Input placeholder="Nome" style={{ width: "200px" }} />
+            </Form.Item>
+
+            <Form.Item name="tipoInstituicao" label="Tipo de Instituição">
+              <Select placeholder="selecione">
+                {tipoInstituicoes.map((option) => (
+                  <Select.Option key={option} value={option}>
+                    {option}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Form>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <>
       {/* Header */}
       <CardFooter>
-        <div className="flex justify-content-between">
-          {/* Filtros */}
-          <div className="flex filtros-card"> 
-              <Input
-                placeholder="Nome"
-                style={{ width: "200px", marginRight: "10px" }}
-              />
-          </div>
-
-          <div>
-            <Button
-              type="primary"
-              onClick={() => {
-                navigate("/Cadastros/Instituições/Cadastrar Instituição");
-              }}
-              value="large"
-              value="large"
-              icon={<PlusOutlined />}
-            >
-              Adicionar
-            </Button>
-          </div>
-        </div>
+        <Collapse
+          accordion
+          items={items}
+          onChange={(key) => setExpanded(key.includes("1"))}
+        />
       </CardFooter>
 
       {/* Tabela */}

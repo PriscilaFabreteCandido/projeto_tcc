@@ -3,6 +3,8 @@ package br.com.sistema.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Curso {
@@ -16,4 +18,7 @@ public class Curso {
 
     @Column
     private String nivel;
+
+    @OneToMany(mappedBy = "curso")
+    private List<Pessoa> pessoas;
 }

@@ -12,4 +12,5 @@ public class AcaoContextDataDTO {
     private List<InstituicaoDTO> instituicoes;
     private List<TurmaDTO> turmas;
     private List<PeriodoAcademicoDTO> periodos;
+    private List<TipoAcaoDTO> tipoAcoes;
 }

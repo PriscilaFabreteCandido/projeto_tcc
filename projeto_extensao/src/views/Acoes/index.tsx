@@ -21,6 +21,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/es/table";
+import { get } from "../../api/axios";
 
 interface DataType {
   key: React.Key;
@@ -41,6 +42,7 @@ const Acoes: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [formFilter] = Form.useForm();
+  const [data, setData] = useState<any[]>();
 
   const onFilter = () => {
 
@@ -230,45 +232,6 @@ const Acoes: React.FC = () => {
     },
   ];
 
-  // Valores fake para as ações
-  const data: DataType[] = [
-    {
-      key: "1",
-      nome: "Curso de Informática Básica",
-      projeto: "",
-      tipoAcao: "Curso",
-      publicoAlvo: "Público Alvo 1",
-      instituicaoAtendida: "Instituição 1",
-      numeroVagas: 10,
-      duracao: "2 horas",
-      horarioInicio: "08:00",
-      horarioTermino: "10:00",
-    },
-    {
-      key: "2",
-      nome: "Palestra",
-      projeto: "",
-      tipoAcao: "Palestra",
-      publicoAlvo: "Público Alvo 2",
-      instituicaoAtendida: "Instituição 2",
-      numeroVagas: 20,
-      duracao: "3 horas",
-      horarioInicio: "14:00",
-      horarioTermino: "17:00",
-    },
-    {
-      key: "3",
-      nome: "Visita Guiada",
-      projeto: "",
-      tipoAcao: "Visita Guiada",
-      publicoAlvo: "Público Alvo 3",
-      instituicaoAtendida: "Instituição 3",
-      numeroVagas: 30,
-      duracao: "4 horas",
-      horarioInicio: "09:00",
-      horarioTermino: "13:00",
-    },
-  ];
 
   const getContextData = async () => {
     setLoading(true);
@@ -282,8 +245,21 @@ const Acoes: React.FC = () => {
     }
   };
 
+  const getAcoes = async () => {
+    setLoading(true);
+    try {
+      const response: any[] = await get("acoes");
+      setData(response);
+    } catch (error) {
+      console.error("Erro ao obter cursos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     getContextData();
+    getAcoes()
   }, []);
 
   return (

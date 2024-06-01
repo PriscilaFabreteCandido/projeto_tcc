@@ -8,7 +8,6 @@ import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { vinculos } from "../../../data/vinculos";
 import moment from "moment";
 
-
 export interface FuncoesType {
   id: number;
   nome: string;
@@ -23,12 +22,12 @@ const CadastrarPessoa = () => {
   const [form] = Form.useForm();
   const location = useLocation();
   const [instituicoes, setInstituicoes] = useState<InstituicaoType[]>([]);
-  const [cursos, setCursos] =useState<any[]>([])
+  const [cursos, setCursos] = useState<any[]>([]);
   const [funcoes, setFuncoes] = useState<GraduacaoType[]>([]);
   const { pessoa } = location.state || {};
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     getContextData();
   }, []);
@@ -37,10 +36,18 @@ const CadastrarPessoa = () => {
     setLoading(true);
     try {
       const response = await get("pessoas/contextData");
-      
+
       setInstituicoes(response.instituicoes);
       setFuncoes(response.funcoes);
       setCursos(response.cursos);
+
+      if (pessoa) {
+        // form.setFieldsValue({
+        //   curso: pessoa.curso,
+        //   instituicao: response.instituicoes.find(x => x.id == ) ,
+        //   funcao: pessoa.funcao,
+        // });
+      }
     } catch (error) {
       console.error("Erro ao obter instituições:", error);
     } finally {
@@ -58,12 +65,12 @@ const CadastrarPessoa = () => {
         nome: pessoa.nome,
         cpf: pessoa.cpf,
         matricula: pessoa.matricula,
-        dataNascimento: pessoa.dtNascimento ? moment(pessoa.dataNascimento) : null,
+        dataNascimento: pessoa.dtNascimento ? pessoa.dtNascimento.format("YYYY-MM-DD") : null,
         telefone: pessoa.telefone,
-        curso: pessoa.curso,
-        instituicao: pessoa.instituicao,
+        curso: pessoa.curso?.id,
+        instituicao: pessoa.instituicao?.id,
         graduacao: pessoa.graduacao,
-        funcao: pessoa.funcao,
+        funcao: pessoa.funcao?.id,
         vinculo: pessoa.vinculo,
         email: pessoa.email,
         nivelEscolaridade: pessoa.nivelEscolaridade,
@@ -75,7 +82,7 @@ const CadastrarPessoa = () => {
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
-  
+
       const pessoaData = {
         nome: values.nome,
         cpf: values.cpf,
@@ -84,19 +91,19 @@ const CadastrarPessoa = () => {
         telefone: values.telefone,
         email: values.email,
         instituicao: {
-          id: values.instituicao
+          id: values.instituicao,
         },
         nivelEscolaridade: values.nivelEscolaridade,
         funcao: {
-          id: values.funcao
+          id: values.funcao,
         },
         vinculo: values.vinculo,
         curso: {
-          id: values.curso
+          id: values.curso,
         },
         id: pessoa ? pessoa.id : null,
       };
-  
+
       if (!pessoa) {
         await post("pessoas/create", pessoaData);
         message.success("Pessoa criada com sucesso");
@@ -104,14 +111,13 @@ const CadastrarPessoa = () => {
         await put(`pessoas/update/${pessoa.id}`, pessoaData);
         message.success("Pessoa editada com sucesso");
       }
-  
+
       navigate("/Cadastros/Pessoas");
     } catch (error) {
       console.error("Erro ao processar o formulário:", error);
       message.error("Erro ao processar o formulário");
     }
   };
-  
 
   return (
     <Spin spinning={loading}>
@@ -148,11 +154,7 @@ const CadastrarPessoa = () => {
               </Form.Item>
             </div>
             <div style={{ flex: 1 }}>
-              <Form.Item
-                name="matricula"
-                label="Matrícula"
-
-              >
+              <Form.Item name="matricula" label="Matrícula">
                 <Input />
               </Form.Item>
             </div>
@@ -170,7 +172,7 @@ const CadastrarPessoa = () => {
                   },
                 ]}
               >
-                <DatePicker format="DD/MM/YYYY" style={{ width: '100%' }} />
+                <DatePicker format="DD/MM/YYYY" style={{ width: "100%" }} />
               </Form.Item>
             </div>
             <div style={{ flex: 1, marginRight: "10px" }}>
@@ -186,7 +188,7 @@ const CadastrarPessoa = () => {
               >
                 <Select>
                   {instituicoes.map((option) => (
-                    <Select.Option key={option.id} value={option.nome}>
+                    <Select.Option key={option.id} value={option.id}>
                       {option.nome}
                     </Select.Option>
                   ))}
@@ -256,7 +258,7 @@ const CadastrarPessoa = () => {
               >
                 <Select>
                   {funcoes.map((option) => (
-                    <Select.Option key={option.id} value={option.nome}>
+                    <Select.Option key={option.id} value={option.id}>
                       {option.nome}
                     </Select.Option>
                   ))}
@@ -288,9 +290,9 @@ const CadastrarPessoa = () => {
             </div>
             <div style={{ flex: 1, marginRight: "10px" }}>
               <Form.Item name="curso" label="Curso">
-              <Select>
+                <Select>
                   {cursos.map((option) => (
-                    <Select.Option key={option.id} value={option.nome}>
+                    <Select.Option key={option.id} value={option.id}>
                       {option.nome}
                     </Select.Option>
                   ))}
@@ -308,7 +310,7 @@ const CadastrarPessoa = () => {
               type="primary"
               htmlType="submit"
               style={{ marginLeft: "8px" }}
-              onClick={() =>  handleCadastrar()}
+              onClick={() => handleCadastrar()}
             >
               Cadastrar <PlusOutlined />
             </Button>

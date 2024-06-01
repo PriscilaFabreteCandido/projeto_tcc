@@ -1,6 +1,9 @@
 package br.com.sistema.Controller;
 
+import br.com.sistema.DTO.Instituicao.InstituicaoFilterDTO;
 import br.com.sistema.DTO.InstituicaoDTO;
+import br.com.sistema.DTO.Pessoa.PessoaDTO;
+import br.com.sistema.DTO.Pessoa.PessoaFilterDTO;
 import br.com.sistema.Service.InstituicaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +49,12 @@ public class InstituicaoController {
     public ResponseEntity<List<InstituicaoDTO>> findAllInstituicoes() {
         List<InstituicaoDTO> instituicaoDTOList = instituicaoService.findAll();
         return new ResponseEntity<>(instituicaoDTOList, instituicaoDTOList.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<List<InstituicaoDTO>> filterInstituicoes(@RequestBody InstituicaoFilterDTO instituicaoFilterDTO) {
+        List<InstituicaoDTO> filteredList = instituicaoService.filter(instituicaoFilterDTO);
+        return new ResponseEntity<>(filteredList, filteredList.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 
 }
