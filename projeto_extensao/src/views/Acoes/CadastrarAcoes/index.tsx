@@ -67,12 +67,11 @@ export default function CadastrarAcoes() {
       value: "Evento",
     },
   ]);
-  
+
   const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>();
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
 
   const onFinish = () => {
     //
@@ -95,7 +94,7 @@ export default function CadastrarAcoes() {
   }, []);
 
   const handleCadastrar = async () => {
-    console.log('feddd')
+    console.log("feddd");
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
@@ -123,7 +122,7 @@ export default function CadastrarAcoes() {
         documentos: values.documentos?.fileList,
       };
 
-      console.log('acaoToCreateOrEdit', acaoToCreateOrEdit)
+      console.log("acaoToCreateOrEdit", acaoToCreateOrEdit);
       if (!values.id) {
         await post("acoes/create", acaoToCreateOrEdit);
         message.success("Ação criada com sucesso");
@@ -172,7 +171,9 @@ export default function CadastrarAcoes() {
             >
               <Select
                 onChange={(e) => {
-                  setSelectedTipoAcao(acaoContexData?.tipoAcoes.find(x=> x.id == e).nome);
+                  setSelectedTipoAcao(
+                    acaoContexData?.tipoAcoes.find((x) => x.id == e).nome
+                  );
                 }}
               >
                 {acaoContexData?.tipoAcoes?.map((option: any) => (
@@ -319,19 +320,17 @@ export default function CadastrarAcoes() {
             </Row>
           </>
         )}
-      </Form>
 
-      <Divider
-        orientation="left"
-        plain
-        style={{ borderWidth: 3, borderColor: "#000" }}
-      >
-        <h5 className="poppins-bold">
-          <InfoCircleOutlined /> Informações Gerais
-        </h5>
-      </Divider>
+        <Divider
+          orientation="left"
+          plain
+          style={{ borderWidth: 3, borderColor: "#000" }}
+        >
+          <h5 className="poppins-bold">
+            <InfoCircleOutlined /> Informações Gerais
+          </h5>
+        </Divider>
 
-      <Form onFinish={onFinish}>
         <Row gutter={16}>
           {/* Primeira Linha */}
           <Col span={14}>
@@ -386,7 +385,7 @@ export default function CadastrarAcoes() {
                 }}
               >
                 {acaoContexData?.instituicoes?.map((option: any) => (
-                  <Select.Option key={option.value} value={option.nome}>
+                  <Select.Option key={option.value} value={option.id}>
                     {option.nome}
                   </Select.Option>
                 ))}
