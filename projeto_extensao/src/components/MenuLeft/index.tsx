@@ -9,7 +9,6 @@ import {
   HomeOutlined,
   IdcardOutlined,
   PlayCircleOutlined,
-  QuestionCircleOutlined,
   SafetyOutlined,
   SolutionOutlined,
   TeamOutlined,
@@ -20,6 +19,7 @@ import { Menu } from "antd";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import "./styles.css"
+import { BsPeople } from "react-icons/bs";
 
 interface MenuItem {
   key: React.Key;
@@ -63,6 +63,7 @@ const items: MenuProps["items"] = [
     getItem("Nova Ação", "novaAcao", <DesktopOutlined  />, "/Ações/Cadastrar Nova Ação"),
     getItem("Emitir Relatórios", "emitirRelatorios", <FileSearchOutlined  />, "Ações/Emitir Relatório"),
     getItem("Consultar Ação", "consultarAcao", <BarChartOutlined  />, "/Ações/Consultar Ação"),
+    getItem("Consultar Participantes", "consultarParticipantes", <BsPeople  />, "/Ações/Consultar Ação"),
   ]),
   getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined />,"/Gerenciar Níveis de Acesso"),
 ];

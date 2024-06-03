@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import "./styles.css";
 import Breadcrumbs from "../components/Breadcrumbs";
 import MenuLeft from "../components/MenuLeft";
-import ifes from "../assets/images/logocolatina.png";
+import ifes from "../assets/images/LogoLeter_LetraPreta-removebg-preview.png";
 import logo from "../assets/images/logo.png";
 
 import {  useState } from "react";
