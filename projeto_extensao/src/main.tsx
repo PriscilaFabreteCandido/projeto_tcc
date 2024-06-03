@@ -1,9 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-import { ConfigProvider } from "antd";
+
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
+import { ConfigProvider } from 'antd'
 import ptBR from "antd/lib/locale/pt_BR";
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import store from './store/store.tsx'
+import { persistStore } from 'redux-persist'
 
 const config = {
   token: {
@@ -21,8 +25,17 @@ const config = {
   },
 };
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <ConfigProvider locale={ptBR} theme={config}>
-    <App />
-  </ConfigProvider>
-);
+
+let persistor = persistStore(store)
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <ConfigProvider locale={ptBR} theme={config}>
+        <App />
+      </ConfigProvider>
+    </PersistGate>
+  </Provider>
+
+)

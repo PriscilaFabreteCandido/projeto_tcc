@@ -1,24 +1,42 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import loginSvg from "../../../assets/images/login.svg";
 import img2 from "../../../assets/images/fundologin.svg";
 import ifes from "../../../assets/images/logocolatina.png";
+import { login } from "../../../features/authSlice";
+import { post } from "../../../api/axios";
+import { useDispatch } from "react-redux";
+
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+ 
 
-  const onFinish = (values) => {
-    setLoading(true);
-    // Aqui você pode fazer a lógica para autenticar o usuário
-    setTimeout(() => {
-      console.log("Received values of form:", values);
-      setLoading(false);
-    }, 1000);
-  };
+  const handleLogin = async (values: { login: any; password: any; }) => {
+    try {
+      setLoading(true)
+      const params = {
+        login: "",
+        password: ""
+      }
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+      const response = await post("/", params)
+
+      console.log('Login Efetuado!:', response);
+      console.log('response', response)
+      dispatch(login({
+        token: response
+      }));
+
+  
+    } catch (error) {
+      console.error('Login failed:', error);
+      
+    } finally {
+      setLoading(false)
+    }
   };
 
   return (
@@ -52,8 +70,8 @@ const Login = () => {
             <Form
               name="basic"
               initialValues={{ remember: true }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
+              onFinish={handleLogin}
+              onFinishFailed={() => {}}
             >
               <Form.Item
                 name="username"

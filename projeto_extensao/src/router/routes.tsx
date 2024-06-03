@@ -19,7 +19,6 @@ import CadastrarInstituicao from "../views/Cadastros/Instituicao/CadastrarInstit
 import Turmas from "../views/Cadastros/Turma";
 import SemestresLetivos from "../views/Cadastros/Semestre";
 import Cursos from "../views/Cadastros/Curso";
-import Login from "../views/app/Login/Login";
 import EmitirRelatorio from "../views/Acoes/EmitirRelatorio/EmitirRelatorio"
 import GerenciarNiveisAcesso from "../views/GerenciarNiveisAcesso/GerenciarNiveisAcesso";
 
@@ -31,53 +30,44 @@ export interface RouteConfig {
 }
 
 const routes: RouteConfig[] = [
-  { path: "/login", element: <Login />, permissions: "" },
-  { path: "/logout", element: <Logout />, permissions: "" },
-  {
-    path: "",
-    element: <RootLayout />,
-    permissions: "",
-    children: [
-      // Inicio
-      { path: "Inicio", element: <Home />, permissions: "" },
+ // Inicio
+ { path: "Inicio", element: <Home />, permissions: "" },
 
-      //Cadastros
-      { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
-      { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
-      { path: "Cadastros/Instituições/:action", element: <CadastrarInstituicao />, permissions: "" },
-      { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
-      { path: "Cadastros/Turmas", element: <Turmas />, permissions: "" },
-      { path: "Cadastros/Semestres Letivos", element: <SemestresLetivos />, permissions: "" },
-      { path: "Cadastros/Pessoas/:action", element: <CadastrarPessoa />, permissions: "" },
-      { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
-      { path: "Cadastros/Projetos", element: <Projetos />, permissions: "" },
-      { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },
-      { path: "Cadastros/Cursos", element: <Cursos />, permissions: "" },
-     
-      //Ações
-      { path: "Ações", element: <Acoes />, permissions: "" },
-      { path: "Ações/Consultar Ação", element: <Acoes />, permissions: "" },
-      { path: "Ações/Cadastrar Nova Ação", element: <CadastrarAcoes />, permissions: "" },
-      { path: "Ações/Emitir Relatório", element: <EmitirRelatorio />, permissions: "" },
-      { path: "Eventos/Vincular Equipe de Execução", element: <VincularEquipeExecucao />, permissions: "" },
-     
-      //Relatórios
-      { path: "Consultas/Eventos", element: <ConsultarAcoes />, permissions: "" },
-      { path: "Consultas/Pessoas", element: <ConsultasPessoas />, permissions: "" },
-      { path: "Gerenciar Níveis de Acesso", element: <GerenciarNiveisAcesso />, permissions: "" },
-      {
-        path: "*",
-        permissions: "",
-        element: (
-          <>
-            {" "}
-            <Navigate to="/404" replace />
-            <Error404 />
-          </>
-        ),
-      },
-    ],
-  },
+ //Cadastros
+ { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
+ { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
+ { path: "Cadastros/Instituições/:action", element: <CadastrarInstituicao />, permissions: "" },
+ { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
+ { path: "Cadastros/Turmas", element: <Turmas />, permissions: "" },
+ { path: "Cadastros/Semestres Letivos", element: <SemestresLetivos />, permissions: "" },
+ { path: "Cadastros/Pessoas/:action", element: <CadastrarPessoa />, permissions: "" },
+ { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
+ { path: "Cadastros/Projetos", element: <Projetos />, permissions: "" },
+ { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },
+ { path: "Cadastros/Cursos", element: <Cursos />, permissions: "" },
+
+ //Ações
+ { path: "Ações", element: <Acoes />, permissions: "" },
+ { path: "Ações/Consultar Ação", element: <Acoes />, permissions: "" },
+ { path: "Ações/Cadastrar Nova Ação", element: <CadastrarAcoes />, permissions: "" },
+ { path: "Ações/Emitir Relatório", element: <EmitirRelatorio />, permissions: "" },
+ { path: "Eventos/Vincular Equipe de Execução", element: <VincularEquipeExecucao />, permissions: "" },
+
+ //Relatórios
+ { path: "Consultas/Eventos", element: <ConsultarAcoes />, permissions: "" },
+ { path: "Consultas/Pessoas", element: <ConsultasPessoas />, permissions: "" },
+ { path: "Gerenciar Níveis de Acesso", element: <GerenciarNiveisAcesso />, permissions: "" },
+ {
+   path: "*",
+   permissions: "",
+   element: (
+     <>
+       {" "}
+       <Navigate to="/404" replace />
+       <Error404 />
+     </>
+   ),
+ },
 ];
 
 export default routes;

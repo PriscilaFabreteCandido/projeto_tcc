@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  Col,
   Collapse,
   CollapseProps,
   DatePicker,
   Form,
   Input,
+  Row,
   Select,
   Space,
   Table,
@@ -47,7 +49,7 @@ const Acoes: React.FC = () => {
   const onFilter = () => {
 
   }
-  
+
   const items: CollapseProps["items"] = [
     {
       key: "1",
@@ -107,42 +109,68 @@ const Acoes: React.FC = () => {
       children: (
         <div
           className="flex filtros-card"
-          style={{ padding: "10px 0", display: "flex", gap: "20px" }}
+          style={{ padding: "10px 0",}}
         >
           <Form
             form={formFilter}
             layout="vertical"
-            style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+            style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
           >
-            <Form.Item name="nomeAcao" label="Nome Ação">
-              <Input placeholder="Nome Ação" style={{ width: "200px" }} />
-            </Form.Item>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item name="nomeAcao" label="Nome Ação">
+                  <Input placeholder="Nome Ação" style={{ width: "100%" }} />
+                </Form.Item>
+              </Col>
 
-            <Form.Item name="projeto" label="Projeto">
-              <Select
-                placeholder="Selecione um projeto"
-                style={{ width: "200px" }}
-              >
-                <Option value="projeto1">Projeto 1</Option>
-                <Option value="projeto2">Projeto 2</Option>
-                <Option value="projeto3">Projeto 3</Option>
-              </Select>
-            </Form.Item>
+              <Col span={8}>
+                <Form.Item name="projeto" label="Projeto">
+                  <Select placeholder="Selecione um projeto" style={{ width: "100%" }}>
+                    <Option value="projeto1">Projeto 1</Option>
+                    <Option value="projeto2">Projeto 2</Option>
+                    <Option value="projeto3">Projeto 3</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
 
-            <Form.Item name="dataCriacao" label="Data de Criação">
-              <DatePicker
-                placeholder="Data de Criação"
-                style={{ width: "200px" }}
-              />
-            </Form.Item>
+              <Col span={8}>
+                <Form.Item name="dataCriacao" label="Data de Emissão">
+                  <DatePicker placeholder="Data de Criação" style={{ width: "100%" }} />
+                </Form.Item>
+              </Col>
+            </Row>
 
-            <Form.Item name="tipoAcao" label="Tipo Ação">
-              <Select placeholder="Selecione o tipo" style={{ width: "200px" }}>
-                <Option value="tipo1">Tipo 1</Option>
-                <Option value="tipo2">Tipo 2</Option>
-                <Option value="tipo3">Tipo 3</Option>
-              </Select>
-            </Form.Item>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item name="tipoAcao" label="Tipo Ação">
+                  <Select placeholder="Selecione o tipo" style={{ width: "100%" }}>
+                    <Option value="tipo1">Tipo 1</Option>
+                    <Option value="tipo2">Tipo 2</Option>
+                    <Option value="tipo3">Tipo 3</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="periodoVigencia" label="Período de Vigência">
+                  <DatePicker.RangePicker style={{ width: "100%" }} />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="dataTermino" label="Data de Término">
+                  <DatePicker placeholder="Data de Término" style={{ width: "100%" }} />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item name="ano" label="Ano">
+                  <Input placeholder="Ano" type="number" style={{ width: "100%" }} />
+                </Form.Item>
+              </Col>
+            </Row>
           </Form>
         </div>
       ),
@@ -155,21 +183,7 @@ const Acoes: React.FC = () => {
       dataIndex: "nome",
       key: "nome",
     },
-    {
-      title: "Projeto",
-      dataIndex: "projeto",
-      key: "projeto",
-    },
-    {
-      title: "Tipo de Ação",
-      dataIndex: "tipoAcao",
-      key: "tipoAcao",
-    },
-    {
-      title: "Público Alvo",
-      dataIndex: "publicoAlvo",
-      key: "publicoAlvo",
-    },
+
     {
       title: "Instituição Atendida",
       dataIndex: "instituicaoAtendida",
@@ -185,16 +199,7 @@ const Acoes: React.FC = () => {
       dataIndex: "duracao",
       key: "duracao",
     },
-    {
-      title: "Horário de Início",
-      dataIndex: "horarioInicio",
-      key: "horarioInicio",
-    },
-    {
-      title: "Horário de Término",
-      dataIndex: "horarioTermino",
-      key: "horarioTermino",
-    },
+
     {
       title: "Ações",
       key: "actions",
@@ -224,7 +229,7 @@ const Acoes: React.FC = () => {
             <Button
               className="ifes-btn-warning"
               icon={<EditOutlined />}
-              onClick={() => {}}
+              onClick={() => { }}
             ></Button>
           </Tooltip>
         </Space>
@@ -264,7 +269,7 @@ const Acoes: React.FC = () => {
 
   return (
     <>
-      <div className="" style={{ flex: 1 }}>
+      <div className="" style={{ flex: 1, marginBottom: "1rem" }}>
         <Collapse
           accordion
           items={items}
