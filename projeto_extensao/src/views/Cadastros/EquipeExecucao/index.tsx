@@ -78,7 +78,7 @@ export default function EquipesExecucao() {
     {
       title: "Ações",
       key: "acao",
-      render: () => (
+      render: (record:any) => (
         <Space size="middle">
           <Tooltip title="Excluir">
             <Button
