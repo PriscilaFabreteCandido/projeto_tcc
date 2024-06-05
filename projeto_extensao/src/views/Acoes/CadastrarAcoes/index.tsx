@@ -5,10 +5,13 @@ import {
   Divider,
   Form,
   Input,
+  Modal,
+  Popconfirm,
   Row,
   Select,
   Spin,
   Steps,
+  Table,
   TimePicker,
   TreeSelect,
   Upload,
@@ -19,9 +22,11 @@ import "../styles.css";
 import {
   ApartmentOutlined,
   CloseOutlined,
+  DeleteOutlined,
   InfoCircleOutlined,
   PlusOutlined,
   UploadOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
@@ -37,12 +42,15 @@ export interface AcaoContextDataType {
   periodos: any[];
   tipoAcoes: any[];
   instituicoes: any[];
+  funcoes: any[];
+  participantes: any[];
 }
 
 export default function CadastrarAcoes() {
   const [form] = Form.useForm();
   const [selectedTipoAcao, setSelectedTipoAcao] = useState<string>("");
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [participants, setParticipants] = useState([]);
   const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -58,9 +66,46 @@ export default function CadastrarAcoes() {
   };
 
 
-  const onFinish = () => {
-    //
+
+
+  const handleAddParticipant = () => {
+    form.validateFields().then((values) => {
+      setParticipants([...participants, values]);
+      form.resetFields();
+      setIsModalVisible(false);
+    });
   };
+
+  const handleDeleteParticipant = (record) => {
+    setParticipants(participants.filter(participant => participant.nome !== record.nome));
+  };
+
+  const columns = [
+    {
+      title: 'Nome do Participante',
+      dataIndex: 'nome',
+      key: 'nome',
+    },
+    {
+      title: 'Função',
+      dataIndex: 'funcao',
+      key: 'funcao',
+    },
+    {
+      title: 'Ações',
+      key: 'acoes',
+      render: (text, record) => (
+        <Popconfirm
+          title="Tem certeza que deseja excluir?"
+          onConfirm={() => handleDeleteParticipant(record)}
+          okText="Sim"
+          cancelText="Não"
+        >
+         
+        </Popconfirm>
+      ),
+    },
+  ];
 
   const getContextData = async () => {
     setLoading(true);
@@ -347,6 +392,63 @@ export default function CadastrarAcoes() {
 
             </>
           )}
+
+
+          <Button type="primary" icon={<UserAddOutlined />} onClick={() => setIsModalVisible(true)}>
+            Adicionar Participante
+          </Button>
+
+          <Table
+            dataSource={participants}
+            columns={columns}
+            rowKey={(record) => record?.nome}
+            style={{ marginTop: '1rem' }}
+          />
+
+          <Modal
+            title="Adicionar Participante"
+            visible={isModalVisible}
+            onCancel={() => setIsModalVisible(false)}
+            onOk={handleAddParticipant}
+          >
+            <Form form={form} layout="vertical">
+              <Form.Item
+                label="Participante"
+                name="nome"
+                rules={[{ required: true, message: 'Por favor, insira o nome do participante!' }]}
+              >
+                <Select
+                  onChange={(e) => {
+                    setSelectedTipoAcao(e);
+                  }}
+                >
+                  {acaoContexData?.participantes?.map((option) => (
+                    <Select.Option key={option.value} value={option.id}>
+                      {option.nome}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="Função"
+                name="funcao"
+                rules={[{ required: true, message: 'Por favor, insira a função!' }]}
+              >
+                <Select
+                  onChange={(e) => {
+                    setSelectedTipoAcao(e);
+                  }}
+                >
+                  {acaoContexData?.funcoes?.map((option) => (
+                    <Select.Option key={option.value} value={option.id}>
+                      {option.nome}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Form>
+          </Modal>
+
         </div>
       ),
     },
@@ -357,24 +459,6 @@ export default function CadastrarAcoes() {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item
-                label="Rua"
-                name="rua"
-                rules={[{ required: true, message: "Campo obrigatório" }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item
-                label="Número"
-                name="numero"
-                rules={[{ required: true, message: "Campo obrigatório" }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item
                 label="CEP"
                 name="cep"
                 rules={[{ required: true, message: "Campo obrigatório" }]}
@@ -382,10 +466,52 @@ export default function CadastrarAcoes() {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={6}>
+            <Col span={8}>
               <Form.Item
-                label="Complemento"
-                name="complemento"
+                label="Endereço"
+                name="endereco"
+                rules={[{ required: true, message: "Campo obrigatório" }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+
+            <Col span={8}>
+              <Form.Item
+                label="Rua"
+                name="rua"
+                rules={[{ required: true, message: "Campo obrigatório" }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item
+                label="UF"
+                name="uf"
+                rules={[{ required: true, message: "Campo obrigatório" }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="Cidade"
+                name="cidade"
+                rules={[{ required: true, message: "Campo obrigatório" }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+
+            <Col span={8}>
+              <Form.Item
+                label="Número"
+                name="numero"
+                rules={[{ required: true, message: "Campo obrigatório" }]}
               >
                 <Input />
               </Form.Item>
