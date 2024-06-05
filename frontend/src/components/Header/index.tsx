@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
 import "./styles.css";
 import {
-  BellOutlined,
+ 
   FormOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  MoreOutlined,
   SecurityScanOutlined,
   SettingOutlined,
   UserOutlined,
@@ -59,7 +58,6 @@ function Header({ onIconClick }: any) {
   const [collapsed, setCollapsed] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const menuRef = useRef<HTMLDivElement | null>({} as any);
   const navigate = useNavigate();
 
   const toggleCollapsed = () => {

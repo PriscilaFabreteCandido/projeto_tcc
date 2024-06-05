@@ -30,7 +30,7 @@ const { Option } = Select;
 export default function CadastrarAcoes() {
   const [form] = Form.useForm();
   const [selectedTipoAcao, setSelectedTipoAcao] = useState<string>("");
-  const [tiposAcoesOptions, setTiposAcoesOptions] = useState<any>([
+  const [tiposAcoesOptions, ] = useState<any>([
     {
       title: "Curso",
       value: "Curso",
@@ -56,20 +56,14 @@ export default function CadastrarAcoes() {
       value: "Evento",
     },
   ]);
-  const [selectedTipoAcoes, setSelectedTipoAcoes] = useState<any>();
-
-  const salvarForm = async () => {
-    try {
-      const values = await form.validateFields();
-      // Faça algo com os valores, como enviar para o servidor
-    } catch (errorInfo) {}
-  };
+ 
+ 
 
   const onFinish = () => {
     //
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const eventos = [
     {
@@ -293,7 +287,6 @@ export default function CadastrarAcoes() {
 
       <Form onFinish={onFinish}>
         <Row gutter={16}>
-          {/* Primeira Linha */}
           <Col span={14}>
             <Form.Item
               label="Nome da Ação"

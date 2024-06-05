@@ -49,6 +49,7 @@ export default function CadastrarAcoes() {
   const [participants, setParticipants] = useState<any[]>([]);
   const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>();
   const [loading, setLoading] = useState(false);
+  const [tipoAcoes, ] = useState<any[]>([{id: 1, nome: "Curso" }, {id: 2, nome: "Projeto",}, {id: 3, nome: "Evento",}])
   const navigate = useNavigate();
 
   const [current, setCurrent] = useState(0);
@@ -186,15 +187,15 @@ export default function CadastrarAcoes() {
                   placeholder="selecione"
                   onChange={(e) => {
                     console.log(
-                      acaoContexData?.tipoAcoes.find((x) => x.id == e)
+                      tipoAcoes.find((x) => x.id == e)
                     );
                     setSelectedTipoAcao(
-                      acaoContexData?.tipoAcoes.find((x) => x.id == e)
+                      tipoAcoes.find((x) => x.id == e)
                     );
                   }}
                 >
-                  {acaoContexData?.tipoAcoes?.map((option) => (
-                    <Select.Option key={option.value} value={option.id}>
+                  {tipoAcoes.map((option) => (
+                    <Select.Option key={option.id} value={option.id}>
                       {option.nome}
                     </Select.Option>
                   ))}

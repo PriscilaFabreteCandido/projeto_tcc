@@ -47,7 +47,7 @@ function getItem(
 }
 
 const items: MenuProps["items"] = [
-  getItem("Calendário", "inicio", <CalendarOutlined  />, "/Calendário"),
+  //getItem("Calendário", "inicio", <CalendarOutlined  />, "/Calendário"),
 
   getItem("Cadastros", "cadastros", <FileTextOutlined />, "/Consultas", [
     getItem("Curso", "cursos", <DesktopOutlined />, "Cadastros/Cursos"),

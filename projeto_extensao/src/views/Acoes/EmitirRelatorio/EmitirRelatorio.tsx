@@ -28,20 +28,56 @@ const EmitirRelatorio = () => {
   const [tiposAcoes, setTiposAcoes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Dados mockados
   const data = [
     {
       key: "1",
       year: "2021",
-      type: "Ação 1",
-      description: "Descrição da Ação 1",
+      type: "Curso",
+      description: "Curso de Java",
     },
     {
       key: "2",
       year: "2022",
-      type: "Ação 2",
-      description: "Descrição da Ação 2",
+      type: "Projeto",
+      description: "Projeto de Pesquisa",
     },
-    // Adicione mais dados conforme necessário
+    {
+      key: "3",
+      year: "2023",
+      type: "Palestra",
+      description: "Palestra sobre IA",
+    },
+    {
+      key: "4",
+      year: "2023",
+      type: "Visita Guiada",
+      description: "Visita ao Museu",
+    },
+    {
+      key: "5",
+      year: "2021",
+      type: "Curso",
+      description: "Curso de Python",
+    },
+    {
+      key: "6",
+      year: "2022",
+      type: "Projeto",
+      description: "Projeto de Robótica",
+    },
+    {
+      key: "7",
+      year: "2023",
+      type: "Palestra",
+      description: "Palestra sobre Segurança",
+    },
+    {
+      key: "8",
+      year: "2023",
+      type: "Visita Guiada",
+      description: "Visita à Fábrica",
+    },
   ];
 
   const onFilter = () => { };
@@ -119,26 +155,21 @@ const EmitirRelatorio = () => {
         </div>
       ),
       children: (
-        <div
-
-
-        >
+        <div>
           <Form
             form={formFilter}
             layout="vertical"
-
           >
-
             <Row gutter={[16, 16]}>
               <Col span={8}>
-                <Form.Item name="período" label="Periodo">
+                <Form.Item name="ano" label="Ano">
                   <Select
-                    placeholder="Selecione um periodo"
+                    placeholder="Selecione um período"
                     style={{ width: "100%" }}
                   >
-                    {tiposAcoes?.map((option: any) => (
-                      <Select.Option key={option.id} value={option.id}>
-                        {option.nome}
+                    {["2024", "2023", "2022", "2021"].map((option: string) => (
+                      <Select.Option key={option} value={option}>
+                        {option}
                       </Select.Option>
                     ))}
                   </Select>
@@ -148,10 +179,10 @@ const EmitirRelatorio = () => {
               <Col span={8}>
                 <Form.Item name="tipoAcao" label="Tipo Ação">
                   <Select
-                    placeholder="Selecione um tipo ação"
+                    placeholder="Selecione um tipo de ação"
                     style={{ width: "100%" }}
                   >
-                    {tiposAcoes?.map((option: any) => (
+                    {tiposAcoes.map((option: any) => (
                       <Select.Option key={option.id} value={option.id}>
                         {option.nome}
                       </Select.Option>
@@ -166,7 +197,7 @@ const EmitirRelatorio = () => {
                     placeholder="Selecione um projeto"
                     style={{ width: "100%" }}
                   >
-                    {tiposAcoes?.map((option: any) => (
+                    {tiposAcoes.map((option: any) => (
                       <Select.Option key={option.id} value={option.id}>
                         {option.nome}
                       </Select.Option>
@@ -176,17 +207,16 @@ const EmitirRelatorio = () => {
               </Col>
             </Row>
 
-
             <Row gutter={[16, 16]}>
               <Col span={8}>
-                <Form.Item name="inicio" label="Data Inicio">
-                  <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" placeholder="selecione a data início" />
+                <Form.Item name="inicio" label="Data Início">
+                  <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" placeholder="Selecione a data de início" />
                 </Form.Item>
               </Col>
 
               <Col span={8}>
                 <Form.Item name="termino" label="Data de Término">
-                  <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" placeholder="selecione a data de término" />
+                  <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" placeholder="Selecione a data de término" />
                 </Form.Item>
               </Col>
 
@@ -197,7 +227,7 @@ const EmitirRelatorio = () => {
                     style={{ width: "100%" }}
                     showSearch
                   >
-                    {tiposAcoes?.map((option: any) => (
+                    {tiposAcoes.map((option: any) => (
                       <Select.Option key={option.id} value={option.id}>
                         {option.nome}
                       </Select.Option>
@@ -206,8 +236,6 @@ const EmitirRelatorio = () => {
                 </Form.Item>
               </Col>
             </Row>
-
-
           </Form>
         </div>
       ),
@@ -225,8 +253,12 @@ const EmitirRelatorio = () => {
       dataIndex: "type",
       key: "type",
     },
+    {
+      title: "Descrição",
+      dataIndex: "description",
+      key: "description",
+    },
   ];
-
 
   const getTiposAcoes = async () => {
     setLoading(true);
@@ -234,7 +266,7 @@ const EmitirRelatorio = () => {
       const response: ActionType[] = await get("tipoAcoes");
       setTiposAcoes(response);
     } catch (error) {
-      console.error("Erro ao obter instituições:", error);
+      console.error("Erro ao obter tipos de ações:", error);
     } finally {
       setLoading(false);
     }
@@ -244,6 +276,52 @@ const EmitirRelatorio = () => {
     getTiposAcoes();
   }, []);
 
+  // Função para agrupar dados pelo tipo de ação
+  const groupedData = data.reduce((acc, item) => {
+    const existingGroup = acc.find(group => group.type === item.type);
+    if (existingGroup) {
+      existingGroup.children.push(item);
+    } else {
+      acc.push({
+        type: item.type,
+        children: [item]
+      });
+    }
+    return acc;
+  }, []);
+
+  const columnsWithGrouping = [
+    {
+      title: "Tipo de Ação",
+      dataIndex: "type",
+      key: "type",
+      render: (_, record) => {
+        if (record.children) {
+          return {
+            children: record.type,
+            props: {
+              colSpan: 3,
+              className: 'group-header',
+            },
+          };
+        }
+        return record.type;
+      },
+    },
+    {
+      title: "Ano",
+      dataIndex: "year",
+      key: "year",
+      render: (text, record) => (record.children ? { props: { colSpan: 0 } } : text),
+    },
+    {
+      title: "Descrição",
+      dataIndex: "description",
+      key: "description",
+      render: (text, record) => (record.children ? { props: { colSpan: 0 } } : text),
+    },
+  ];
+
   return (
     <div>
       <div className="" style={{ flex: 1, marginBottom: "1rem" }}>
@@ -252,10 +330,15 @@ const EmitirRelatorio = () => {
           items={items}
           activeKey={["1"]}
           defaultActiveKey={["1"]}
-
         />
       </div>
-      <Table columns={columns} dataSource={data} loading={loading} />
+      <Table
+        columns={columnsWithGrouping}
+        dataSource={groupedData}
+        loading={loading}
+        pagination={false}
+        rowKey={(record) => record.key || record.type}
+      />
     </div>
   );
 };
