@@ -1,7 +1,5 @@
 import { Navigate } from "react-router";
 import Home from "../views/app/home";
-import RootLayout from "../layout";
-import Logout from "../views/app/Logout";
 import Usuarios from "../views/Cadastros/Usuario";
 import Error404 from "../components/404";
 import Acoes from "../views/Acoes";
@@ -16,7 +14,6 @@ import ConsultasPessoas from "../views/Relatorios/pessoas";
 import VincularEquipeExecucao from "../views/Acoes/VincularEquipeExecucao";
 import CadastrarPessoa from "../views/Cadastros/Pessoas/CadastrarPessoa";
 import CadastrarInstituicao from "../views/Cadastros/Instituicao/CadastrarInstituicao";
-import Turmas from "../views/Cadastros/Turma";
 import SemestresLetivos from "../views/Cadastros/Semestre";
 import Cursos from "../views/Cadastros/Curso";
 import EmitirRelatorio from "../views/Acoes/EmitirRelatorio/EmitirRelatorio"
@@ -31,14 +28,14 @@ export interface RouteConfig {
 
 const routes: RouteConfig[] = [
  // Inicio
- { path: "Inicio", element: <Home />, permissions: "" },
+ { path: "Calendário", element: <Home />, permissions: "" },
 
  //Cadastros
  { path: "Cadastros/Usuários", element: <Usuarios />, permissions: "" },
  { path: "Cadastros/Instituições", element: <Instituicoes />, permissions: "" },
  { path: "Cadastros/Instituições/:action", element: <CadastrarInstituicao />, permissions: "" },
  { path: "Cadastros/Pessoas", element: <Pessoas />, permissions: "" },
- { path: "Cadastros/Turmas", element: <Turmas />, permissions: "" },
+ 
  { path: "Cadastros/Semestres Letivos", element: <SemestresLetivos />, permissions: "" },
  { path: "Cadastros/Pessoas/:action", element: <CadastrarPessoa />, permissions: "" },
  { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
@@ -47,8 +44,7 @@ const routes: RouteConfig[] = [
  { path: "Cadastros/Cursos", element: <Cursos />, permissions: "" },
 
  //Ações
- { path: "Ações", element: <Acoes />, permissions: "" },
- { path: "Ações/Consultar Ação", element: <Acoes />, permissions: "" },
+ { path: "Ações/Buscar Ação", element: <Acoes />, permissions: "" },
  { path: "Ações/Cadastrar Nova Ação", element: <CadastrarAcoes />, permissions: "" },
  { path: "Ações/Emitir Relatório", element: <EmitirRelatorio />, permissions: "" },
  { path: "Eventos/Vincular Equipe de Execução", element: <VincularEquipeExecucao />, permissions: "" },

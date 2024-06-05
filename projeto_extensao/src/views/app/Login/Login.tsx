@@ -3,8 +3,7 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import loginSvg from "../../../assets/images/login.svg";
-import img2 from "../../../assets/images/fundologin.svg";
-import ifes from "../../../assets/images/logocolatina.png";
+import ifes from "../../../assets/images/LogoLeter_LetraPreta-removebg-preview.png";
 import { login } from "../../../features/authSlice";
 import { post } from "../../../api/axios";
 import { useDispatch } from "react-redux";
@@ -42,14 +41,14 @@ const Login = () => {
   return (
     <div
       style={{
-        backgroundColor: "#E4FFD0",
+        backgroundColor: "#FEAE05",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
       }}
     >
-      <Card style={{ width: 550, textAlign: "center" }}>
+      <Card style={{ width: 800, textAlign: "center" }}>
         <div
           style={{
             display: "flex",
@@ -62,10 +61,10 @@ const Login = () => {
             <img
               src={ifes}
               alt="Imagem"
-              style={{ maxWidth: "100%", height: 90 }}
+              style={{ maxWidth: "100%", height: 100, position: "relative", bottom: 25}}
             />
             <div>
-              <h4 className="poppins-bold">Seja Bem-vindo</h4>
+              <h4 className="poppins-bold" style={{fontSize: 30, position: "relative", bottom: 12}}>Seja Bem-vindo</h4>
             </div>
             <Form
               name="basic"
@@ -79,7 +78,7 @@ const Login = () => {
                   { required: true, message: "Please input your username!" },
                 ]}
               >
-                <Input prefix={<UserOutlined />} placeholder="Username" />
+                <Input prefix={<UserOutlined />} placeholder="Usuário" />
               </Form.Item>
 
               <Form.Item
@@ -90,20 +89,17 @@ const Login = () => {
               >
                 <Input.Password
                   prefix={<LockOutlined />}
-                  placeholder="Password"
+                  placeholder="Senha"
                 />
               </Form.Item>
 
-              <Form.Item name="remember" valuePropName="checked">
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-
+              
               <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
                   loading={loading}
-                  style={{ width: "100%" }}
+                  style={{ width: "50%" }}
                 >
                   LOGIN
                 </Button>
@@ -123,7 +119,7 @@ const Login = () => {
         </div>
       </Card>
 
-      <img src={img2} alt="Imagem" style={{ maxWidth: "100%" }} />
+      
     </div>
   );
 };

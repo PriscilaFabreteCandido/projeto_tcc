@@ -1,46 +1,48 @@
-import { ScheduleOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import "./styles.css";
-import { Button, Space } from "antd";
+import React, { useState } from 'react';
+import { Calendar, Button, Tag } from 'antd';
 
-export enum Cores {
-  AMARELO = "#F3CD03",
-  NEUTRO_50 = "#2C343A",
-  NEUTRO_80 = "#2C343A",
-  ROXO = "#495EBC",
-  AZUL = "#4DE5EF",
-  AZUL_ESCURO = "#051766",
-}
 
-function Home() {
-  const [treinamentos, setTreinamentos] = useState<any>([
-    { nome: "José luis Alves", data: "01/02/2024" },
-    { nome: "Pedro Mendes", data: "01/02/2024" },
-    { nome: "Carlos Saldanha", data: "03/02/2024" },
-    { nome: "Maria Silva", data: "04/02/2024" },
-    { nome: "Carla Fonseca", data: "04/02/2024" },
-  ]);
+const Home = () => {
+  const [view, setView] = useState('month'); // Estado para alternar entre 'month' e 'day'
+  const [selectedDate, setSelectedDate] = useState<any>(null); // Data selecionada
 
-  const [vagasAbertas, setVagasAbertas] = useState<any>([
-    { nome: "Mecânico", empresa: "Empresa" },
-    { nome: "Soldador", empresa: "Empresa" },
-    { nome: "Auxiliar Administrativo", empresa: "Empresa" },
-    { nome: "Operador de Maquinas", empresa: "Empresa" },
-    { nome: "Engenheiro", empresa: "Empresa" },
-    { nome: "RH", empresa: "Empresa" },
-  ]);
+  const onSelect = (date:any) => {
+    setSelectedDate(date);
+    setView('day');
+  };
 
-  const cards = [
-    { corFundo: Cores.ROXO, label: "Consultas" },
-    { corFundo: '#1A3AC6', label: "Relatórios" },
-    { corFundo: Cores.AZUL_ESCURO, label: "PGR" },
-    { corFundo: Cores.AZUL_ESCURO, label: "PCMSO" },
-  ];
+  const onPanelChange = (date:any, mode:any) => {
+    if (mode === 'month') {
+      setView('month');
+    }
+  };
 
-  return (
-    <div id="home">
-     
+  const renderMonthView = () => (
+    <div>
+      <Calendar onSelect={onSelect} onPanelChange={onPanelChange} />
     </div>
   );
-}
+
+  const renderDayView = () => (
+    <div>
+      <Button onClick={() => setView('month')}>Ver Mês</Button>
+      <h2>Visualização do Dia: {selectedDate ? selectedDate.format('YYYY-MM-DD') : 'Nenhum dia selecionado'}</h2>
+    </div>
+  );
+
+  return (
+    <div>
+
+      {view === 'month' ? renderMonthView() : renderDayView()}
+      <div style={{ marginTop: 20 }}>
+        <h6>Legenda:</h6>
+        <Tag color="green">Projeto</Tag>
+        <Tag color="pink">Curso</Tag>
+        <Tag color="brown">Visita guiada</Tag>
+      </div>
+      
+    </div>
+  );
+};
+
 export default Home;

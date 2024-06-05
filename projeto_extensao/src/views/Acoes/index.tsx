@@ -73,21 +73,20 @@ const Acoes: React.FC = () => {
             className="flex gap-1"
             style={{ alignItems: "center", gap: "1rem" }}
           >
-            {expanded && (
-              <Button
-                type="primary"
-                onClick={() => {
-                  onFilter();
-                }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <FilterOutlined className="ifes-icon" />
-                <span style={{ marginLeft: "5px" }}>Filtrar</span>
-              </Button>
-            )}
+
+            <Button
+              type="primary"
+              onClick={() => {
+                onFilter();
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <FilterOutlined className="ifes-icon" />
+              <span style={{ marginLeft: "5px" }}>Filtrar</span>
+            </Button>
 
             <Button
               className="ifes-btn-success"
@@ -108,69 +107,80 @@ const Acoes: React.FC = () => {
       ),
       children: (
         <div
-          className="flex filtros-card"
-          style={{ padding: "10px 0",}}
+
+
         >
           <Form
             form={formFilter}
             layout="vertical"
-            style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
+
           >
-            <Row gutter={16}>
+
+            <Row gutter={[16, 16]}>
               <Col span={8}>
-                <Form.Item name="nomeAcao" label="Nome Ação">
-                  <Input placeholder="Nome Ação" style={{ width: "100%" }} />
+                <Form.Item name="nome" label="Nome da Ação">
+                  <Input></Input>
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="tipoAcao" label="Tipo Ação">
+                  <Select
+                    placeholder="Selecione um tipo ação"
+                    style={{ width: "100%" }}
+                  >
+                    {[]?.map((option: any) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.nome}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </Col>
 
               <Col span={8}>
                 <Form.Item name="projeto" label="Projeto">
-                  <Select placeholder="Selecione um projeto" style={{ width: "100%" }}>
-                    <Option value="projeto1">Projeto 1</Option>
-                    <Option value="projeto2">Projeto 2</Option>
-                    <Option value="projeto3">Projeto 3</Option>
+                  <Select
+                    placeholder="Selecione um projeto"
+                    style={{ width: "100%" }}
+                  >
+                    {[]?.map((option: any) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.nome}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+
+            <Row gutter={[16, 16]}>
+              <Col span={8}>
+                <Form.Item name="projeto" label="Periodo">
+                  <Select
+                    placeholder="Selecione um projeto"
+                    style={{ width: "100%" }}
+                  >
+                    {[]?.map((option: any) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.nome}
+                      </Select.Option>
+                    ))}
                   </Select>
                 </Form.Item>
               </Col>
 
               <Col span={8}>
-                <Form.Item name="dataCriacao" label="Data de Emissão">
-                  <DatePicker placeholder="Data de Criação" style={{ width: "100%" }} />
-                </Form.Item>
+
+              </Col>
+
+              <Col span={8}>
+
               </Col>
             </Row>
 
-            <Row gutter={16}>
-              <Col span={8}>
-                <Form.Item name="tipoAcao" label="Tipo Ação">
-                  <Select placeholder="Selecione o tipo" style={{ width: "100%" }}>
-                    <Option value="tipo1">Tipo 1</Option>
-                    <Option value="tipo2">Tipo 2</Option>
-                    <Option value="tipo3">Tipo 3</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
 
-              <Col span={8}>
-                <Form.Item name="periodoVigencia" label="Período de Vigência">
-                  <DatePicker.RangePicker style={{ width: "100%" }} />
-                </Form.Item>
-              </Col>
-
-              <Col span={8}>
-                <Form.Item name="dataTermino" label="Data de Término">
-                  <DatePicker placeholder="Data de Término" style={{ width: "100%" }} />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16}>
-              <Col span={8}>
-                <Form.Item name="ano" label="Ano">
-                  <Input placeholder="Ano" type="number" style={{ width: "100%" }} />
-                </Form.Item>
-              </Col>
-            </Row>
           </Form>
         </div>
       ),
@@ -273,6 +283,9 @@ const Acoes: React.FC = () => {
         <Collapse
           accordion
           items={items}
+          items={items}
+          activeKey={["1"]}
+          defaultActiveKey={["1"]}
           onChange={(key) => setExpanded(key.includes("1"))}
         />
       </div>

@@ -8,6 +8,8 @@ import {
   DatePicker,
   Form,
   Collapse,
+  Row,
+  Col,
 } from "antd";
 import {
   FileExcelOutlined,
@@ -42,7 +44,7 @@ const EmitirRelatorio = () => {
     // Adicione mais dados conforme necessário
   ];
 
-  const onFilter = () => {};
+  const onFilter = () => { };
 
   const items: CollapseProps["items"] = [
     {
@@ -70,21 +72,21 @@ const EmitirRelatorio = () => {
           </div>
 
           <div className="flex gap-1" style={{ gap: "1rem" }}>
-            {expanded && (
-              <Button
-                type="primary"
-                onClick={() => {
-                  onFilter();
-                }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <FilterOutlined className="ifes-icon" />
-                <span style={{ marginLeft: "5px" }}>Filtrar</span>
-              </Button>
-            )}
+
+            <Button
+              type="primary"
+              onClick={() => {
+                onFilter();
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <FilterOutlined className="ifes-icon" />
+              <span style={{ marginLeft: "5px" }}>Filtrar</span>
+            </Button>
+
 
             <Button
               className="ifes-btn-danger"
@@ -99,7 +101,7 @@ const EmitirRelatorio = () => {
             </Button>
 
             <Button
-            className="ifes-btn-warning"
+              className="ifes-btn-warning"
               type="primary"
               onClick={() => {
                 // Lógica de emissão de relatório em Excel
@@ -118,30 +120,94 @@ const EmitirRelatorio = () => {
       ),
       children: (
         <div
-          className="flex filtros-card"
-          style={{ padding: "10px 0", display: "flex", gap: "20px" }}
+
+
         >
           <Form
             form={formFilter}
             layout="vertical"
-            style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-          >
-            <Form.Item name="ano" label="Ano">
-              <Input type="number" maxLength={4} />
-            </Form.Item>
 
-            <Form.Item name="tipoAcao" label="Tipo Ação">
-              <Select
-                placeholder="Selecione um projeto"
-                style={{ width: "200px" }}
-              >
-                {tiposAcoes?.map((option: any) => (
-                  <Select.Option key={option.id} value={option.id}>
-                    {option.nome}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
+          >
+
+            <Row gutter={[16, 16]}>
+              <Col span={8}>
+                <Form.Item name="período" label="Periodo">
+                  <Select
+                    placeholder="Selecione um periodo"
+                    style={{ width: "100%" }}
+                  >
+                    {tiposAcoes?.map((option: any) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.nome}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="tipoAcao" label="Tipo Ação">
+                  <Select
+                    placeholder="Selecione um tipo ação"
+                    style={{ width: "100%" }}
+                  >
+                    {tiposAcoes?.map((option: any) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.nome}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="projeto" label="Projeto">
+                  <Select
+                    placeholder="Selecione um projeto"
+                    style={{ width: "100%" }}
+                  >
+                    {tiposAcoes?.map((option: any) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.nome}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+
+            <Row gutter={[16, 16]}>
+              <Col span={8}>
+                <Form.Item name="inicio" label="Data Inicio">
+                  <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" placeholder="selecione a data início" />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="termino" label="Data de Término">
+                  <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" placeholder="selecione a data de término" />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item name="participantes" label="Participantes">
+                  <Select
+                    placeholder="Selecione um projeto"
+                    style={{ width: "100%" }}
+                    showSearch
+                  >
+                    {tiposAcoes?.map((option: any) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.nome}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+
           </Form>
         </div>
       ),
@@ -161,7 +227,7 @@ const EmitirRelatorio = () => {
     },
   ];
 
- 
+
   const getTiposAcoes = async () => {
     setLoading(true);
     try {
@@ -184,8 +250,9 @@ const EmitirRelatorio = () => {
         <Collapse
           accordion
           items={items}
+          activeKey={["1"]}
           defaultActiveKey={["1"]}
-          onChange={(key) => setExpanded(key.includes("1"))}
+
         />
       </div>
       <Table columns={columns} dataSource={data} loading={loading} />

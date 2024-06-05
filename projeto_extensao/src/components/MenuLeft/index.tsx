@@ -6,11 +6,9 @@ import {
   DesktopOutlined,
   FileSearchOutlined,
   FileTextOutlined,
-  HomeOutlined,
   IdcardOutlined,
   PlayCircleOutlined,
   SafetyOutlined,
-  SolutionOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -49,7 +47,7 @@ function getItem(
 }
 
 const items: MenuProps["items"] = [
-  getItem("Início", "inicio", <HomeOutlined />, "/Inicio"),
+  getItem("Calendário", "inicio", <CalendarOutlined  />, "/Calendário"),
 
   getItem("Cadastros", "cadastros", <FileTextOutlined />, "/Consultas", [
     getItem("Curso", "cursos", <DesktopOutlined />, "Cadastros/Cursos"),
@@ -62,7 +60,7 @@ const items: MenuProps["items"] = [
   getItem("Ações", "acoes", <PlayCircleOutlined  />, "/Consultas", [
     getItem("Nova Ação", "novaAcao", <DesktopOutlined  />, "/Ações/Cadastrar Nova Ação"),
     getItem("Emitir Relatórios", "emitirRelatorios", <FileSearchOutlined  />, "Ações/Emitir Relatório"),
-    getItem("Consultar Ação", "consultarAcao", <BarChartOutlined  />, "/Ações/Consultar Ação"),
+    getItem("Buscar Ação", "consultarAcao", <BarChartOutlined  />, "/Ações/Buscar Ação"),
     getItem("Consultar Participantes", "consultarParticipantes", <BsPeople  />, "/Ações/Consultar Ação"),
   ]),
   getItem("Gerenciar Nívies de Acesso", "niveisAcesso", <SafetyOutlined />,"/Gerenciar Níveis de Acesso"),

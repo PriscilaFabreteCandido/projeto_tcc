@@ -11,7 +11,7 @@ import { persistStore } from 'redux-persist'
 
 const config = {
   token: {
-    colorPrimary: "#04652F",
+    colorPrimary: "#FA7305",
     colorSecondary: "#E5EDEA",
     colorSuccess: "#6EC936",
     colorInfo: "#45bfd6",

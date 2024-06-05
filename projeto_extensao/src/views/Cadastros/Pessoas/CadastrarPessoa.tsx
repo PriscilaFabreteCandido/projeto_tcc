@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input, Select, Spin, message } from "antd";
+import { Button, DatePicker, Form, Input, Select, Spin, Switch, message } from "antd";
 import { useLocation, useNavigate } from "react-router";
 import { InstituicaoType } from "../Instituicao";
 import { get, post, put } from "../../../api/axios";
@@ -29,6 +29,7 @@ const CadastrarPessoa = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    form.setFieldsValue({ativo: true})
     getContextData();
   }, []);
 
@@ -121,7 +122,7 @@ const CadastrarPessoa = () => {
 
   return (
     <Spin spinning={loading}>
-      <Form form={form} layout="vertical">
+      <Form form={form} layout="vertical"  >
         <div style={{ marginBottom: "20px" }}>
           <h4 className="poppins-bold">Cadastrar Pessoa</h4>
           <div style={{ display: "flex", marginBottom: "20px" }}>
@@ -299,7 +300,11 @@ const CadastrarPessoa = () => {
                 </Select>
               </Form.Item>
             </div>
-            <div style={{ flex: 1, marginRight: "10px" }}></div>
+            <div style={{ flex: 1, marginRight: "10px" }}>
+              <Form.Item name="ativo" label="Ativo" valuePropName="checked">
+                <Switch />
+              </Form.Item>
+            </div>
           </div>
 
           <div style={{ display: "flex", justifyContent: "end" }}>

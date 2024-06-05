@@ -14,6 +14,8 @@ import {
   Select,
 } from "antd";
 import {
+  CheckOutlined,
+  CloseOutlined,
   DeleteOutlined,
   EditOutlined,
   FilterOutlined,
@@ -41,7 +43,7 @@ interface PessoaType {
 const { Title } = Typography;
 
 const Pessoas: React.FC = () => {
-  const [pessoas, setPessoas] = useState<PessoaType[]>([]);
+  const [pessoas, setPessoas] = useState<any[]>([{}]);
   const [expanded, setExpanded] = useState(false);
   const [formFilter] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
@@ -60,7 +62,7 @@ const Pessoas: React.FC = () => {
   };
 
   useEffect(() => {
-    getPessoas();
+    //getPessoas();
   }, []);
 
   const onDelete = async (id: number) => {
@@ -71,6 +73,13 @@ const Pessoas: React.FC = () => {
     } catch (error) {
       console.error("Erro ao excluir pessoa:", error);
     }
+  };
+
+  const handleToggleActive = (record:any) => {
+    onToggleActive(record.id);
+    message.info(
+      `A pessoa ${record.ativo ? 'não aparecerá' : 'aparecerá'} mais na busca de participantes ao cadastrar uma ação.`
+    );
   };
 
   const columns: ColumnsType<PessoaType> = [
@@ -89,7 +98,7 @@ const Pessoas: React.FC = () => {
     {
       title: "Data de Nascimento",
       dataIndex: "dtNascimento",
-      render: (text) => moment(text).format('DD/MM/YYYY'), 
+      render: (text) => moment(text).format('DD/MM/YYYY'),
     },
     {
       title: "Email",
@@ -127,9 +136,22 @@ const Pessoas: React.FC = () => {
               <Button
                 className="ifes-btn-danger"
                 shape="circle"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 <DeleteOutlined className="ifes-icon" />
+              </Button>
+            </Popconfirm>
+          </Tooltip>
+
+          <Tooltip title={record.ativo ? "Desativar" : "Ativar"}>
+            <Popconfirm
+              title={`Tem certeza que deseja ${record.ativo ? 'desativar' : 'ativar'} esta pessoa?`}
+              onConfirm={() => handleToggleActive(record)}
+              okText="Sim"
+              cancelText="Cancelar"
+            >
+              <Button className={record.ativo ? "ifes-btn-danger" : "ifes-btn-success"} shape="circle">
+                {record.ativo ? <CloseOutlined className="ifes-icon" /> : <CheckOutlined className="ifes-icon" />}
               </Button>
             </Popconfirm>
           </Tooltip>
@@ -145,10 +167,10 @@ const Pessoas: React.FC = () => {
       const values = formFilter.getFieldsValue()
       const resp = await post(`pessoas/filter`, values);
       setPessoas(resp);
-     
+
     } catch (error) {
       console.error("Erro ao excluir pessoa:", error);
-    }finally{
+    } finally {
       setLoading(false)
     }
   }
@@ -161,18 +183,18 @@ const Pessoas: React.FC = () => {
           className="title-container"
           style={{
             display: "flex",
-            
+
             justifyContent: "space-between",
           }}
         >
-          <div  className="flex gap-1" style={{alignItems: "center",}}>
+          <div className="flex gap-1" style={{ alignItems: "center", }}>
             <UserOutlined style={{ fontSize: "18px", marginRight: "8px" }} />
             <span style={{ fontSize: "16px", fontWeight: "bold" }}>
               Cadastro de Pessoas
             </span>
           </div>
 
-          <div className="flex gap-1" style={{alignItems: "center", gap:"1rem"}}>
+          <div className="flex gap-1" style={{ alignItems: "center", gap: "1rem" }}>
             {expanded && (
               <Button
                 type="primary"
@@ -257,3 +279,7 @@ const Pessoas: React.FC = () => {
 };
 
 export default Pessoas;
+function onToggleActive(id: any) {
+  throw new Error("Function not implemented.");
+}
+

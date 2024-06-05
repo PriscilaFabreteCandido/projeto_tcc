@@ -220,7 +220,7 @@ export default function CadastrarAcoes() {
           </Row>
 
           <Row gutter={16}>
-            <Col span={6}>
+            <Col span={7}>
               <Form.Item
                 label="Data Início"
                 name="dataInicio"
@@ -229,7 +229,7 @@ export default function CadastrarAcoes() {
                 <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
               </Form.Item>
             </Col>
-            <Col span={6}>
+            <Col span={7}>
               <Form.Item
                 label="Data Término"
                 name="dataTermino"
@@ -238,7 +238,7 @@ export default function CadastrarAcoes() {
                 <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col span={10}>
               <Form.Item
                 label="Instituição Atendida"
                 name="instituicaoAtendida"
@@ -255,16 +255,6 @@ export default function CadastrarAcoes() {
                     </Select.Option>
                   ))}
                 </Select>
-              </Form.Item>
-            </Col>
-
-            <Col span={4}>
-              <Form.Item
-                label="Ano"
-                name="ano"
-                rules={[{ required: true, message: "Campo obrigatório" }]}
-              >
-                <Input type="number" />
               </Form.Item>
             </Col>
           </Row>
