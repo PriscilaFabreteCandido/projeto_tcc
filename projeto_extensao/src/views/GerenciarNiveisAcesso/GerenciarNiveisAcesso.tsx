@@ -47,17 +47,17 @@ const GerenciarNiveisAcesso = () => {
     setIsModalVisible(false);
   };
 
-  const handleEdit = (record) => {
-    setSelectedAccessLevel(record);
-    form.setFieldsValue(record);
-    setIsModalVisible(true);
-  };
+  // const handleEdit = (record) => {
+  //   setSelectedAccessLevel(record);
+  //   form.setFieldsValue(record);
+  //   setIsModalVisible(true);
+  // };
 
-  const handleDelete = (id) => {
-    const updatedAccessLevels = accessLevels.filter((level) => level.id !== id);
-    setAccessLevels(updatedAccessLevels);
-    message.success('Nível de acesso excluído com sucesso.');
-  };
+  // const handleDelete = (id) => {
+  //   const updatedAccessLevels = accessLevels.filter((level) => level.id !== id);
+  //   setAccessLevels(updatedAccessLevels);
+  //   message.success('Nível de acesso excluído com sucesso.');
+  // };
 
   const columns = [
     {
@@ -68,7 +68,7 @@ const GerenciarNiveisAcesso = () => {
     {
         title: "Ações",
         key: "actions",
-        render: (_, record) => (
+        render: () => (
           <Space size="middle">
             <Tooltip title="Editar">
               <Button

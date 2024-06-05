@@ -7,10 +7,7 @@ import CadastrarAcoes from "../views/Acoes/CadastrarAcoes";
 import Instituicoes from "../views/Cadastros/Instituicao";
 import Pessoas from "../views/Cadastros/Pessoas";
 import Funcao from "../views/Cadastros/Funcao";
-import Projetos from "../views/Cadastros/Projeto";
 import TiposAcoes from "../views/Cadastros/TipoAcoes";
-import ConsultarAcoes from "../views/Relatorios/Acoes";
-import ConsultasPessoas from "../views/Relatorios/pessoas";
 import VincularEquipeExecucao from "../views/Acoes/VincularEquipeExecucao";
 import CadastrarPessoa from "../views/Cadastros/Pessoas/CadastrarPessoa";
 import CadastrarInstituicao from "../views/Cadastros/Instituicao/CadastrarInstituicao";
@@ -39,7 +36,6 @@ const routes: RouteConfig[] = [
  { path: "Cadastros/Semestres Letivos", element: <SemestresLetivos />, permissions: "" },
  { path: "Cadastros/Pessoas/:action", element: <CadastrarPessoa />, permissions: "" },
  { path: "Cadastros/Funções", element: <Funcao />, permissions: "" },
- { path: "Cadastros/Projetos", element: <Projetos />, permissions: "" },
  { path: "Cadastros/Tipo Ações", element: <TiposAcoes />, permissions: "" },
  { path: "Cadastros/Cursos", element: <Cursos />, permissions: "" },
 
@@ -49,9 +45,7 @@ const routes: RouteConfig[] = [
  { path: "Ações/Emitir Relatório", element: <EmitirRelatorio />, permissions: "" },
  { path: "Eventos/Vincular Equipe de Execução", element: <VincularEquipeExecucao />, permissions: "" },
 
- //Relatórios
- { path: "Consultas/Eventos", element: <ConsultarAcoes />, permissions: "" },
- { path: "Consultas/Pessoas", element: <ConsultasPessoas />, permissions: "" },
+
  { path: "Gerenciar Níveis de Acesso", element: <GerenciarNiveisAcesso />, permissions: "" },
  {
    path: "*",

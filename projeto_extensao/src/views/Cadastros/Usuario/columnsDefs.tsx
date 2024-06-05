@@ -48,7 +48,7 @@ const columns: ColumnsType<DataType> = [
   {
     title: "Ações",
     key: "acao",
-    render: (record:any) => (
+    render: () => (
       <Space size="middle">
         {/* <Can I={DELETE} this={FEATURE}/> */}
 

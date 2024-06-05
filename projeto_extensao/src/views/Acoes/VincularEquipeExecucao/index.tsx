@@ -28,7 +28,7 @@ const VincularEquipeExecucao: React.FC = () => {
   );
 
   
-  const projetos = ["Programa-se", "Titãs da Robótica", "Letter"];
+  
 
   const columns: ColumnsType<DataType> = [
     {

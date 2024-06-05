@@ -1,7 +1,6 @@
 import { Button, Input, Select, Table } from "antd";
 import columns from "./columnsDefs";
 import data from "./data";
-import React from "react";
 import "./styles.css";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";

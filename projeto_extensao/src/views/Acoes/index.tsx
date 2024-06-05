@@ -4,7 +4,6 @@ import {
   Col,
   Collapse,
   CollapseProps,
-  DatePicker,
   Form,
   Input,
   Row,
@@ -37,12 +36,11 @@ interface DataType {
   horarioInicio: string;
   horarioTermino: string;
 }
-const { Option } = Select;
 
 const Acoes: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const [, setExpanded] = useState(false);
   const [formFilter] = Form.useForm();
   const [data, setData] = useState<any[]>();
 
@@ -213,7 +211,7 @@ const Acoes: React.FC = () => {
     {
       title: "Ações",
       key: "actions",
-      render: (record:any) => (
+      render: () => (
         <Space size="middle">
           <Tooltip title="Visualizar informações">
             <Button

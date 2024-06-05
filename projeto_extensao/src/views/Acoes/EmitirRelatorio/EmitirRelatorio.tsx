@@ -291,13 +291,13 @@ const EmitirRelatorio = () => {
       title: "Ano",
       dataIndex: "year",
       key: "year",
-      render: (record:any) => (record.children ? { props: { colSpan: 0 } } : text),
+      render: (text:any, record:any) => (record.children ? { props: { colSpan: 0 } } : text),
     },
     {
       title: "Descrição",
       dataIndex: "description",
       key: "description",
-      render: ( record:any) => (record.children ? { props: { colSpan: 0 } } : text),
+      render: ( text:any, record:any) => (record.children ? { props: { colSpan: 0 } } : text),
     },
   ];
 

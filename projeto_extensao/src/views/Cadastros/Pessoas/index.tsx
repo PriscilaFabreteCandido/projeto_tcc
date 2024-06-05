@@ -10,7 +10,6 @@ import {
   Space,
   Collapse,
   CollapseProps,
-  Typography,
   Select,
 } from "antd";
 import {
@@ -77,7 +76,6 @@ const Pessoas: React.FC = () => {
   };
 
   const handleToggleActive = (record:any) => {
-    onToggleActive(record.id);
     message.info(
       `A pessoa ${record.ativo ? 'não aparecerá' : 'aparecerá'} mais na busca de participantes ao cadastrar uma ação.`
     );

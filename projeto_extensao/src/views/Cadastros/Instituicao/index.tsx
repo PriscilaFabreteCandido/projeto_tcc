@@ -20,7 +20,7 @@ import {
 } from "@ant-design/icons";
 import { CardFooter } from "../../../components/CardFooter";
 import { ColumnsType } from "antd/es/table";
-import { get, post, put, remove } from "../../../api/axios";
+import { get, post,  remove } from "../../../api/axios";
 import { useNavigate } from "react-router";
 import { tipoInstituicoes } from "../../../data/tipoInstituicoes";
 
