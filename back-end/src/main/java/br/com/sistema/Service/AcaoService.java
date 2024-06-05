@@ -5,16 +5,20 @@ import br.com.sistema.DTO.Acao.AcaoDTO;
 
 import br.com.sistema.DTO.InstituicaoDTO;
 import br.com.sistema.DTO.PeriodoAcademicoDTO;
+import br.com.sistema.DTO.Pessoa.PessoaDTO;
 import br.com.sistema.DTO.TipoAcaoDTO;
 import br.com.sistema.DTO.TurmaDTO;
 import br.com.sistema.Exception.EntityNotFoundException;
 import br.com.sistema.Mapper.AcaoMapper;
 import br.com.sistema.Model.Acao;
+import br.com.sistema.Model.Pessoa;
 import br.com.sistema.Repository.AcaoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +31,11 @@ public class AcaoService {
     private final InstituicaoService instituicaoService;
     private final TurmaService turmaService;
     private final PeriodoAcademicoService periodoAcademicoService;
+    private final PessoaService pessoaService;
+    private final FuncaoService funcaoService;
+
+    @Autowired
+    private AcaoRepository acaoRepository;
 
 
     public AcaoDTO create(AcaoDTO acaoDTO){
@@ -36,6 +45,9 @@ public class AcaoService {
 
         return mapper.toDto(entity);
     }
+
+
+
 
     public List<AcaoDTO> getProjetos(){
 
@@ -58,8 +70,18 @@ public class AcaoService {
         List<TipoAcaoDTO> tipoAcoes = tipoAcaoService.findAll();
         acaoContextDataDTO.setTipoAcoes(tipoAcoes);
 
+        //Projetos
         List<AcaoDTO> projetos = getProjetos();
+
+        //Eventos
         List<AcaoDTO> eventos = getEventos();
+
+        //Funcoes
+        acaoContextDataDTO.setFuncoes(funcaoService.findAll());
+
+        //Participantes
+        acaoContextDataDTO.setPessoas(pessoaService.findAll().stream().filter(PessoaDTO::isAtivo)
+                .collect(Collectors.toList()));
 
 
         return acaoContextDataDTO;

@@ -43,7 +43,7 @@ interface PessoaType {
 const { Title } = Typography;
 
 const Pessoas: React.FC = () => {
-  const [pessoas, setPessoas] = useState<any[]>([{}]);
+  const [pessoas, setPessoas] = useState<any[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [formFilter] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
@@ -62,7 +62,7 @@ const Pessoas: React.FC = () => {
   };
 
   useEffect(() => {
-    //getPessoas();
+    getPessoas();
   }, []);
 
   const onDelete = async (id: number) => {

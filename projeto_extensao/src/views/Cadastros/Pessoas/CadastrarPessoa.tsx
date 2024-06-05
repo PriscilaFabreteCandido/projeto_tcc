@@ -75,6 +75,7 @@ const CadastrarPessoa = () => {
         vinculo: pessoa.vinculo,
         email: pessoa.email,
         nivelEscolaridade: pessoa.nivelEscolaridade,
+        ativo: pessoa.ativo
       });
     }
   }, [pessoa, form]);
@@ -103,6 +104,7 @@ const CadastrarPessoa = () => {
           id: values.curso,
         },
         id: pessoa ? pessoa.id : null,
+        ativo: values.ativo
       };
 
       if (!pessoa) {

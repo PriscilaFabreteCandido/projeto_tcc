@@ -32,6 +32,8 @@ public class Pessoa {
     @Column(nullable = true)
     private String matricula;
 
+    private boolean ativo = true;
+
     @Column(nullable = false)
     private String nivelEscolaridade;
 
@@ -51,4 +53,7 @@ public class Pessoa {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
+
+    @OneToMany(mappedBy = "pessoa")
+    private List<AcaoPessoa> acaoPessoas;
 }

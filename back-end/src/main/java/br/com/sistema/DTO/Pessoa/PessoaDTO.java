@@ -1,5 +1,7 @@
 package br.com.sistema.DTO.Pessoa;
 
+import br.com.sistema.DTO.Acao.AcaoDTO;
+import br.com.sistema.DTO.Acao.AcaoPessoaDTO;
 import br.com.sistema.DTO.CursoDTO;
 import br.com.sistema.DTO.FuncaoDTO;
 import br.com.sistema.DTO.InstituicaoDTO;
@@ -11,6 +13,7 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class PessoaDTO {
@@ -32,4 +35,6 @@ public class PessoaDTO {
     private FuncaoDTO funcao;
     private InstituicaoDTO instituicao;
     private CursoDTO curso;
+    private boolean ativo;
+    private List<AcaoPessoaDTO> pessoaAcoes;
 }

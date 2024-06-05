@@ -17,14 +17,36 @@ public class Acao {
     @Column
     private String nome;
 
+
+    @Column
+    private String publicoAlvo;
+
+    @Column
+    private PeriodoAcademico semestre;
+
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false, updatable = false)
+    private Date dtInicio;
+
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false, updatable = false)
+    private Date dtTermino;
+
+    @ManyToOne
+    @JoinColumn(name = "instituicao_id")
+    private Instituicao instituicao;
+
     @Column
     private String turma;
 
     @Column
-    private String semestre;//será entidade
+    private String modalidade;//será entidade
 
     @Column
-    private String modalidade;//será entidade
+    private String horaInicio;
+
+    @Column
+    private String horaTermino;
 
     @Column
     private Integer qtdParticipantes;
@@ -32,12 +54,10 @@ public class Acao {
     @Column
     private Integer qtdVagas;
 
-    @Column
-    private String localRealizacao;
 
-    @ManyToOne
-    @JoinColumn(name = "instituicao_id")
-    private Instituicao instituicao;
+    @Column
+    private String numeroProcesso;
+
 
     @ManyToOne
     @JoinColumn(name = "tipo_acao_id")
@@ -47,27 +67,37 @@ public class Acao {
     @JoinColumn(name = "acao_projeto_id")
     private Acao projeto;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false, updatable = false)
-    private Date dtCriacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "acao_evento_id")
     private Acao evento;
 
     @Column
-    private String participantesPDF;
+    private byte[] participantesPDF;
 
     @Column
-    private List<String> demaisDocumentos;
+    private List<byte[]> demaisDocumentos;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "acao_pai_id")
-    private Acao acaoPai;
+    @Column
+    private String cep;
 
-    @PrePersist
-    protected void onCreate() {
-        dtCriacao = new Date();
-    }
+    @Column
+    private String endereco;
+
+    @Column
+    private String rua;
+
+    @Column
+    private String uf;
+
+    @Column
+    private String cidade;
+
+    @Column
+    private String numero;
+
+    @OneToMany(mappedBy = "acao")
+    private List<AcaoPessoa> acaoPessoas;
+
 
 }

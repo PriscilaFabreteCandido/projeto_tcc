@@ -15,7 +15,7 @@ export default function AppRoutes() {
       <AlertListener />
       <Fragment>
         <Routes>
-          {isAuthenticated ? (
+          {!isAuthenticated ? (
             <Route element={<RootLayout />}>
               {/* Renderiza as rotas dentro de RootLayout */}
               {routes.map((route) => (

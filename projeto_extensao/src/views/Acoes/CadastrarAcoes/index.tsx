@@ -2,7 +2,6 @@ import {
   Button,
   Col,
   DatePicker,
-  Divider,
   Form,
   Input,
   Modal,
@@ -20,10 +19,6 @@ import {
 
 import "../styles.css";
 import {
-  ApartmentOutlined,
-  CloseOutlined,
-  DeleteOutlined,
-  InfoCircleOutlined,
   PlusOutlined,
   UploadOutlined,
   UserAddOutlined,
@@ -43,14 +38,15 @@ export interface AcaoContextDataType {
   tipoAcoes: any[];
   instituicoes: any[];
   funcoes: any[];
-  participantes: any[];
+  pessoas: any[];
 }
 
 export default function CadastrarAcoes() {
   const [form] = Form.useForm();
+  const [formParticipantes] = Form.useForm();
   const [selectedTipoAcao, setSelectedTipoAcao] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState<any[]>([]);
   const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -65,44 +61,45 @@ export default function CadastrarAcoes() {
     setCurrent(current - 1);
   };
 
-
-
-
   const handleAddParticipant = () => {
-    form.validateFields().then((values) => {
-      setParticipants([...participants, values]);
-      form.resetFields();
+    formParticipantes.validateFields().then((values) => {
+      const newValue = {
+        funcao:  acaoContexData?.funcoes.find(x => x.id == values.funcao),
+        participante: acaoContexData?.funcoes.find(x => x.id == values.participante)
+      }
+      setParticipants([...participants, newValue]);
+      formParticipantes.resetFields();
       setIsModalVisible(false);
     });
   };
 
-  const handleDeleteParticipant = (record) => {
-    setParticipants(participants.filter(participant => participant.nome !== record.nome));
+  const handleDeleteParticipant = (record:any) => {
+    setParticipants(
+      participants.filter((participant) => participant.nome !== record.nome)
+    );
   };
 
   const columns = [
     {
-      title: 'Nome do Participante',
-      dataIndex: 'nome',
-      key: 'nome',
+      title: "Nome do Participante",
+      dataIndex: "nome",
+      key: "nome",
     },
     {
-      title: 'Função',
-      dataIndex: 'funcao',
-      key: 'funcao',
+      title: "Função",
+      dataIndex: "funcao",
+      key: "funcao",
     },
     {
-      title: 'Ações',
-      key: 'acoes',
+      title: "Ações",
+      key: "acoes",
       render: (text, record) => (
         <Popconfirm
           title="Tem certeza que deseja excluir?"
           onConfirm={() => handleDeleteParticipant(record)}
           okText="Sim"
           cancelText="Não"
-        >
-         
-        </Popconfirm>
+        ></Popconfirm>
       ),
     },
   ];
@@ -124,7 +121,6 @@ export default function CadastrarAcoes() {
   }, []);
 
   const handleCadastrar = async () => {
-
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
@@ -171,7 +167,7 @@ export default function CadastrarAcoes() {
 
   const steps = [
     {
-      title: 'Equipe de Execução',
+      title: "Equipe de Execução",
       content: (
         <div style={{ marginTop: "2rem" }}>
           <Row gutter={16}>
@@ -187,9 +183,13 @@ export default function CadastrarAcoes() {
                 ]}
               >
                 <Select
+                  placeholder="selecione"
                   onChange={(e) => {
+                    console.log(
+                      acaoContexData?.tipoAcoes.find((x) => x.id == e)
+                    );
                     setSelectedTipoAcao(
-                      acaoContexData?.tipoAcoes.find((x) => x.id == e).nome
+                      acaoContexData?.tipoAcoes.find((x) => x.id == e)
                     );
                   }}
                 >
@@ -231,18 +231,13 @@ export default function CadastrarAcoes() {
               </Form.Item>
             </Col>
           </Row>
-
-
         </div>
       ),
     },
     {
-      title: 'Informações Gerais',
+      title: "Informações Gerais",
       content: (
         <div style={{ marginTop: "2rem" }}>
-
-
-
           <Row gutter={16}>
             <Col span={14}>
               <Form.Item
@@ -265,7 +260,7 @@ export default function CadastrarAcoes() {
           </Row>
 
           <Row gutter={16}>
-            <Col span={7}>
+            <Col span={8}>
               <Form.Item
                 label="Data Início"
                 name="dataInicio"
@@ -274,7 +269,7 @@ export default function CadastrarAcoes() {
                 <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
               </Form.Item>
             </Col>
-            <Col span={7}>
+            <Col span={8}>
               <Form.Item
                 label="Data Término"
                 name="dataTermino"
@@ -283,17 +278,13 @@ export default function CadastrarAcoes() {
                 <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
               </Form.Item>
             </Col>
-            <Col span={10}>
+            <Col span={8}>
               <Form.Item
                 label="Instituição Atendida"
                 name="instituicaoAtendida"
                 rules={[{ required: true, message: "Campo obrigatório" }]}
               >
-                <Select
-                  onChange={(e) => {
-                    setSelectedTipoAcao(e);
-                  }}
-                >
+                <Select>
                   {acaoContexData?.instituicoes?.map((option) => (
                     <Select.Option key={option.value} value={option.id}>
                       {option.nome}
@@ -304,7 +295,7 @@ export default function CadastrarAcoes() {
             </Col>
           </Row>
 
-          {selectedTipoAcao == "Curso" && (
+          {selectedTipoAcao?.nome == "Curso" && (
             <>
               <Row gutter={16}>
                 <Col span={8}>
@@ -388,13 +379,36 @@ export default function CadastrarAcoes() {
                   </Form.Item>
                 </Col>
               </Row>
-
-
             </>
           )}
 
+          <Row gutter={16}>
+          <Col span={8}>
+              <Form.Item
+                label="Quantidade de Vagas"
+                name="qtdVagas"
+                rules={[{ required: true, message: "Campo obrigatório" }]}
+              >
+                <Input type="number"></Input>
+              </Form.Item>
+            </Col>
+            
+            <Col span={8}>
+              <Form.Item
+                label="Quantidade de Participantes"
+                name="qtdParticipantes"
+                rules={[{ required: true, message: "Campo obrigatório" }]}
+              >
+                <Input type="number"></Input>
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Button type="primary" icon={<UserAddOutlined />} onClick={() => setIsModalVisible(true)}>
+          <Button
+            type="primary"
+            icon={<UserAddOutlined />}
+            onClick={() => setIsModalVisible(true)}
+          >
             Adicionar Participante
           </Button>
 
@@ -402,7 +416,7 @@ export default function CadastrarAcoes() {
             dataSource={participants}
             columns={columns}
             rowKey={(record) => record?.nome}
-            style={{ marginTop: '1rem' }}
+            style={{ marginTop: "1rem" }}
           />
 
           <Modal
@@ -411,18 +425,23 @@ export default function CadastrarAcoes() {
             onCancel={() => setIsModalVisible(false)}
             onOk={handleAddParticipant}
           >
-            <Form form={form} layout="vertical">
+            <Form form={formParticipantes} layout="vertical">
               <Form.Item
                 label="Participante"
                 name="nome"
-                rules={[{ required: true, message: 'Por favor, insira o nome do participante!' }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Por favor, insira o nome do participante!",
+                  },
+                ]}
               >
                 <Select
                   onChange={(e) => {
                     setSelectedTipoAcao(e);
                   }}
                 >
-                  {acaoContexData?.participantes?.map((option) => (
+                  {acaoContexData?.pessoas?.map((option) => (
                     <Select.Option key={option.value} value={option.id}>
                       {option.nome}
                     </Select.Option>
@@ -432,7 +451,9 @@ export default function CadastrarAcoes() {
               <Form.Item
                 label="Função"
                 name="funcao"
-                rules={[{ required: true, message: 'Por favor, insira a função!' }]}
+                rules={[
+                  { required: true, message: "Por favor, insira a função!" },
+                ]}
               >
                 <Select
                   onChange={(e) => {
@@ -448,12 +469,11 @@ export default function CadastrarAcoes() {
               </Form.Item>
             </Form>
           </Modal>
-
         </div>
       ),
     },
     {
-      title: 'Endereço de Realização',
+      title: "Endereço de Realização",
       content: (
         <div style={{ marginTop: "2rem" }}>
           <Row gutter={16}>
@@ -521,7 +541,7 @@ export default function CadastrarAcoes() {
       ),
     },
     {
-      title: 'Documentos',
+      title: "Documentos",
       content: (
         <div style={{ marginTop: "2rem" }}>
           <Row gutter={16}>
@@ -573,13 +593,12 @@ export default function CadastrarAcoes() {
             </Button>
           )}
           {current > 0 && (
-            <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+            <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
               Anterior
             </Button>
           )}
         </div>
       </Form>
-
-    </Spin >
+    </Spin>
   );
 }
