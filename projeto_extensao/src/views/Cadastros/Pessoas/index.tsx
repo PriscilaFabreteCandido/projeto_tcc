@@ -39,8 +39,9 @@ interface PessoaType {
   email: string;
   instituicao: string;
   graduacao: string;
+  ativo:boolean;
 }
-const { Title } = Typography;
+
 
 const Pessoas: React.FC = () => {
   const [pessoas, setPessoas] = useState<any[]>([]);
@@ -279,7 +280,5 @@ const Pessoas: React.FC = () => {
 };
 
 export default Pessoas;
-function onToggleActive(id: any) {
-  throw new Error("Function not implemented.");
-}
+
 

@@ -1,10 +1,9 @@
-import { DeleteOutlined, EditOutlined, InfoOutlined, VerticalAlignBottomOutlined } from "@ant-design/icons";
-import { Can } from "@casl/react";
+import { DeleteOutlined,  InfoOutlined } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { FeatureCodeAction, FeatureCodeEnum } from "../../../enums/feature";
-const FEATURE = FeatureCodeEnum.USERS;
-const DELETE = FeatureCodeAction.DELETE;
+// import { FeatureCodeAction, FeatureCodeEnum } from "../../../enums/feature";
+// const FEATURE = FeatureCodeEnum.USERS;
+// const DELETE = FeatureCodeAction.DELETE;
 interface DataType {
   key: React.Key;
   nomeCompleto: string;
@@ -49,7 +48,7 @@ const columns: ColumnsType<DataType> = [
   {
     title: "Ações",
     key: "acao",
-    render: (_, record) => (
+    render: (record:any) => (
       <Space size="middle">
         {/* <Can I={DELETE} this={FEATURE}/> */}
 

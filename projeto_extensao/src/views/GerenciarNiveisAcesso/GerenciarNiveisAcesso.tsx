@@ -25,11 +25,11 @@ const GerenciarNiveisAcesso = () => {
   const [accessLevels, setAccessLevels] = useState(mockAccessLevels);
   const [functions] = useState(mockFunctions);
   const [people] = useState(mockPeople);
-  const [selectedAccessLevel, setSelectedAccessLevel] = useState(null);
+  const [selectedAccessLevel, setSelectedAccessLevel] = useState<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
 
-  const handleCreateOrUpdate = (values) => {
+  const handleCreateOrUpdate = (values:any) => {
     if (selectedAccessLevel) {
       const updatedAccessLevels = accessLevels.map((level) =>
         level.id === selectedAccessLevel.id ? { ...level, ...values } : level

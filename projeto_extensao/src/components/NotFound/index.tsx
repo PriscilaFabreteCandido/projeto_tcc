@@ -1,6 +1,6 @@
 // NotFound.js
-import { Button, Result } from "antd";
-import React from "react";
+import { Result } from "antd";
+
 
 function NotFound() {
   return (

@@ -1,4 +1,3 @@
-import { Navigate } from "react-router";
 
 export interface ItensBreadcrumbs {
   path: string;

@@ -12,6 +12,7 @@ const Home = () => {
   };
 
   const onPanelChange = (date:any, mode:any) => {
+    console.log('date',date)
     if (mode === 'month') {
       setView('month');
     }

@@ -84,11 +84,11 @@ const CadastrarInstituicao = () => {
       };
 
       if (!instituicao) {
-        const response = await post("instituicoes/create", instituicaoToCreateOrEdit);
+        await post("instituicoes/create", instituicaoToCreateOrEdit);
         navigate("/Cadastros/Instituições");
         message.success("Instituição criada com sucesso");
       } else {
-        const response = await put(
+        await put(
           `instituicoes/update/${instituicao.id}`,
           instituicaoToCreateOrEdit
         );

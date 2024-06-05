@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, DatePicker, Form, Input, Select, Spin, Switch, message } from "antd";
 import { useLocation, useNavigate } from "react-router";
 import { InstituicaoType } from "../Instituicao";
@@ -6,7 +6,6 @@ import { get, post, put } from "../../../api/axios";
 import { niveisEscolaridade } from "../../../data/niveisdeescolaridade";
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { vinculos } from "../../../data/vinculos";
-import moment from "moment";
 
 export interface FuncoesType {
   id: number;

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import {
   Table,
-  Input,
   Button,
   Select,
   CollapseProps,
@@ -20,10 +19,7 @@ import {
 import { get } from "../../../api/axios";
 import { ActionType } from "../../Cadastros/TipoAcoes";
 
-const { Option } = Select;
-
 const EmitirRelatorio = () => {
-  const [expanded, setExpanded] = useState(true);
   const [formFilter] = Form.useForm();
   const [tiposAcoes, setTiposAcoes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -242,24 +238,7 @@ const EmitirRelatorio = () => {
     },
   ];
 
-  const columns = [
-    {
-      title: "Ano",
-      dataIndex: "year",
-      key: "year",
-    },
-    {
-      title: "Tipo de Ação",
-      dataIndex: "type",
-      key: "type",
-    },
-    {
-      title: "Descrição",
-      dataIndex: "description",
-      key: "description",
-    },
-  ];
-
+  
   const getTiposAcoes = async () => {
     setLoading(true);
     try {
@@ -277,8 +256,8 @@ const EmitirRelatorio = () => {
   }, []);
 
   // Função para agrupar dados pelo tipo de ação
-  const groupedData = data.reduce((acc, item) => {
-    const existingGroup = acc.find(group => group.type === item.type);
+  const groupedData = data.reduce((acc:any, item:any) => {
+    const existingGroup = acc.find((group:any) => group.type === item.type);
     if (existingGroup) {
       existingGroup.children.push(item);
     } else {
@@ -295,7 +274,7 @@ const EmitirRelatorio = () => {
       title: "Tipo de Ação",
       dataIndex: "type",
       key: "type",
-      render: (_, record) => {
+      render: (record:any) => {
         if (record.children) {
           return {
             children: record.type,
@@ -312,13 +291,13 @@ const EmitirRelatorio = () => {
       title: "Ano",
       dataIndex: "year",
       key: "year",
-      render: (text, record) => (record.children ? { props: { colSpan: 0 } } : text),
+      render: (record:any) => (record.children ? { props: { colSpan: 0 } } : text),
     },
     {
       title: "Descrição",
       dataIndex: "description",
       key: "description",
-      render: (text, record) => (record.children ? { props: { colSpan: 0 } } : text),
+      render: ( record:any) => (record.children ? { props: { colSpan: 0 } } : text),
     },
   ];
 

@@ -1,7 +1,6 @@
-import React from 'react';
-import { Form, Input, DatePicker, Select, Button, Upload, Space, Tooltip } from 'antd';
-import { UploadOutlined, DeleteOutlined, InfoOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
+import { Form, Input, DatePicker, Select, Button, Space, Tooltip } from 'antd';
+import { DeleteOutlined, InfoOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 

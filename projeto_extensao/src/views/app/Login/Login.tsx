@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 import { Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import loginSvg from "../../../assets/images/login.svg";
@@ -13,7 +13,7 @@ const Login = () => {
   const dispatch = useDispatch();
  
 
-  const handleLogin = async (values: { login: any; password: any; }) => {
+  const handleLogin = async () => {
     try {
       setLoading(true)
       const params = {

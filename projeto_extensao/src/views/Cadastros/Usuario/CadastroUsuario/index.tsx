@@ -1,40 +1,25 @@
 import {
   Button,
-  Checkbox,
   Col,
   Form,
   Input,
   Row,
   Select,
-  Space,
-  Table,
   Tooltip,
 } from "antd";
 
 import "../styles.css";
 import { CardCadastro } from "../../../../components/CardCadastro";
 import {
-  BankOutlined,
   CloseOutlined,
   SaveOutlined,
-  SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router";
 
 const { Option } = Select;
 
 export default function UsuarioCadastro() {
   const [form] = Form.useForm();
-
-  const salvarForm = async () => {
-    try {
-      const values = await form.validateFields();
-      // Faça algo com os valores, como enviar para o servidor
-    } catch (errorInfo) {}
-  };
-
-  const navigate = useNavigate();
 
   return (
     <>

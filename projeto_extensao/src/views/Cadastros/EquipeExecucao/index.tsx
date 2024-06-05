@@ -1,4 +1,4 @@
-import { Button, Input, Select, Space, Switch, Table, Tooltip, Typography } from "antd";
+import { Button, Input,  Space, Switch, Table, Tooltip, Typography } from "antd";
 import React from "react";
 import "./styles.css";
 import { CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, InfoOutlined, PlusOutlined } from "@ant-design/icons";

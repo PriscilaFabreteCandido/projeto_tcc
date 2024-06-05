@@ -1,17 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import {
-  BellOutlined,
   FormOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  MoreOutlined,
+
   SecurityScanOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, FloatButton, Menu, MenuProps } from "antd";
+import { Avatar, Button, Menu, MenuProps } from "antd";
 import MenuItem from "antd/es/menu/MenuItem";
 import { useNavigate } from "react-router";
 
@@ -59,7 +58,6 @@ function Header({ onIconClick }: any) {
   const [collapsed, setCollapsed] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const menuRef = useRef<HTMLDivElement | null>({} as any);
   const navigate = useNavigate();
 
   const toggleCollapsed = () => {

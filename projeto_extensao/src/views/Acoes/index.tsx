@@ -213,7 +213,7 @@ const Acoes: React.FC = () => {
     {
       title: "Ações",
       key: "actions",
-      render: (_, record) => (
+      render: (record:any) => (
         <Space size="middle">
           <Tooltip title="Visualizar informações">
             <Button
@@ -282,7 +282,6 @@ const Acoes: React.FC = () => {
       <div className="" style={{ flex: 1, marginBottom: "1rem" }}>
         <Collapse
           accordion
-          items={items}
           items={items}
           activeKey={["1"]}
           defaultActiveKey={["1"]}

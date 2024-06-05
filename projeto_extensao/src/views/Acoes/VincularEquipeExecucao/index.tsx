@@ -3,18 +3,9 @@ import {
   Button,
   Input,
   Select,
-  Space,
+
   Table,
-  Tooltip,
-  Typography,
 } from "antd";
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  DeleteOutlined,
-  InfoOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/es/table";
 

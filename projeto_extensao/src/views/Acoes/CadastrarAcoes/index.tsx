@@ -28,7 +28,6 @@ import { useEffect, useState } from "react";
 import { get, post, put } from "../../../api/axios";
 import { modalidades } from "../../../data/modalidades";
 
-const { Option } = Select;
 
 export interface AcaoContextDataType {
   projetos: any[];
@@ -44,7 +43,7 @@ export interface AcaoContextDataType {
 export default function CadastrarAcoes() {
   const [form] = Form.useForm();
   const [formParticipantes] = Form.useForm();
-  const [selectedTipoAcao, setSelectedTipoAcao] = useState<string>("");
+  const [selectedTipoAcao, setSelectedTipoAcao] = useState<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [participants, setParticipants] = useState<any[]>([]);
   const [acaoContexData, setAcaoContexData] = useState<AcaoContextDataType>();
@@ -94,7 +93,7 @@ export default function CadastrarAcoes() {
     {
       title: "Ações",
       key: "acoes",
-      render: (text, record) => (
+      render: (record:any) => (
         <Popconfirm
           title="Tem certeza que deseja excluir?"
           onConfirm={() => handleDeleteParticipant(record)}
