@@ -83,11 +83,11 @@ public class AcaoService {
         acaoContextDataDTO.setProjetos(projetos);
 
         // Eventos
-        List<AcaoDTO> eventos = getProjetos().stream()
+        List<AcaoDTO> eventos = getEventos().stream()
                 .filter(Objects::nonNull)
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
-        
+
         acaoContextDataDTO.setEventos(eventos);
 
         // Funcoes
