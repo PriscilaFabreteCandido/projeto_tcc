@@ -20,4 +20,6 @@ public class PeriodoAcademicoDTO {
     private String formato;
     private String periodo;
 
+    public static class DocumentoDTO {
+    }
 }

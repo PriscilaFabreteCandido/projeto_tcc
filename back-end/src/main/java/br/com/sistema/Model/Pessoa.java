@@ -50,7 +50,7 @@ public class Pessoa {
     private Instituicao instituicao;
 
     @ManyToOne
-    @JoinColumn(name = "curso_id")
+    @JoinColumn(name = "curso_id", nullable = true)
     private Curso curso;
 
 

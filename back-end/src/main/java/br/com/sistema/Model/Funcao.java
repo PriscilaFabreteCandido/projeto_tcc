@@ -18,6 +18,6 @@ public class Funcao {
     private String nome;
 
     @OneToMany(mappedBy = "funcao")
-    private List<Pessoa> pessoas;
+    private List<AcaoPessoa> acoesPessoas;
 
 }

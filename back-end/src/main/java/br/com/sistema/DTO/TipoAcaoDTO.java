@@ -10,6 +10,7 @@ public class TipoAcaoDTO {
 
     private Long id;
     private String nome;
+    private String icone;
     //private List<AcaoDTO> acoes = new ArrayList<>();
 
 }

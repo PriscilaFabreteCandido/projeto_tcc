@@ -1,10 +1,7 @@
 package br.com.sistema.DTO.Acao;
 
-import br.com.sistema.DTO.InstituicaoDTO;
-import br.com.sistema.DTO.PeriodoAcademicoDTO;
+import br.com.sistema.DTO.*;
 import br.com.sistema.DTO.Pessoa.PessoaDTO;
-import br.com.sistema.DTO.ProjetoDTO;
-import br.com.sistema.DTO.TipoAcaoDTO;
 import br.com.sistema.Service.PeriodoAcademicoService;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -24,7 +21,8 @@ public class AcaoDTO {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-3")
     private Date dtInicio;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-3")
-    private Date dtFim;
+    private Date dtTermino;
+
     private String turma;
     private PeriodoAcademicoDTO periodo;
     private String modalidade;
@@ -33,7 +31,7 @@ public class AcaoDTO {
     private String numeroProcesso;
     private int qtdVagas;
     private int qtdParticipantes;
-    private List<AcaoPessoaDTO> acaoPessoas;
+
     private String cep;
     private String endereco;
     private String rua;
@@ -41,7 +39,11 @@ public class AcaoDTO {
     private String cidade;
     private String numero;
     private String complemento;
-    private byte[] participantes;
-    private List<byte[]> documentos;
+    private DocumentoDTO participantes;
+    private List<DocumentoDTO> documentos;
 
+    private List<AcaoPessoaDTO> acaoPessoas;
+    private InstituicaoDTO instituicaoAtendida;
+    private AcaoDTO projeto;
+    private AcaoDTO evento;
 }

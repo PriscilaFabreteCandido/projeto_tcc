@@ -3,13 +3,11 @@ package br.com.sistema.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Entity
-public class TipoAcao {
-
+//@Data
+//@Entity
+public class Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,8 +16,8 @@ public class TipoAcao {
     private String nome;
 
     @Column
-    private String icone;
+    private List<byte[]> conteudo;
 
-    @OneToMany(mappedBy = "tipoAcao")
-    private List<Acao> acoes = new ArrayList<>();
+    @Column
+    private String tipo;
 }

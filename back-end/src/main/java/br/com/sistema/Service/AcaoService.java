@@ -37,7 +37,6 @@ public class AcaoService {
     @Autowired
     private AcaoRepository acaoRepository;
 
-
     public AcaoDTO create(AcaoDTO acaoDTO){
 
         Acao entity = mapper.toEntity(acaoDTO);
@@ -46,43 +45,57 @@ public class AcaoService {
         return mapper.toDto(entity);
     }
 
-
-
-
-    public List<AcaoDTO> getProjetos(){
-
-        return new ArrayList<>();
+    public List<Acao> findByTipoAcaoNome(String tipoAcaoNome) {
+        return acaoRepository.findByTipoAcaoNome(tipoAcaoNome);
     }
 
-    public List<AcaoDTO> getEventos(){
-
-        return new ArrayList<>();
+    public List<Acao> getProjetos() {
+        return findByTipoAcaoNome("Projeto");
     }
+
+    public List<Acao> getEventos() {
+        return findByTipoAcaoNome("Evento");
+    }
+
+
     public AcaoContextDataDTO getContextData() {
         AcaoContextDataDTO acaoContextDataDTO = new AcaoContextDataDTO();
-        //instituicao
+
+        // Instituicao
         List<InstituicaoDTO> instituicaoDTOS = instituicaoService.findAll();
         acaoContextDataDTO.setInstituicoes(instituicaoDTOS);
-        //periodo
+
+        // Periodo
         List<PeriodoAcademicoDTO> periodoAcademicoDTOS = periodoAcademicoService.findAll();
         acaoContextDataDTO.setPeriodos(periodoAcademicoDTOS);
-        //tipoAcoes
+
+        // TipoAcoes
         List<TipoAcaoDTO> tipoAcoes = tipoAcaoService.findAll();
         acaoContextDataDTO.setTipoAcoes(tipoAcoes);
 
-        //Projetos
-        List<AcaoDTO> projetos = getProjetos();
+        // Projetos
+        List<AcaoDTO> projetos = getProjetos().stream()
+                        .filter(Objects::nonNull)
+                        .map(mapper::toDto)
+                        .collect(Collectors.toList());
 
-        //Eventos
-        List<AcaoDTO> eventos = getEventos();
 
-        //Funcoes
+        acaoContextDataDTO.setProjetos(projetos);
+
+        // Eventos
+        List<AcaoDTO> eventos = getProjetos().stream()
+                .filter(Objects::nonNull)
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+        
+        acaoContextDataDTO.setEventos(eventos);
+
+        // Funcoes
         acaoContextDataDTO.setFuncoes(funcaoService.findAll());
 
-        //Participantes
+        // Participantes
         acaoContextDataDTO.setPessoas(pessoaService.findAll().stream().filter(PessoaDTO::isAtivo)
                 .collect(Collectors.toList()));
-
 
         return acaoContextDataDTO;
     }
@@ -104,9 +117,6 @@ public class AcaoService {
 
         repository.delete(entity);
     }
-
-
-
 
     //=============================================================================================
 

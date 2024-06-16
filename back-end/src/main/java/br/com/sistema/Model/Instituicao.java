@@ -46,4 +46,7 @@ public class Instituicao {
 
     @OneToMany(mappedBy = "instituicao")
     private List<Pessoa> pessoas;
+
+    @OneToMany(mappedBy = "instituicaoAtendida")
+    private List<Acao> acoes;
 }

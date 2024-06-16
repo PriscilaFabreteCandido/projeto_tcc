@@ -21,8 +21,9 @@ public class Acao {
     @Column
     private String publicoAlvo;
 
-    @Column
-    private PeriodoAcademico semestre;
+    @ManyToOne
+    @JoinColumn(name = "periodo_id")
+    private PeriodoAcademico periodo;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false, updatable = false)
@@ -34,7 +35,7 @@ public class Acao {
 
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
-    private Instituicao instituicao;
+    private Instituicao instituicaoAtendida;
 
     @Column
     private String turma;
@@ -73,12 +74,6 @@ public class Acao {
     private Acao evento;
 
     @Column
-    private byte[] participantesPDF;
-
-    @Column
-    private List<byte[]> demaisDocumentos;
-
-    @Column
     private String cep;
 
     @Column
@@ -97,7 +92,14 @@ public class Acao {
     private String numero;
 
     @OneToMany(mappedBy = "acao")
+
     private List<AcaoPessoa> acaoPessoas;
 
-
+//    @OneToMany(mappedBy = "documento")
+//
+//    private List<Documento> documentos;
+//
+//    @OneToOne(mappedBy = "participantesDocumento")
+//
+//    private Documento participantesDocumento;
 }
