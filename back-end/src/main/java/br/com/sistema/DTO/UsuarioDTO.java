@@ -1,9 +1,12 @@
 package br.com.sistema.DTO;
 
+import br.com.sistema.DTO.Pessoa.PessoaDTO;
+import lombok.Data;
+
+@Data
 public class UsuarioDTO {
     private Long id;
-    private String username;
-    private String email;
-    private String password;
-    private int[] roles;
+    private String usuario;
+    private String senha;
+    private PessoaDTO pessoa;
 }

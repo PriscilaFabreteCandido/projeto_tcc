@@ -5,19 +5,24 @@ import lombok.Data;
 
 import java.util.List;
 
-//@Data
-//@Entity
+@Data
+@Entity
 public class Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String nome;
 
-    @Column
-    private List<byte[]> conteudo;
+    @Lob
+    @Column(nullable = false)
+    private String conteudo;
 
-    @Column
+    @Column(nullable = false)
     private String tipo;
+
+    @ManyToOne
+    @JoinColumn(name = "acao_id", nullable = false)
+    private Acao acao;
 }

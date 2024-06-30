@@ -91,15 +91,13 @@ public class Acao {
     @Column
     private String numero;
 
-    @OneToMany(mappedBy = "acao")
-
+    @OneToMany(mappedBy = "acao", orphanRemoval = true)
     private List<AcaoPessoa> acaoPessoas;
 
-//    @OneToMany(mappedBy = "documento")
-//
-//    private List<Documento> documentos;
-//
-//    @OneToOne(mappedBy = "participantesDocumento")
-//
-//    private Documento participantesDocumento;
+    @OneToMany(mappedBy = "acao")
+    private List<Documento> documentos;
+
+    @OneToOne(mappedBy = "acao")
+    @JoinColumn(name = "participantesDocumento_id")
+    private Documento participantesDocumento;
 }
