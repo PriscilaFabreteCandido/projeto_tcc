@@ -9,6 +9,13 @@ import br.com.sistema.Repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,16 +24,17 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioService {
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    };
+public class UsuarioService implements UserDetailsService {
+
     @Autowired
     private UsuarioRepository repository;
     private final UsuarioMapper mapper;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     public UsuarioDTO create(UsuarioDTO usuarioDTO){
-        Usuario usuario = repository.findByUsuario(usuarioDTO.getUsuario());
+        Usuario usuario = repository.findByLogin(usuarioDTO.getPassword());
 
         if(usuario != null){
             throw new Error("Usuário já existe");
@@ -34,7 +42,8 @@ public class UsuarioService {
 
         Usuario entity = mapper.toEntity(usuarioDTO);
 
-        entity.setSenha(passwordEncoder().encode(usuarioDTO.getSenha()));
+        var senhaCript = new BCryptPasswordEncoder().encode(usuarioDTO.getPassword());
+        entity.setPassword(senhaCript);
         repository.save(entity);
         return mapper.toDto(entity);
     }
@@ -44,7 +53,8 @@ public class UsuarioService {
 
         Usuario entity = mapper.toEntity(usuarioDTO);
         entity.setId(id);
-        entity.setSenha(passwordEncoder().encode(usuarioDTO.getSenha())); // Encrypt the password if it's updated
+        var senhaCript = new BCryptPasswordEncoder().encode(usuarioDTO.getPassword());
+        entity.setPassword(senhaCript);
         repository.save(entity);
 
         return mapper.toDto(entity);
@@ -65,5 +75,15 @@ public class UsuarioService {
     public List<UsuarioDTO> findAll() {
         return mapper.toDto(repository.findAll());
     }
+    public Authentication login(String usuario, String senha) {
+        var userNamePawword = new UsernamePasswordAuthenticationToken(usuario, senha);
+        var auth = this.authenticationManager.authenticate(userNamePawword);
 
+        return auth;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return repository.findByLogin(username);
+    }
 }
