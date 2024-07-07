@@ -2,6 +2,7 @@ package br.com.sistema.Service;
 
 import br.com.sistema.Config.TokenService;
 import br.com.sistema.DTO.UsuarioDTO;
+import br.com.sistema.Enum.UserRole;
 import br.com.sistema.Mapper.UsuarioMapper;
 import br.com.sistema.Model.Usuario;
 import br.com.sistema.Repository.UsuarioRepository;
@@ -30,15 +31,14 @@ public class UsuarioService implements UserDetailsService {
 
 
     public UsuarioDTO create(UsuarioDTO usuarioDTO) {
-        Usuario usuario = repository.findByLogin(usuarioDTO.getLogin());
+        UserDetails usuario = repository.findByLogin(usuarioDTO.getLogin());
 
         if (usuario != null) {
             throw new Error("Usuário já existe");
         }
 
-        Usuario entity = new Usuario();
-        entity.setLogin(usuarioDTO.getLogin());
-        entity.setId(1L);
+        Usuario entity = mapper.toEntity(usuarioDTO);
+
         var senhaCript = new BCryptPasswordEncoder().encode(usuarioDTO.getPassword());
         entity.setPassword(senhaCript);
         repository.save(entity);
@@ -57,6 +57,9 @@ public class UsuarioService implements UserDetailsService {
         return mapper.toDto(entity);
     }
 
+    public UsuarioDTO getUser(){
+        return null;
+    }
     public void delete(Long id) {
         Usuario entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário com ID '" + id + "' não encontrado."));
@@ -73,15 +76,7 @@ public class UsuarioService implements UserDetailsService {
         return mapper.toDto(repository.findAll());
     }
 
-//    public LoginDTO login(String usuario, String senha, AuthenticationManager authenticationManager) {
-//
-//        var authToken = new UsernamePasswordAuthenticationToken(usuario, senha);
-//        var auth =  authenticationManager.authenticate(authToken);
-//
-//        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
-//        var loginToken = new LoginDTO(token);
-//        return loginToken;
-//    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -56,4 +56,8 @@ public class Pessoa {
 
     @OneToMany(mappedBy = "pessoa")
     private List<AcaoPessoa> acaoPessoas;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private Usuario usuario;
 }

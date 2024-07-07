@@ -1,36 +1,42 @@
 package br.com.sistema.Model;
 
 
+import br.com.sistema.Enum.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
+@Table()
+@Entity(name = "users")
 @Data
-@Entity
+@EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String login;
+
     private String password;
-    private String role;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Pessoa pessoa;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
+        if (this.role == UserRole.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -40,21 +46,21 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

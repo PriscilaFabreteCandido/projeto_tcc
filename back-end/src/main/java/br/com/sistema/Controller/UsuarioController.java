@@ -1,9 +1,11 @@
 package br.com.sistema.Controller;
 
+import br.com.sistema.Config.TokenProvider;
+import br.com.sistema.Config.TokenService;
 import br.com.sistema.DTO.JwtDTO;
 import br.com.sistema.DTO.LoginDTO;
 import br.com.sistema.DTO.UsuarioDTO;
-import br.com.sistema.Infra.Security.TokenService;
+
 import br.com.sistema.Model.Usuario;
 import br.com.sistema.Service.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +32,7 @@ public class UsuarioController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private TokenService tokenService;
+    private TokenProvider tokenService;
 
     @PostMapping("/create")
     public ResponseEntity<UsuarioDTO> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
@@ -42,9 +44,9 @@ public class UsuarioController {
     public ResponseEntity<JwtDTO> logar(@RequestBody UsuarioDTO usuarioDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(usuarioDTO.getLogin(), usuarioDTO.getPassword());
         var authUser = authenticationManager.authenticate(usernamePassword);
-        var accessToken = tokenService.generateToken((Usuario) authUser.getPrincipal());
+        var accessToken = tokenService.generateAccessToken((Usuario) authUser.getPrincipal());
 
-        return ResponseEntity.ok(new JwtDTO(accessToken));
+        return new ResponseEntity<>(new JwtDTO(accessToken), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
@@ -62,6 +64,12 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> findUsuarioById(@PathVariable Long id) {
         return new ResponseEntity<>(usuarioService.findById(id), HttpStatus.OK);
     }
+
+    @PostMapping("/info")
+    public ResponseEntity<UsuarioDTO> getInfoUsuario() {
+        return new ResponseEntity<>(usuarioService.getUser(), HttpStatus.OK);
+    }
+
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> findAllUsuarios() {
