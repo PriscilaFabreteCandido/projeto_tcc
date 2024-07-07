@@ -1,11 +1,18 @@
 package br.com.sistema.Controller;
 
+import br.com.sistema.DTO.JwtDTO;
+import br.com.sistema.DTO.LoginDTO;
 import br.com.sistema.DTO.UsuarioDTO;
+import br.com.sistema.Infra.Security.TokenService;
+import br.com.sistema.Model.Usuario;
 import br.com.sistema.Service.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +26,12 @@ import java.util.List;
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/create")
     public ResponseEntity<UsuarioDTO> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         return new ResponseEntity<>(usuarioService.create(usuarioDTO), HttpStatus.OK);
@@ -26,8 +39,12 @@ public class UsuarioController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Authentication> logar(@RequestBody UsuarioDTO usuarioDTO) {
-        return new ResponseEntity<>(usuarioService.login(usuarioDTO.getLogin(),usuarioDTO.getPassword() ), HttpStatus.OK);
+    public ResponseEntity<JwtDTO> logar(@RequestBody UsuarioDTO usuarioDTO) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(usuarioDTO.getLogin(), usuarioDTO.getPassword());
+        var authUser = authenticationManager.authenticate(usernamePassword);
+        var accessToken = tokenService.generateToken((Usuario) authUser.getPrincipal());
+
+        return ResponseEntity.ok(new JwtDTO(accessToken));
     }
 
     @PutMapping("/update/{id}")

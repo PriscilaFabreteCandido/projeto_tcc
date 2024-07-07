@@ -1,23 +1,17 @@
 package br.com.sistema.Service;
 
+import br.com.sistema.Config.TokenService;
 import br.com.sistema.DTO.UsuarioDTO;
-import br.com.sistema.Mapper.TipoInstituicaoMapper;
 import br.com.sistema.Mapper.UsuarioMapper;
-import br.com.sistema.Model.Turma;
 import br.com.sistema.Model.Usuario;
 import br.com.sistema.Repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,24 +22,27 @@ public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository repository;
+
     private final UsuarioMapper mapper;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private TokenService tokenService;
 
-    public UsuarioDTO create(UsuarioDTO usuarioDTO){
-        Usuario usuario = repository.findByLogin(usuarioDTO.getPassword());
 
-        if(usuario != null){
+    public UsuarioDTO create(UsuarioDTO usuarioDTO) {
+        Usuario usuario = repository.findByLogin(usuarioDTO.getLogin());
+
+        if (usuario != null) {
             throw new Error("Usuário já existe");
         }
 
-        Usuario entity = mapper.toEntity(usuarioDTO);
-
+        Usuario entity = new Usuario();
+        entity.setLogin(usuarioDTO.getLogin());
+        entity.setId(1L);
         var senhaCript = new BCryptPasswordEncoder().encode(usuarioDTO.getPassword());
         entity.setPassword(senhaCript);
         repository.save(entity);
-        return mapper.toDto(entity);
+        return usuarioDTO;
     }
 
     public UsuarioDTO update(UsuarioDTO usuarioDTO, Long id) {
@@ -75,12 +72,16 @@ public class UsuarioService implements UserDetailsService {
     public List<UsuarioDTO> findAll() {
         return mapper.toDto(repository.findAll());
     }
-    public Authentication login(String usuario, String senha) {
-        var userNamePawword = new UsernamePasswordAuthenticationToken(usuario, senha);
-        var auth = this.authenticationManager.authenticate(userNamePawword);
 
-        return auth;
-    }
+//    public LoginDTO login(String usuario, String senha, AuthenticationManager authenticationManager) {
+//
+//        var authToken = new UsernamePasswordAuthenticationToken(usuario, senha);
+//        var auth =  authenticationManager.authenticate(authToken);
+//
+//        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+//        var loginToken = new LoginDTO(token);
+//        return loginToken;
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

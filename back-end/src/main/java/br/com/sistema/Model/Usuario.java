@@ -21,8 +21,7 @@ public class Usuario implements UserDetails {
     private String password;
     private String role;
 
-    @OneToOne
-    private Pessoa pessoa;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
