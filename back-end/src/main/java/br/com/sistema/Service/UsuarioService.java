@@ -1,8 +1,6 @@
 package br.com.sistema.Service;
 
-import br.com.sistema.Config.TokenService;
 import br.com.sistema.DTO.UsuarioDTO;
-import br.com.sistema.Enum.UserRole;
 import br.com.sistema.Mapper.UsuarioMapper;
 import br.com.sistema.Model.Usuario;
 import br.com.sistema.Repository.UsuarioRepository;
@@ -14,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -25,10 +24,6 @@ public class UsuarioService implements UserDetailsService {
     private UsuarioRepository repository;
 
     private final UsuarioMapper mapper;
-
-    @Autowired
-    private TokenService tokenService;
-
 
     public UsuarioDTO create(UsuarioDTO usuarioDTO) {
         UserDetails usuario = repository.findByLogin(usuarioDTO.getLogin());
@@ -57,9 +52,7 @@ public class UsuarioService implements UserDetailsService {
         return mapper.toDto(entity);
     }
 
-    public UsuarioDTO getUser(){
-        return null;
-    }
+
     public void delete(Long id) {
         Usuario entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário com ID '" + id + "' não encontrado."));
@@ -76,8 +69,9 @@ public class UsuarioService implements UserDetailsService {
         return mapper.toDto(repository.findAll());
     }
 
-
-
+    public Usuario findByLogin(String login) {
+        return repository.findByLogin(login);
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByLogin(username);

@@ -57,7 +57,6 @@ public class Pessoa {
     @OneToMany(mappedBy = "pessoa")
     private List<AcaoPessoa> acaoPessoas;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private Usuario usuario;
 }

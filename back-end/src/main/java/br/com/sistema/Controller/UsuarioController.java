@@ -1,9 +1,7 @@
 package br.com.sistema.Controller;
 
 import br.com.sistema.Config.TokenProvider;
-import br.com.sistema.Config.TokenService;
 import br.com.sistema.DTO.JwtDTO;
-import br.com.sistema.DTO.LoginDTO;
 import br.com.sistema.DTO.UsuarioDTO;
 
 import br.com.sistema.Model.Usuario;
@@ -15,10 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.Authenticator;
 import java.util.List;
 
 @Tag(name = "UsuarioController")
@@ -64,12 +62,11 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> findUsuarioById(@PathVariable Long id) {
         return new ResponseEntity<>(usuarioService.findById(id), HttpStatus.OK);
     }
-
-    @PostMapping("/info")
-    public ResponseEntity<UsuarioDTO> getInfoUsuario() {
-        return new ResponseEntity<>(usuarioService.getUser(), HttpStatus.OK);
+    @GetMapping("/info")
+    public ResponseEntity<Usuario> getUser(@AuthenticationPrincipal UserDetails userDetails) {
+        Usuario usuario = usuarioService.findByLogin(userDetails.getUsername());
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
-
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> findAllUsuarios() {
