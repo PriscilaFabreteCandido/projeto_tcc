@@ -97,7 +97,4 @@ public class Acao {
     @OneToMany(mappedBy = "acao")
     private List<Documento> documentos;
 
-    @OneToOne(mappedBy = "acao")
-    @JoinColumn(name = "participantesDocumento_id")
-    private Documento participantesDocumento;
 }

@@ -25,4 +25,6 @@ public class Documento {
     @ManyToOne
     @JoinColumn(name = "acao_id", nullable = false)
     private Acao acao;
+
+
 }

@@ -11,8 +11,10 @@ import br.com.sistema.DTO.TurmaDTO;
 import br.com.sistema.Exception.EntityNotFoundException;
 import br.com.sistema.Mapper.AcaoMapper;
 import br.com.sistema.Model.Acao;
+import br.com.sistema.Model.Documento;
 import br.com.sistema.Model.Pessoa;
 import br.com.sistema.Repository.AcaoRepository;
+import br.com.sistema.Repository.DocumentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,12 +39,26 @@ public class AcaoService {
     @Autowired
     private AcaoRepository acaoRepository;
 
+    @Autowired
+    private DocumentoRepository documentoRepository;
+
     public AcaoDTO create(AcaoDTO acaoDTO){
-
         Acao entity = mapper.toEntity(acaoDTO);
-        repository.save(entity);
 
-        return mapper.toDto(entity);
+        // Save Acao entity first
+        Acao savedAcao = acaoRepository.save(entity);
+
+        // Save each Documento entity and associate it with the saved Acao
+        List<Documento> documentos = mapper.toDocumentoEntityList(acaoDTO.getDocumentos());
+        for (Documento documento : documentos) {
+            documento.setAcao(savedAcao);
+            documentoRepository.save(documento);
+        }
+
+        // Update the saved Acao with the saved documents
+        savedAcao.setDocumentos(documentos);
+        acaoRepository.save(savedAcao);
+        return mapper.toDto(savedAcao);
     }
 
     public List<Acao> findByTipoAcaoNome(String tipoAcaoNome) {

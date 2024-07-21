@@ -39,7 +39,6 @@ public class AcaoDTO {
     private String cidade;
     private String numero;
     private String complemento;
-    private DocumentoDTO participantesDocumento;
     private List<DocumentoDTO> documentos;
 
     private List<AcaoPessoaDTO> acaoPessoas;
