@@ -66,7 +66,8 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public List<UsuarioDTO> findAll() {
-        return mapper.toDto(repository.findAll());
+        List<Usuario> usuarios = repository.retrieveAll();
+        return mapper.toDto(usuarios);
     }
 
     public Usuario findByLogin(String login) {

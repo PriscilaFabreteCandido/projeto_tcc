@@ -2,13 +2,16 @@
 package br.com.sistema.Mapper;
 
 import br.com.sistema.DTO.Acao.AcaoDTO;
+import br.com.sistema.DTO.Acao.AcaoPessoaDTO;
 import br.com.sistema.DTO.DocumentoDTO;
 import br.com.sistema.Model.Acao;
+import br.com.sistema.Model.AcaoPessoa;
 import br.com.sistema.Model.Documento;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {AcaoPessoaMapper.class})
@@ -28,4 +31,6 @@ public interface AcaoMapper {
 
     List<DocumentoDTO> toDocumentoDtoList(List<Documento> documentos);
     List<Documento> toDocumentoEntityList(List<DocumentoDTO> documentoDTOs);
+
+
 }
