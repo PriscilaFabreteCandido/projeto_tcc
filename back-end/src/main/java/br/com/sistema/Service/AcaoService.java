@@ -1,9 +1,7 @@
 package br.com.sistema.Service;
 
-import br.com.sistema.DTO.Acao.AcaoContextDataDTO;
-import br.com.sistema.DTO.Acao.AcaoDTO;
+import br.com.sistema.DTO.Acao.*;
 
-import br.com.sistema.DTO.Acao.AcaoPessoaDTO;
 import br.com.sistema.DTO.InstituicaoDTO;
 import br.com.sistema.DTO.PeriodoAcademicoDTO;
 import br.com.sistema.DTO.Pessoa.PessoaDTO;
@@ -12,10 +10,7 @@ import br.com.sistema.DTO.TurmaDTO;
 import br.com.sistema.Exception.EntityNotFoundException;
 import br.com.sistema.Mapper.AcaoMapper;
 import br.com.sistema.Mapper.AcaoPessoaMapper;
-import br.com.sistema.Model.Acao;
-import br.com.sistema.Model.AcaoPessoa;
-import br.com.sistema.Model.Documento;
-import br.com.sistema.Model.Pessoa;
+import br.com.sistema.Model.*;
 import br.com.sistema.Repository.AcaoPessoaRepository;
 import br.com.sistema.Repository.AcaoRepository;
 import br.com.sistema.Repository.DocumentoRepository;
@@ -23,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,7 +50,9 @@ public class AcaoService {
         List<AcaoPessoa> acaoPessoas = new ArrayList<>();
         if(acaoPessoaDTOS != null){
             for (AcaoPessoaDTO acaoPessoaDTO : acaoPessoaDTOS) {
-                AcaoPessoa entity = acaoPessoaMapper.toEntity(acaoPessoaDTO);
+                AcaoPessoa entity = new AcaoPessoa();
+                Pessoa pessoa = new Pessoa(); pessoa.setId(acaoPessoaDTO.getPessoa().getId());
+                Funcao funcao = new Funcao(); funcao.setId(acaoPessoaDTO.getFuncao().getId());
                 acaoPessoas.add(entity);
             }
         }
@@ -74,14 +73,15 @@ public class AcaoService {
         }
 
         // Save each AcaoPessoa entity and associate it with the saved Acao
-        List<AcaoPessoa> acaoPessoas = toAcaoPessoaEntityList(acaoDTO.getAcaoPessoas());
-        for (AcaoPessoa acaoPessoa : acaoPessoas) {
-            acaoPessoa.setAcao(savedAcao);
-            acaoPessoaRepository.save(acaoPessoa);
-        }
+//        List<AcaoPessoa> acaoPessoas = toAcaoPessoaEntityList(acaoDTO.getAcaoPessoas());
+//        for (AcaoPessoa acaoPessoa : entity.getAcaoPessoas()) {
+//            acaoPessoa.setAcao(savedAcao);
+//            acaoPessoaRepository.save(acaoPessoa);
+//        }
 
         // Update the saved Acao with the saved documents
         savedAcao.setDocumentos(documentos);
+       // savedAcao.setAcaoPessoas(acaoPessoas);
         acaoRepository.save(savedAcao);
         return mapper.toDto(savedAcao);
     }
@@ -172,5 +172,30 @@ public class AcaoService {
         return mapper.toDto(repository.findAll());
     }
 
+    public  List<AcaoResultRelatorioDTO> getRelatorios(AcaoFilterDTO acaoFilterDTO){
+        List<Acao> acoes = repository.getRelatorios();
+        List<AcaoResultRelatorioDTO> acaoResult = new ArrayList<>();
+
+        if (acoes != null && acoes.size() > 1){
+            acoes.forEach(x -> {
+                AcaoResultRelatorioDTO result = new AcaoResultRelatorioDTO();
+                result.setId(x.getId());
+                Date dtInicio = x.getDtInicio(); // x.getDtInicio() deve retornar um objeto java.sql.Date
+                if (dtInicio != null) {
+                    int year = dtInicio.getYear() + 1900;
+                    result.setAno(year);
+                } else {
+                    result.setAno(0); // or handle the null case as needed
+                }
+                result.setNome(x.getNome());
+                result.setTipoAcao(x.getTipoAcao().getNome());
+                result.setEventoId(x.getEvento() != null ? x.getEvento().getId(): null);
+                result.setProjetoId(x.getProjeto() != null ? x.getProjeto().getId(): null);
+                acaoResult.add(result);
+            });
+
+        }
+        return acaoResult;
+    }
 
 }

@@ -2,6 +2,8 @@ package br.com.sistema.Controller;
 
 import br.com.sistema.DTO.Acao.AcaoContextDataDTO;
 import br.com.sistema.DTO.Acao.AcaoDTO;
+import br.com.sistema.DTO.Acao.AcaoFilterDTO;
+import br.com.sistema.DTO.Acao.AcaoResultRelatorioDTO;
 import br.com.sistema.Service.AcaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,11 @@ public class AcaoController {
     @GetMapping("/contextData")
     public ResponseEntity<AcaoContextDataDTO> getContextData() {
         return new ResponseEntity<>(acaoService.getContextData(), HttpStatus.OK);
+    }
+
+    @PostMapping("/relatorios")
+    public ResponseEntity<List<AcaoResultRelatorioDTO>> getRelatorios(@RequestBody AcaoFilterDTO acaoFilterDTO) {
+        return new ResponseEntity<>(acaoService.getRelatorios(acaoFilterDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -13,4 +13,9 @@ import java.util.List;
 public interface AcaoRepository extends JpaRepository<Acao, Long> {
     @Query("SELECT a FROM Acao a WHERE a.tipoAcao.nome = :tipoAcaoNome")
     List<Acao> findByTipoAcaoNome(@Param("tipoAcaoNome") String tipoAcaoNome);
+
+    @Query("SELECT a FROM Acao a " +
+            "LEFT JOIN FETCH a.evento " +
+            "LEFT JOIN FETCH a.projeto")
+    List<Acao> getRelatorios();
 }
