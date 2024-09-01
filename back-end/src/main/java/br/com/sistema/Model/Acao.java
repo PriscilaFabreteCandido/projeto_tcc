@@ -44,10 +44,10 @@ public class Acao {
     private String modalidade;//será entidade
 
     @Column
-    private String horaInicio;
+    private String horarioInicio;
 
     @Column
-    private String horaTermino;
+    private String horarioTermino;
 
     @Column
     private Integer qtdParticipantes;
@@ -66,6 +66,7 @@ public class Acao {
 
     @ManyToOne
     @JoinColumn(name = "acao_projeto_id")
+
     private Acao projeto;
 
 
@@ -91,10 +92,10 @@ public class Acao {
     @Column
     private String numero;
 
+    @OneToMany(mappedBy = "acao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Documento> documentos;
+
     @OneToMany(mappedBy = "acao", orphanRemoval = true)
     private List<AcaoPessoa> acaoPessoas;
-
-    @OneToMany(mappedBy = "acao")
-    private List<Documento> documentos;
 
 }

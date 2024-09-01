@@ -23,7 +23,7 @@ public class PeriodoAcademicoService {
         validate(periodoAcademicoDTO);
 
         PeriodoAcademico entity = mapper.toEntity(periodoAcademicoDTO);
-
+        
         repository.save(entity);
 
         return mapper.toDto(entity);

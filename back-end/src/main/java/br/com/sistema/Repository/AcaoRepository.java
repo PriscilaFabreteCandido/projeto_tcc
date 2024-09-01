@@ -15,7 +15,17 @@ public interface AcaoRepository extends JpaRepository<Acao, Long> {
     List<Acao> findByTipoAcaoNome(@Param("tipoAcaoNome") String tipoAcaoNome);
 
     @Query("SELECT a FROM Acao a " +
-            "LEFT JOIN FETCH a.evento " +
-            "LEFT JOIN FETCH a.projeto")
-    List<Acao> getRelatorios();
+            "LEFT JOIN FETCH a.evento e " +
+            "LEFT JOIN FETCH a.projeto p " +
+            "LEFT JOIN FETCH a.acaoPessoas ap " +
+            "LEFT JOIN FETCH ap.pessoa pe " +
+            "LEFT JOIN FETCH a.tipoAcao t " +
+            "WHERE (:ano IS NULL OR (COALESCE(:ano, YEAR(a.dtInicio)) = YEAR(a.dtInicio))) " +
+            "AND (:idTipoAcao IS NULL OR t.id = :idTipoAcao) " +
+            "AND (:idProjeto IS NULL OR p.id = :idProjeto)")
+    List<Acao> findAcoesByCriteria(@Param("ano") Long ano,
+                                   @Param("idTipoAcao") Long idTipoAcao,
+                                   @Param("idProjeto") Long idProjeto);
+
+
 }

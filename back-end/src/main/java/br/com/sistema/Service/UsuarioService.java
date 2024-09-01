@@ -29,7 +29,7 @@ public class UsuarioService implements UserDetailsService {
         UserDetails usuario = repository.findByLogin(usuarioDTO.getLogin());
 
         if (usuario != null) {
-            throw new Error("Usuário já existe");
+            throw new EntityNotFoundException("Usuário já existe");
         }
 
         Usuario entity = mapper.toEntity(usuarioDTO);
